@@ -17,3 +17,4 @@ prisma/dev.db-journal
 coverage
 .idea
 .vscode
+public/uploads/

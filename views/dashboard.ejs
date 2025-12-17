@@ -29,7 +29,11 @@
               <span class="text-gray-700 font-medium"
                 >Hola, <%= currentUser?.name %></span
               >
-              <a href="/settings" class="text-gray-600 hover:text-gray-900 font-medium">Ajustes</a>
+              <a
+                href="/settings"
+                class="text-gray-600 hover:text-gray-900 font-medium"
+                >Ajustes</a
+              >
               <form method="post" action="/logout" class="inline">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <button
