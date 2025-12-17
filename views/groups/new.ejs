@@ -19,33 +19,11 @@
     />
   </head>
   <body class="h-full flex flex-col">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-          <div class="flex items-center">
-            <h1 class="text-2xl font-bold text-red-600 flex items-center gap-2">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"
-                />
-              </svg>
-              Amigo Invisible
-            </h1>
-          </div>
-          <div class="flex items-center space-x-4">
-            <a
-              class="text-gray-600 hover:text-gray-900 font-medium"
-              href="/dashboard"
-              >Volver</a
-            >
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <main>
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <%- include('../partials/header') %>
+    
+    <div class="flex-1 flex flex-col bg-gray-100">
+      <main>
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="mb-4"><%- include('../partials/flash') %></div>
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-2xl font-bold mb-1">Nuevo grupo</h2>
