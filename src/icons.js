@@ -6,6 +6,7 @@ const iconMap = {
   chart: "bar_chart",
   users: "group",
   groups: "groups",
+  people: "people",
   settings: "settings",
   lock: "lock",
   heart: "favorite",
@@ -38,6 +39,8 @@ const iconMap = {
   "wand-2": "wand_stars",
   shuffle: "shuffle",
   schedule: "schedule",
+  inbox: "inbox",
+  star: "star",
 };
 
 // Mapeo de tamaños de Tailwind a px
