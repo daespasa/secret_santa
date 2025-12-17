@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full bg-gray-100">
-  <head>
-    <%- include('./partials/head') %>
-    <title>Ajustes de Perfil</title>
-    <meta
-      name="description"
-      content="Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible."
-    />
-  </head>
-  <body class="h-full flex flex-col">
-    <%- include('./partials/header') %>
-
-    <div class="flex-1 flex flex-col bg-gray-100 pt-16">
-      <main class="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <%- include('./partials/flash') %>
-
+<%- include('../partials/layout-page', {
+  title: 'Ajustes de Perfil',
+  description: 'Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible.',
+  body: `
         <div class="bg-white shadow rounded-lg p-6 mt-8">
             <h2 class="text-2xl font-bold mb-6">Ajustes de Perfil</h2>
 
@@ -216,8 +203,4 @@
             </p>
           </div>
         </div>
-      </main>
-    </div>
-    <%- include('./partials/footer') %>
-  </body>
-</html>
+` }) %>

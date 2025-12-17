@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-  <head>
-    <%- include('./partials/head') %>
-    <title>Página no encontrada - 404</title>
-    <meta
-      name="description"
-      content="La página que buscas no existe. Vuelve al inicio de Amigo Invisible."
-    />
-  </head>
-  <body class="h-full flex flex-col">
-    <%- include('./partials/header') %>
-
-    <div class="flex-1 flex flex-col bg-gray-50 pt-16">
-      <!-- Main Content -->
-      <main
-        class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10"
-      >
+<%- include('../partials/layout-error', {
+  title: 'Página no encontrada - 404',
+  description: 'La página que buscas no existe. Vuelve al inicio de Amigo Invisible.',
+  headerOffset: true,
+  body: `
         <div class="text-center max-w-md">
           <!-- 404 Icon -->
           <div class="mb-8">
@@ -92,9 +79,4 @@
             </ul>
           </div>
         </div>
-      </main>
-    </div>
-
-    <%- include('./partials/footer') %>
-  </body>
-</html>
+` }) %>

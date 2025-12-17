@@ -1,61 +1,12 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full scroll-smooth">
-  <head>
-    <%- include('./partials/head') %>
-    <title>Amigo Invisible - Organiza tu intercambio</title>
-    <meta
-      name="keywords"
-      content="amigo invisible, sorteo, intercambio de regalos, grupos, navidad"
-    />
-    <meta name="robots" content="index,follow" />
-    <link rel="canonical" href="/" />
-    <meta property="og:title" content="Amigo Invisible" />
-    <meta
-      property="og:description"
-      content="Crea grupos, invita amigos y sortea tu amigo invisible en minutos."
-    />
-    <meta property="og:image" content="/favicon.svg" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="/" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Amigo Invisible" />
-    <meta
-      name="twitter:description"
-      content="Organiza tu amigo invisible en minutos: crea grupos, comparte invitaciones y sortea de forma justa."
-    />
-    <meta name="twitter:image" content="/favicon.svg" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Amigo Invisible",
-        "description": "Organiza tu amigo invisible en minutos con grupos, invitaciones y sorteos justos.",
-        "applicationCategory": "Productivity",
-        "operatingSystem": "Web",
-        "url": "/"
-      }
-    </script>
-    <link rel="preload" href="/style.css" as="style" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
-    />
-  </head>
-  <body
-    class="h-full flex flex-col bg-gradient-to-br from-red-50 via-white to-green-50"
-  >
-    <%- include('./partials/header') %>
-
-    <div class="flex-1 flex flex-col relative z-0">
-      <!-- Hero Section -->
-      <div class="flex-1 flex flex-col pt-16">
-        <!-- Hero Content -->
-        <main
-          class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10"
-        >
+<%- include('../partials/layout-full', {
+  title: 'Amigo Invisible - Organiza tu intercambio',
+  description: 'La forma más fácil de organizar tu intercambio de regalos. Crea grupos, personaliza con iconos y colores, comparte invitaciones, sortea de forma justa y todos reciben las asignaciones por email.',
+  htmlClass: 'scroll-smooth',
+  includeHeader: true,
+  keywords: 'amigo invisible, sorteo, intercambio de regalos, grupos, navidad',
+  robots: 'index,follow',
+  canonicalUrl: '/',
+  body: `
           <div class="max-w-4xl mx-auto text-center">
             <div class="mb-8">
               <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
@@ -142,9 +93,4 @@
               <% } %>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
-    <%- include('./partials/footer') %>
-  </body>
-</html>
+` }) %>
