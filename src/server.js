@@ -9,6 +9,7 @@ import { attachUserToLocals } from "./middleware/auth.js";
 import authRoutes from "./routes/auth.js";
 import groupRoutes from "./routes/groups.js";
 import dashboardRoutes from "./routes/dashboard.js";
+import settingsRoutes from "./routes/settings.js";
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.get("/", (req, res) => {
 
 app.use(authRoutes);
 app.use(dashboardRoutes);
+app.use(settingsRoutes);
 app.use(groupRoutes);
 
 app.use((err, req, res, next) => {

@@ -12,6 +12,7 @@ model User {
   email     String   @unique
   name      String
   googleId  String   @unique
+  profilePhoto String?
   createdAt DateTime @default(now())
   groups    Group[]  @relation("GroupAdmin")
   memberships GroupUser[]

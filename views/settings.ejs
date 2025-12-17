@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-gray-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajustes de Perfil</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png" />
+    <meta name="theme-color" content="#ef4444" />
+    <meta
+      name="description"
+      content="Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full">
+    <div class="min-h-full">
+      <!-- Navigation -->
+      <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex items-center">
+              <h1 class="text-2xl font-bold text-red-600">🎁 Amigo Invisible</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+              <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium">Dashboard</a>
+              <form method="post" action="/logout" class="inline">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button type="submit" class="text-gray-600 hover:text-gray-900 font-medium">Salir</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <%- include('./partials/flash') %>
+
+          <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-bold mb-6">Ajustes de Perfil</h2>
+
+            <!-- Profile Card -->
+            <div class="mb-8 pb-8 border-b border-gray-200">
+              <div class="flex items-center space-x-6">
+                <div class="flex-shrink-0">
+                  <% if (user.profilePhoto) { %>
+                    <img
+                      src="<%= user.profilePhoto %>"
+                      alt="<%= user.name %>"
+                      class="h-20 w-20 rounded-full object-cover"
+                    />
+                  <% } else { %>
+                    <div class="h-20 w-20 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-3xl">
+                      <%= user.name.charAt(0).toUpperCase() %>
+                    </div>
+                  <% } %>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500">Foto de Perfil</p>
+                  <p class="font-semibold text-gray-900"><%= user.name %></p>
+                  <p class="text-sm text-gray-600"><%= user.email %></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form method="post" action="/settings" class="space-y-6">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                <input
+                  type="text"
+                  name="name"
+                  value="<%= user.name %>"
+                  required
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input
+                  type="email"
+                  value="<%= user.email %>"
+                  disabled
+                  class="mt-1 block w-full rounded-md bg-gray-50 px-3 py-2 border border-gray-300 text-gray-600"
+                />
+                <p class="mt-1 text-xs text-gray-500">El correo está vinculado a tu cuenta y no se puede cambiar.</p>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Foto de Perfil</label>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <p class="text-sm text-gray-600 mb-2">La funcionalidad de carga de foto próximamente</p>
+                  <p class="text-xs text-gray-500">Sube una foto PNG o JPG menor a 5MB</p>
+                </div>
+              </div>
+
+              <div class="flex justify-end gap-3 pt-4">
+                <a href="/dashboard" class="inline-flex items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50">
+                  Cancelar
+                </a>
+                <button type="submit" class="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700">
+                  Guardar Cambios
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Info Section -->
+          <div class="mt-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+            <h3 class="font-semibold text-blue-900 mb-2">💡 Información</h3>
+            <p class="text-sm text-blue-800">
+              Tu perfil es privado. Otros usuarios solo ven tu nombre cuando les asignas un regalo.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
