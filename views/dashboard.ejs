@@ -14,15 +14,16 @@
     />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body class="h-full">
-    <div class="min-h-full">
+  <body class="h-full flex flex-col">
+    <div class="flex-1 flex flex-col">
       <!-- Navigation -->
       <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between h-16">
             <div class="flex items-center">
-              <h1 class="text-2xl font-bold text-red-600">
-                🎁 Amigo Invisible
+              <h1 class="text-2xl font-bold text-red-600 flex items-center gap-2">
+                <%- renderIcon("gift", "w-8 h-8") %>
+                Amigo Invisible
               </h1>
             </div>
             <div class="flex items-center space-x-4">
@@ -74,8 +75,7 @@
             </div>
           </div>
         </div>
-        <% }) %> <% } %> <% if (flash.success) { %> <% flash.success.forEach(msg
-        => { %>
+        <% }) %> <% } %> <% if (flash.success) { %> <% flash.success.forEach(msg => { %>
         <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4 rounded">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -160,7 +160,7 @@
               <div class="p-5">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="text-3xl">👑</div>
+                    <div class="text-yellow-500"><%- renderIcon("crown", "w-12 h-12") %></div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
@@ -180,7 +180,7 @@
               <div class="p-5">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="text-3xl">✅</div>
+                    <div class="text-green-600"><%- renderIcon("check", "w-12 h-12") %></div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
@@ -294,9 +294,9 @@
                           class="text-lg font-medium text-red-600 truncate flex items-center"
                         >
                           <span
-                            class="mr-2 text-2xl"
+                            class="mr-2"
                             style="color: <%= g.color || '#DC2626' %>"
-                            ><%= g.icon || '🎁' %></span
+                            ><%- renderGroupIcon(g.icon, "w-6 h-6") %></span
                           >
                           <a href="/groups/<%= g.id %>" class="hover:underline"
                             ><%= g.name %></a
@@ -365,9 +365,10 @@
                         />
                         <button
                           type="submit"
-                          class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          class="inline-flex items-center gap-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                         >
-                          🎲 Sortear
+                          <%- renderIcon("dice", "w-5 h-5") %>
+                          Sortear
                         </button>
                       </form>
                       <% } %>

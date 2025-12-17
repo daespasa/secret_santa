@@ -14,15 +14,16 @@
     />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body class="h-full">
-    <div class="min-h-full">
+  <body class="h-full flex flex-col">
+    <div class="flex-1 flex flex-col">
       <!-- Navigation -->
       <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between h-16">
             <div class="flex items-center">
-              <h1 class="text-2xl font-bold text-red-600">
-                🎁 Amigo Invisible
+              <h1 class="text-2xl font-bold text-red-600 flex items-center gap-2">
+                <%- renderIcon("gift", "w-8 h-8") %>
+                Amigo Invisible
               </h1>
             </div>
             <div class="flex items-center space-x-4">
@@ -168,7 +169,10 @@
 
           <!-- Info Section -->
           <div class="mt-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
-            <h3 class="font-semibold text-blue-900 mb-2">💡 Información</h3>
+            <h3 class="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+              <%- renderIcon("lightbulb", "w-5 h-5") %>
+              Información
+            </h3>
             <p class="text-sm text-blue-800">
               Tu perfil es privado. Otros usuarios solo ven tu nombre cuando les
               asignas un regalo.

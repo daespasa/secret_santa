@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body class="bg-gray-50 min-h-screen">
+  <body class="bg-gray-50 min-h-screen flex flex-col">
     <nav class="bg-white shadow-sm">
       <div
         class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
@@ -37,9 +37,9 @@
         <div class="flex items-start justify-between">
           <div class="flex items-start">
             <span
-              class="text-4xl mr-3"
+              class="mr-3"
               style="color: <%= group.color || '#DC2626' %>"
-              ><%= group.icon || '🎁' %></span
+              ><%- renderGroupIcon(group.icon, "w-10 h-10") %></span
             >
             <div>
               <h2 class="text-2xl font-bold text-gray-900">
@@ -66,9 +66,10 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <button
               type="submit"
-              class="inline-flex items-center px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700"
             >
-              🎲 Iniciar sorteo
+              <%- renderIcon("dice", "w-5 h-5") %>
+              Iniciar sorteo
             </button>
           </form>
           <% } %>

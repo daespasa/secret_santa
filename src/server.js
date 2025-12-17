@@ -11,7 +11,7 @@ import groupRoutes from "./routes/groups.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import settingsRoutes from "./routes/settings.js";
 import pagesRoutes from "./routes/pages.js";
-import { renderIcon } from "./icons.js";
+import { renderIcon, renderGroupIcon } from "./icons.js";
 
 const app = express();
 
@@ -38,6 +38,7 @@ app.use(attachUserToLocals);
 app.use((req, res, next) => {
   res.locals.csrfToken = "csrf-disabled";
   res.locals.renderIcon = renderIcon;
+  res.locals.renderGroupIcon = renderGroupIcon;
   next();
 });
 

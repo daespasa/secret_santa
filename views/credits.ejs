@@ -14,15 +14,16 @@
     />
     <link rel="stylesheet" href="/style.css" />
   </head>
-  <body class="h-full">
-    <div class="min-h-full flex flex-col">
+  <body class="h-full flex flex-col">
+    <div class="flex-1 flex flex-col">
       <!-- Navigation -->
       <nav class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between h-16">
             <div class="flex items-center">
-              <a href="/" class="text-2xl font-bold text-red-600">
-                🎁 Amigo Invisible
+              <a href="/" class="text-2xl font-bold text-red-600 flex items-center gap-2">
+                <%- renderIcon("gift", "w-8 h-8") %>
+                Amigo Invisible
               </a>
             </div>
             <div class="flex items-center">
@@ -48,8 +49,9 @@
 
         <!-- Developer -->
         <section class="mb-12 bg-white rounded-lg shadow p-6">
-          <h2 class="text-2xl font-bold mb-4 text-gray-900">
-            👨‍💻 Desarrollador
+          <h2 class="text-2xl font-bold mb-4 text-gray-900 flex items-center gap-2">
+            <%- renderIcon("code", "w-7 h-7") %>
+            Desarrollador
           </h2>
           <div class="flex items-center gap-4">
             <div
@@ -121,7 +123,10 @@
 
         <!-- Dependencies -->
         <section class="bg-white rounded-lg shadow p-6">
-          <h2 class="text-2xl font-bold mb-6 text-gray-900">📦 Dependencias</h2>
+          <h2 class="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+            <%- renderIcon("package", "w-7 h-7") %>
+            Dependencias
+          </h2>
 
           <div class="space-y-4">
             <!-- Express -->
@@ -328,8 +333,9 @@
             </p>
           </div>
           <div class="mt-4 p-4 bg-green-50 border-l-4 border-green-400 rounded">
-            <p class="text-sm text-green-900">
-              ✓ Todas las licencias son permisivas y compatibles con proyectos
+            <p class="text-sm text-green-900 flex items-center gap-2">
+              <%- renderIcon("check", "w-5 h-5") %>
+              Todas las licencias son permisivas y compatibles con proyectos
               comerciales y de código abierto.
             </p>
           </div>
@@ -337,8 +343,9 @@
 
         <!-- Open Source -->
         <section class="mt-12 bg-white rounded-lg shadow p-6">
-          <h2 class="text-2xl font-bold mb-4 text-gray-900">
-            🔓 Código Abierto
+          <h2 class="text-2xl font-bold mb-4 text-gray-900 flex items-center gap-2">
+            <%- renderIcon("unlock", "w-7 h-7") %>
+            Código Abierto
           </h2>
           <p class="text-gray-700 mb-4">
             Amigo Invisible es un proyecto de código abierto. Puedes ver, usar y
