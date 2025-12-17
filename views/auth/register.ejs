@@ -8,7 +8,9 @@
   <body class="h-full flex flex-col bg-gradient-to-br from-red-50 to-pink-50">
     <%- include('../partials/header') %>
 
-    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <main
+      class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
+    >
       <div class="w-full max-w-md">
         <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8">
           <!-- Header -->
@@ -23,10 +25,14 @@
           <!-- Register Form -->
           <form method="post" action="/register" class="space-y-4">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="returnTo" value="<%= returnTo || '' %>" />
 
             <!-- Email -->
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email
               </label>
               <input
@@ -41,7 +47,10 @@
 
             <!-- Name -->
             <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Nombre
               </label>
               <input
@@ -56,7 +65,10 @@
 
             <!-- Password -->
             <div>
-              <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Contraseña
               </label>
               <input
@@ -72,7 +84,10 @@
 
             <!-- Password Confirm -->
             <div>
-              <label for="passwordConfirm" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="passwordConfirm"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Confirmar contraseña
               </label>
               <input
@@ -133,7 +148,10 @@
           <!-- Login Link -->
           <p class="text-center text-sm text-gray-600 mt-6">
             ¿Ya tienes cuenta?
-            <a href="/login" class="text-red-600 hover:text-red-700 font-semibold">
+            <a
+              href="/login"
+              class="text-red-600 hover:text-red-700 font-semibold"
+            >
               Inicia sesión
             </a>
           </p>

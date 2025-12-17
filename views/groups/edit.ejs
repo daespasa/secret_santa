@@ -20,23 +20,36 @@
   <body class="h-full flex flex-col bg-gray-50">
     <%- include('../partials/header') %>
 
-    <main class="flex-1 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16">
+    <main
+      class="flex-1 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16"
+    >
       <%- include('../partials/flash') %>
 
       <div class="bg-white shadow rounded-lg p-6 sm:p-8">
         <div class="mb-6">
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2">
+          <h2
+            class="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2"
+          >
             <%- renderIcon("edit", "text-3xl sm:text-4xl") %> Editar grupo
           </h2>
-          <p class="text-gray-600 mt-2">Modifica los detalles de <%= group.name %></p>
+          <p class="text-gray-600 mt-2">
+            Modifica los detalles de <%= group.name %>
+          </p>
         </div>
 
-        <form method="post" action="/groups/<%= group.id %>/edit" class="space-y-6">
+        <form
+          method="post"
+          action="/groups/<%= group.id %>/edit"
+          class="space-y-6"
+        >
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
           <!-- Nombre -->
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="name"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("edit", "text-sm") %> Nombre del grupo
             </label>
             <input
@@ -52,7 +65,10 @@
 
           <!-- Descripción -->
           <div>
-            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="description"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("description", "text-sm") %> Descripción
             </label>
             <textarea
@@ -61,13 +77,19 @@
               rows="3"
               class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none text-sm resize-none"
               placeholder="Ej: Secret Santa de navidad 2025"
-            ><%= group.description || '' %></textarea>
+            >
+<%= group.description || '' %></textarea
+            >
           </div>
 
           <!-- Precio máximo -->
           <div>
-            <label for="price_max" class="block text-sm font-medium text-gray-700 mb-1">
-              <%- renderIcon("attach_money", "text-sm") %> Precio máximo del regalo
+            <label
+              for="price_max"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              <%- renderIcon("attach_money", "text-sm") %> Precio máximo del
+              regalo
             </label>
             <input
               type="number"
@@ -83,7 +105,10 @@
 
           <!-- Mínimo de participantes -->
           <div>
-            <label for="min_participants" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="min_participants"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("people", "text-sm") %> Mínimo de participantes
             </label>
             <input
@@ -98,7 +123,10 @@
 
           <!-- Fecha del evento -->
           <div>
-            <label for="event_date" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="event_date"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("event", "text-sm") %> Fecha del evento
             </label>
             <input
@@ -112,8 +140,12 @@
 
           <!-- Fecha límite de inscripción -->
           <div>
-            <label for="draw_deadline" class="block text-sm font-medium text-gray-700 mb-1">
-              <%- renderIcon("schedule", "text-sm") %> Fecha límite de inscripción
+            <label
+              for="draw_deadline"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              <%- renderIcon("schedule", "text-sm") %> Fecha límite de
+              inscripción
             </label>
             <input
               type="date"
@@ -126,7 +158,10 @@
 
           <!-- Reglas -->
           <div>
-            <label for="rules" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="rules"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("rule", "text-sm") %> Reglas del grupo
             </label>
             <textarea
@@ -135,13 +170,19 @@
               rows="4"
               class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none text-sm resize-none"
               placeholder="Ej: No revelarse antes del evento&#10;Máximo una compra por persona&#10;..."
-            ><%= group.rules || '' %></textarea>
+            >
+<%= group.rules || '' %></textarea
+            >
           </div>
 
           <!-- Icono -->
           <div>
-            <label for="icon" class="block text-sm font-medium text-gray-700 mb-1">
-              <%- renderIcon("emoji_emotions", "text-sm") %> Icono (Material Symbols)
+            <label
+              for="icon"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
+              <%- renderIcon("emoji_emotions", "text-sm") %> Icono (Material
+              Symbols)
             </label>
             <input
               type="text"
@@ -151,12 +192,18 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none text-sm"
               placeholder="Ej: favorite, star, cake"
             />
-            <p class="text-xs text-gray-500 mt-1">Usa nombres de iconos de Material Symbols (favorite, star, cake, gift, heart, etc.)</p>
+            <p class="text-xs text-gray-500 mt-1">
+              Usa nombres de iconos de Material Symbols (favorite, star, cake,
+              gift, heart, etc.)
+            </p>
           </div>
 
           <!-- Color -->
           <div>
-            <label for="color" class="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              for="color"
+              class="block text-sm font-medium text-gray-700 mb-1"
+            >
               <%- renderIcon("palette", "text-sm") %> Color del grupo
             </label>
             <input

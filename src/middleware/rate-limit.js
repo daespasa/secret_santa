@@ -5,7 +5,8 @@ import slowDown from "express-slow-down";
 export const registerLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hora
   max: 3, // 3 intentos
-  message: "Demasiados intentos de registro. Por favor intenta de nuevo en una hora.",
+  message:
+    "Demasiados intentos de registro. Por favor intenta de nuevo en una hora.",
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: false,
@@ -15,7 +16,8 @@ export const registerLimiter = rateLimit({
 export const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 10, // 10 intentos
-  message: "Demasiados intentos de inicio de sesión. Por favor intenta de nuevo más tarde.",
+  message:
+    "Demasiados intentos de inicio de sesión. Por favor intenta de nuevo más tarde.",
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: true, // No contar intentos exitosos
@@ -33,7 +35,8 @@ export const loginSpeedLimiter = slowDown({
 export const changePasswordLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hora
   max: 5, // 5 intentos
-  message: "Demasiados intentos de cambio de contraseña. Por favor intenta de nuevo en una hora.",
+  message:
+    "Demasiados intentos de cambio de contraseña. Por favor intenta de nuevo en una hora.",
   standardHeaders: true,
   legacyHeaders: false,
   skipSuccessfulRequests: true,
@@ -43,7 +46,8 @@ export const changePasswordLimiter = rateLimit({
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutos
   max: 100, // 100 requests
-  message: "Demasiadas solicitudes desde esta IP. Por favor intenta de nuevo más tarde.",
+  message:
+    "Demasiadas solicitudes desde esta IP. Por favor intenta de nuevo más tarde.",
   standardHeaders: true,
   legacyHeaders: false,
 });

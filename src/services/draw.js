@@ -17,7 +17,7 @@ export async function performDraw(groupId) {
     where: { groupId },
     include: { user: true },
   });
-  
+
   const minParticipants = await prisma.group.findUnique({
     where: { id: groupId },
     select: { minParticipants: true },
@@ -28,7 +28,7 @@ export async function performDraw(groupId) {
       `Se requieren al menos ${minParticipants.minParticipants} participantes para sortear`
     );
   }
-  
+
   const shuffled = shuffle(participants);
   const assignments = shuffled.map((entry, idx) => {
     const receiver = shuffled[(idx + 1) % shuffled.length];

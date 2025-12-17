@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import cookieParser from "cookie-parser";
 import path from "path";
 import morgan from "morgan";
 import flash from "connect-flash";
@@ -21,6 +22,7 @@ app.use(express.static(path.join(process.cwd(), "public")));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use(

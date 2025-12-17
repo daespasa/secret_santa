@@ -11,28 +11,37 @@
   <body class="h-full flex flex-col bg-gray-50">
     <%- include('../partials/header') %>
 
-    <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16">
+    <main
+      class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16"
+    >
       <%- include('../partials/flash') %>
 
       <header class="bg-white shadow rounded-lg p-4 sm:p-6 mb-6">
         <div class="flex flex-col gap-4">
           <!-- Header Top: Icon, Title, Status -->
           <div class="flex items-start gap-3 flex-1">
-            <span class="flex-shrink-0 text-3xl sm:text-4xl" style="color: <%= group.color || '#DC2626' %>"
+            <span
+              class="flex-shrink-0 text-3xl sm:text-4xl"
+              style="color: <%= group.color || '#DC2626' %>"
               ><%- renderGroupIcon(group.icon, "text-3xl sm:text-4xl") %></span
             >
             <div class="min-w-0 flex-1">
-              <h2 class="text-xl sm:text-2xl font-bold text-gray-900 break-words">
+              <h2
+                class="text-xl sm:text-2xl font-bold text-gray-900 break-words"
+              >
                 <%= group.name %>
               </h2>
               <% if (group.description) { %>
-              <p class="text-gray-600 mt-1 text-sm sm:text-base break-words"><%= group.description %></p>
+              <p class="text-gray-600 mt-1 text-sm sm:text-base break-words">
+                <%= group.description %>
+              </p>
               <% } %>
               <p class="mt-2 text-sm">
                 Estado: <% if (group.drawnAt) { %>
                 <span
                   class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800"
-                  ><%- renderIcon("check_circle", "text-xs mr-1") %>Sorteado</span
+                  ><%- renderIcon("check_circle", "text-xs mr-1")
+                  %>Sorteado</span
                 >
                 <% } else { %>
                 <span
@@ -43,46 +52,60 @@
               </p>
             </div>
           </div>
-          
+
           <!-- Action Buttons Grid -->
-          <div class="grid grid-cols-2 sm:grid-cols-auto gap-2 sm:gap-2 auto-cols-max sm:flex sm:flex-wrap">
-            <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
-            <form method="post" action="/groups/<%= group.id %>/draw" class="w-full sm:w-auto">
+          <div
+            class="grid grid-cols-2 sm:grid-cols-auto gap-2 sm:gap-2 auto-cols-max sm:flex sm:flex-wrap"
+          >
+            <% if (!isGuest && !group.drawnAt && group.adminUserId === currentUser.id) { %>
+            <form
+              method="post"
+              action="/groups/<%= group.id %>/draw"
+              class="w-full sm:w-auto"
+            >
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button
                 type="submit"
                 class="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition text-xs sm:text-sm font-medium"
               >
-                <%- renderIcon("dice", "text-sm") %> <span class="hidden sm:inline">Iniciar sorteo</span><span class="sm:hidden">Sorteo</span>
+                <%- renderIcon("dice", "text-sm") %>
+                <span class="hidden sm:inline">Iniciar sorteo</span
+                ><span class="sm:hidden">Sorteo</span>
               </button>
             </form>
-            <% } %>
-            
-            <% if (group.adminUserId === currentUser.id) { %>
+            <% } %> <% if (!isGuest && group.adminUserId === currentUser.id) { %>
             <a
               href="/groups/<%= group.id %>/edit"
               class="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm font-medium"
             >
-              <%- renderIcon("edit", "text-sm") %> <span class="hidden sm:inline">Editar</span><span class="sm:hidden">Editar</span>
+              <%- renderIcon("edit", "text-sm") %>
+              <span class="hidden sm:inline">Editar</span
+              ><span class="sm:hidden">Editar</span>
             </a>
-            <% } %>
-
-            <% if (group.adminUserId === currentUser.id) { %>
+            <% } %> <% if (!isGuest && group.adminUserId === currentUser.id) { %>
             <button
               type="button"
               class="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-xs sm:text-sm font-medium toggle-delete-modal"
             >
-              <%- renderIcon("delete", "text-sm") %> <span class="hidden sm:inline">Eliminar</span><span class="sm:hidden">Eliminar</span>
+              <%- renderIcon("delete", "text-sm") %>
+              <span class="hidden sm:inline">Eliminar</span
+              ><span class="sm:hidden">Eliminar</span>
             </button>
-            <% } else { %>
-            <form method="post" action="/groups/<%= group.id %>/leave" class="w-full sm:w-auto">
+            <% } else if (!isGuest) { %>
+            <form
+              method="post"
+              action="/groups/<%= group.id %>/leave"
+              class="w-full sm:w-auto"
+            >
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button
                 type="submit"
                 class="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition text-xs sm:text-sm font-medium"
                 onclick="return confirm('¿Estás seguro de que quieres dejar este grupo?')"
               >
-                <%- renderIcon("logout", "text-sm") %> <span class="hidden sm:inline">Dejar grupo</span><span class="sm:hidden">Salir</span>
+                <%- renderIcon("logout", "text-sm") %>
+                <span class="hidden sm:inline">Dejar grupo</span
+                ><span class="sm:hidden">Salir</span>
               </button>
             </form>
             <% } %>
@@ -97,31 +120,51 @@
           </h3>
           <dl class="divide-y divide-gray-200 text-sm sm:text-base">
             <% if (group.priceMax) { %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-xs sm:text-sm font-medium text-gray-500">Precio máximo</dt>
-              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+            <div
+              class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4"
+            >
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">
+                Precio máximo
+              </dt>
+              <dd
+                class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium"
+              >
                 $<%= group.priceMax %>
               </dd>
             </div>
             <% } %> <% if (group.eventDate) { %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-xs sm:text-sm font-medium text-gray-500">Evento</dt>
-              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+            <div
+              class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4"
+            >
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">
+                Evento
+              </dt>
+              <dd
+                class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium"
+              >
                 <%= dayjs(group.eventDate).format('DD MMM YYYY') %>
               </dd>
             </div>
             <% } %> <% if (group.drawDeadline) { %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
+            <div
+              class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4"
+            >
               <dt class="text-xs sm:text-sm font-medium text-gray-500">
                 Límite inscripción
               </dt>
-              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+              <dd
+                class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium"
+              >
                 <%= dayjs(group.drawDeadline).format('DD MMM YYYY') %>
               </dd>
             </div>
             <% } %> <% if (group.rules) { %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-xs sm:text-sm font-medium text-gray-500">Reglas</dt>
+            <div
+              class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4"
+            >
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">
+                Reglas
+              </dt>
               <dd
                 class="text-xs sm:text-sm text-gray-700 sm:col-span-2 whitespace-pre-wrap break-words mt-2 sm:mt-0 max-h-32 overflow-y-auto"
               >
@@ -129,25 +172,36 @@
               </dd>
             </div>
             <% } %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-3 sm:gap-4">
-              <dt class="text-xs sm:text-sm font-medium text-gray-500">Invitación</dt>
+            <div
+              class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-3 sm:gap-4"
+            >
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">
+                Invitación
+              </dt>
               <dd class="text-xs sm:text-sm text-gray-900 sm:col-span-2">
-                <div class="bg-gray-100 rounded px-2 sm:px-3 py-2 break-all text-xs mb-3 font-mono border border-gray-300 overflow-x-auto">
+                <div
+                  class="bg-gray-100 rounded px-2 sm:px-3 py-2 break-all text-xs mb-3 font-mono border border-gray-300 overflow-x-auto"
+                >
                   <%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>
                 </div>
-                <div class="grid grid-cols-3 gap-2 sm:flex sm:flex-row sm:gap-2">
+                <div
+                  class="grid grid-cols-3 gap-2 sm:flex sm:flex-row sm:gap-2"
+                >
                   <a
                     class="inline-flex flex-col sm:flex-row items-center justify-center gap-1 text-blue-600 hover:bg-blue-50 text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-2 rounded border border-blue-200 hover:underline transition font-medium"
                     href="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                     title="Abrir enlace de invitación"
-                    ><%- renderIcon("open_in_new", "text-base") %> <span class="text-xs">Abrir</span></a>
+                    ><%- renderIcon("open_in_new", "text-base") %>
+                    <span class="text-xs">Abrir</span></a
+                  >
                   <button
                     type="button"
                     class="copy-group-link inline-flex flex-col sm:flex-row items-center justify-center gap-1 text-gray-700 hover:bg-gray-200 text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-2 rounded border border-gray-300 transition font-medium"
                     data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                     title="Copiar enlace de invitación"
-                    >
-                    <%- renderIcon("link", "text-base") %> <span class="text-xs">Copiar</span>
+                  >
+                    <%- renderIcon("link", "text-base") %>
+                    <span class="text-xs">Copiar</span>
                   </button>
                   <div class="share-dropdown-container">
                     <button
@@ -156,8 +210,9 @@
                       data-group-name="<%= group.name %>"
                       data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                       title="Compartir grupo"
-                      >
-                      <%- renderIcon("share", "text-base") %> <span class="text-xs">Compartir</span>
+                    >
+                      <%- renderIcon("share", "text-base") %>
+                      <span class="text-xs">Compartir</span>
                     </button>
                   </div>
                 </div>
@@ -168,13 +223,16 @@
 
         <section class="bg-white shadow rounded-lg p-4 sm:p-6">
           <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
-            <%- renderIcon("people", "text-xl") %> Participantes (<%= participants.length %>)
+            <%- renderIcon("people", "text-xl") %> Participantes (<%=
+            participants.length %>)
           </h3>
           <ul class="space-y-2 sm:space-y-3 text-gray-800">
-            <% participants.forEach(p => { %>
-            <% const displayName = p.isGuest ? p.guestName : p.user.name; %>
-            <% const hasPhoto = !p.isGuest && p.user.profilePhoto; %>
-            <li class="flex items-center gap-2 sm:gap-3 p-2 sm:p-0 rounded hover:bg-gray-50 transition">
+            <% participants.forEach(p => { %> <% const displayName = p.isGuest ?
+            p.guestName : p.user.name; %> <% const hasPhoto = !p.isGuest &&
+            p.user.profilePhoto; %>
+            <li
+              class="flex items-center gap-2 sm:gap-3 p-2 sm:p-0 rounded hover:bg-gray-50 transition"
+            >
               <div class="flex-shrink-0">
                 <% if (hasPhoto) { %>
                 <img
@@ -191,9 +249,8 @@
                 <% } %>
               </div>
               <span class="font-medium text-xs sm:text-base truncate">
-                <%= displayName %>
-                <% if (p.isGuest) { %>
-                  <span class="text-xs text-gray-500 ml-1">(invitado)</span>
+                <%= displayName %> <% if (p.isGuest) { %>
+                <span class="text-xs text-gray-500 ml-1">(invitado)</span>
                 <% } %>
               </span>
             </li>
@@ -226,23 +283,31 @@
             <% } %>
           </div>
           <div class="text-center sm:text-left flex-1">
-            <p class="text-xs sm:text-sm text-gray-600 font-medium mb-2">Tu amigo invisible es:</p>
-            <p class="text-2xl sm:text-3xl font-bold text-red-600 break-words"><%= receiver.name %></p>
-            <p class="text-xs sm:text-sm text-gray-500 mt-2">¡Que comience la aventura! 🎁</p>
+            <p class="text-xs sm:text-sm text-gray-600 font-medium mb-2">
+              Tu amigo invisible es:
+            </p>
+            <p class="text-2xl sm:text-3xl font-bold text-red-600 break-words">
+              <%= receiver.name %>
+            </p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-2">
+              ¡Que comience la aventura! 🎁
+            </p>
           </div>
         </div>
         <% } else if (!group.drawnAt) { %>
-        <div class="p-4 sm:p-6 bg-orange-50 rounded-lg border border-orange-200">
+        <div
+          class="p-4 sm:p-6 bg-orange-50 rounded-lg border border-orange-200"
+        >
           <p class="text-gray-700 text-sm sm:text-base flex items-center gap-2">
-            <%- renderIcon("schedule", "text-xl text-orange-600") %>
-            Aún no se ha realizado el sorteo.
+            <%- renderIcon("schedule", "text-xl text-orange-600") %> Aún no se
+            ha realizado el sorteo.
           </p>
         </div>
         <% } else { %>
         <div class="p-4 sm:p-6 bg-blue-50 rounded-lg border border-blue-200">
           <p class="text-gray-700 text-sm sm:text-base flex items-center gap-2">
-            <%- renderIcon("info", "text-xl text-blue-600") %>
-            No se encontró asignación.
+            <%- renderIcon("info", "text-xl text-blue-600") %> No se encontró
+            asignación.
           </p>
         </div>
         <% } %>
@@ -251,30 +316,44 @@
     <%- include('../partials/footer') %>
 
     <!-- Delete Group Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4 sm:p-6">
+    <div
+      id="deleteModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4 sm:p-6"
+    >
       <div class="bg-white rounded-lg max-w-sm w-full p-5 sm:p-6 shadow-xl">
-        <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <h3
+          class="text-base sm:text-lg font-bold text-gray-900 mb-4 flex items-center gap-2"
+        >
           <%- renderIcon("warning", "text-2xl text-red-600") %> Eliminar grupo
         </h3>
-        <p class="text-gray-600 text-sm sm:text-base mb-6">¿Qué deseas hacer con este grupo?</p>
-        
+        <p class="text-gray-600 text-sm sm:text-base mb-6">
+          ¿Qué deseas hacer con este grupo?
+        </p>
+
         <div class="space-y-3 mb-6 text-xs sm:text-sm">
           <div class="p-3 bg-yellow-50 rounded border border-yellow-200">
             <p class="text-gray-700">
-              <strong class="text-yellow-700">Archivar:</strong> El grupo se ocultará pero los datos se conservarán.
+              <strong class="text-yellow-700">Archivar:</strong> El grupo se
+              ocultará pero los datos se conservarán.
             </p>
           </div>
           <div class="p-3 bg-red-50 rounded border border-red-200">
             <p class="text-gray-700">
-              <strong class="text-red-700">Eliminar:</strong> El grupo y todos sus datos se eliminarán permanentemente.
+              <strong class="text-red-700">Eliminar:</strong> El grupo y todos
+              sus datos se eliminarán permanentemente.
             </p>
           </div>
         </div>
 
-        <form method="post" action="/groups/<%= group.id %>/delete" id="deleteForm" class="flex flex-col gap-2 sm:gap-3">
+        <form
+          method="post"
+          action="/groups/<%= group.id %>/delete"
+          id="deleteForm"
+          class="flex flex-col gap-2 sm:gap-3"
+        >
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <input type="hidden" name="action" id="actionInput" value="" />
-          
+
           <button
             type="button"
             class="px-3 sm:px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition cancel-delete-modal text-xs sm:text-sm font-medium"
@@ -335,7 +414,11 @@
       const deleteBtn = document.querySelector(".delete-btn");
       if (deleteBtn) {
         deleteBtn.addEventListener("click", () => {
-          if (confirm("⚠️ Esta acción es irreversible. ¿Estás completamente seguro?")) {
+          if (
+            confirm(
+              "⚠️ Esta acción es irreversible. ¿Estás completamente seguro?"
+            )
+          ) {
             document.getElementById("actionInput").value = "delete";
             document.getElementById("deleteForm").submit();
           }
@@ -343,14 +426,19 @@
       }
 
       // Share dropdown functionality with dynamic positioning
-      const shareDropdownContainers = document.querySelectorAll(".share-dropdown-container");
-      
+      const shareDropdownContainers = document.querySelectorAll(
+        ".share-dropdown-container"
+      );
+
       // Create global dropdown menu if it doesn't exist
-      let globalShareMenu = document.getElementById("global-share-dropdown-menu");
+      let globalShareMenu = document.getElementById(
+        "global-share-dropdown-menu"
+      );
       if (!globalShareMenu) {
         globalShareMenu = document.createElement("div");
         globalShareMenu.id = "global-share-dropdown-menu";
-        globalShareMenu.className = "fixed bg-white rounded-md shadow-lg opacity-0 invisible transition-opacity duration-200 z-50 w-40";
+        globalShareMenu.className =
+          "fixed bg-white rounded-md shadow-lg opacity-0 invisible transition-opacity duration-200 z-50 w-40";
         globalShareMenu.innerHTML = `
           <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-md" data-platform="whatsapp"><%- renderIcon("whatsapp", "text-base mr-1.5") %>WhatsApp</a>
           <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="telegram"><%- renderIcon("telegram", "text-base mr-1.5") %>Telegram</a>
@@ -366,22 +454,24 @@
         if (btn) {
           btn.addEventListener("click", (e) => {
             e.stopPropagation();
-            
+
             // Get button position
             const rect = btn.getBoundingClientRect();
-            
+
             // Position the global menu
-            globalShareMenu.style.top = (rect.bottom + 8) + "px";
+            globalShareMenu.style.top = rect.bottom + 8 + "px";
             globalShareMenu.style.left = rect.left + "px";
-            
+
             // Store group info in menu links
             const groupName = btn.getAttribute("data-group-name");
             const inviteLink = btn.getAttribute("data-invite-link");
-            globalShareMenu.querySelectorAll(".share-group-link").forEach((link) => {
-              link.setAttribute("data-group-name", groupName);
-              link.setAttribute("data-invite-link", inviteLink);
-            });
-            
+            globalShareMenu
+              .querySelectorAll(".share-group-link")
+              .forEach((link) => {
+                link.setAttribute("data-group-name", groupName);
+                link.setAttribute("data-invite-link", inviteLink);
+              });
+
             // Toggle menu visibility
             const isHidden = globalShareMenu.classList.contains("opacity-0");
             if (isHidden) {
@@ -397,7 +487,10 @@
 
       // Close menu when clicking outside
       document.addEventListener("click", (e) => {
-        if (!e.target.closest(".share-dropdown-container") && e.target !== globalShareMenu) {
+        if (
+          !e.target.closest(".share-dropdown-container") &&
+          e.target !== globalShareMenu
+        ) {
           globalShareMenu.classList.add("opacity-0", "invisible");
           globalShareMenu.classList.remove("opacity-100", "visible");
         }
@@ -418,20 +511,28 @@
               shareUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
               break;
             case "telegram":
-              shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(`¡Únete a nuestro grupo "${groupName}" en Amigo Invisible!`)}`;
+              shareUrl = `https://t.me/share/url?url=${encodeURIComponent(
+                inviteLink
+              )}&text=${encodeURIComponent(
+                `¡Únete a nuestro grupo "${groupName}" en Amigo Invisible!`
+              )}`;
               break;
             case "twitter":
-              shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`¡Únete a "${groupName}" en Amigo Invisible! ${inviteLink}`)}`;
+              shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                `¡Únete a "${groupName}" en Amigo Invisible! ${inviteLink}`
+              )}`;
               break;
             case "email":
-              shareUrl = `mailto:?subject=${encodeURIComponent(`Únete a ${groupName} en Amigo Invisible`)}&body=${encodeURIComponent(message)}`;
+              shareUrl = `mailto:?subject=${encodeURIComponent(
+                `Únete a ${groupName} en Amigo Invisible`
+              )}&body=${encodeURIComponent(message)}`;
               break;
           }
 
           if (shareUrl) {
             window.open(shareUrl, "_blank");
           }
-          
+
           // Close menu after sharing
           globalShareMenu.classList.add("opacity-0", "invisible");
           globalShareMenu.classList.remove("opacity-100", "visible");

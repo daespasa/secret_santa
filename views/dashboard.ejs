@@ -548,11 +548,14 @@
       });
 
       // Share functionality with fixed positioning dropdown
-      let globalShareMenu = document.getElementById("global-share-dropdown-menu");
+      let globalShareMenu = document.getElementById(
+        "global-share-dropdown-menu"
+      );
       if (!globalShareMenu) {
         globalShareMenu = document.createElement("div");
         globalShareMenu.id = "global-share-dropdown-menu";
-        globalShareMenu.className = "fixed bg-white rounded-md shadow-lg opacity-0 invisible transition-opacity duration-200 z-50 w-40";
+        globalShareMenu.className =
+          "fixed bg-white rounded-md shadow-lg opacity-0 invisible transition-opacity duration-200 z-50 w-40";
         globalShareMenu.style.pointerEvents = "none";
         document.body.appendChild(globalShareMenu);
       }
@@ -590,14 +593,16 @@
           `;
 
           // Position menu
-          globalShareMenu.style.top = (rect.bottom + 8) + "px";
+          globalShareMenu.style.top = rect.bottom + 8 + "px";
           globalShareMenu.style.left = rect.left + "px";
           globalShareMenu.style.pointerEvents = "auto";
           globalShareMenu.classList.remove("opacity-0", "invisible");
           globalShareMenu.classList.add("opacity-100", "visible");
 
           // Add click handlers to share links
-          const shareLinks = globalShareMenu.querySelectorAll(".dashboard-share-link");
+          const shareLinks = globalShareMenu.querySelectorAll(
+            ".dashboard-share-link"
+          );
           shareLinks.forEach((link) => {
             link.addEventListener("click", (e) => {
               e.preventDefault();
@@ -606,16 +611,26 @@
               let shareUrl;
               switch (platform) {
                 case "whatsapp":
-                  shareUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                  shareUrl = `https://wa.me/?text=${encodeURIComponent(
+                    message
+                  )}`;
                   break;
                 case "telegram":
-                  shareUrl = `https://t.me/share/url?url=${encodeURIComponent(invitationUrl)}&text=${encodeURIComponent("¡Únete a nuestro Amigo Invisible!")}`;
+                  shareUrl = `https://t.me/share/url?url=${encodeURIComponent(
+                    invitationUrl
+                  )}&text=${encodeURIComponent(
+                    "¡Únete a nuestro Amigo Invisible!"
+                  )}`;
                   break;
                 case "twitter":
-                  shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent("¡Únete a nuestro Amigo Invisible! " + invitationUrl)}`;
+                  shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    "¡Únete a nuestro Amigo Invisible! " + invitationUrl
+                  )}`;
                   break;
                 case "email":
-                  shareUrl = `mailto:?subject=${encodeURIComponent("¡Únete a nuestro Amigo Invisible!")}&body=${encodeURIComponent(message)}`;
+                  shareUrl = `mailto:?subject=${encodeURIComponent(
+                    "¡Únete a nuestro Amigo Invisible!"
+                  )}&body=${encodeURIComponent(message)}`;
                   break;
               }
 

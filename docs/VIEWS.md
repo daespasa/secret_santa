@@ -21,10 +21,10 @@ En lugar de duplicar todo el head en cada vista, simplemente incluye el partial:
     <%- include('./partials/head') %>
     <!-- O para vistas en subdirectorios: -->
     <%- include('../partials/head') %>
-    
+
     <!-- Título específico de la página -->
     <title>Mi Página - Secret Santa</title>
-    
+
     <!-- Meta tags adicionales si son necesarios -->
     <meta name="description" content="Descripción específica" />
   </head>

@@ -107,57 +107,71 @@ router.post(
   }
 );
 
-router.post("/settings/change-password", ensureAuth, changePasswordLimiter, async (req, res, next) => {
-  try {
-    const { currentPassword, newPassword, confirmPassword } = req.body;
+router.post(
+  "/settings/change-password",
+  ensureAuth,
+  changePasswordLimiter,
+  async (req, res, next) => {
+    try {
+      const { currentPassword, newPassword, confirmPassword } = req.body;
 
-    // Get user with password
-    const user = await prisma.user.findUnique({
-      where: { id: req.user.id },
-    });
+      // Get user with password
+      const user = await prisma.user.findUnique({
+        where: { id: req.user.id },
+      });
 
-    // Check if user has a password (not OAuth only)
-    if (!user.password) {
-      req.flash("error", "No puedes cambiar la contraseña de una cuenta de Google");
-      return res.redirect("/settings");
+      // Check if user has a password (not OAuth only)
+      if (!user.password) {
+        req.flash(
+          "error",
+          "No puedes cambiar la contraseña de una cuenta de Google"
+        );
+        return res.redirect("/settings");
+      }
+
+      // Validate inputs
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        req.flash("error", "Por favor completa todos los campos");
+        return res.redirect("/settings");
+      }
+
+      // Verify current password
+      const isValidPassword = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
+      if (!isValidPassword) {
+        req.flash("error", "La contraseña actual es incorrecta");
+        return res.redirect("/settings");
+      }
+
+      // Validate new password
+      if (newPassword.length < 6) {
+        req.flash(
+          "error",
+          "La nueva contraseña debe tener al menos 6 caracteres"
+        );
+        return res.redirect("/settings");
+      }
+
+      if (newPassword !== confirmPassword) {
+        req.flash("error", "Las contraseñas nuevas no coinciden");
+        return res.redirect("/settings");
+      }
+
+      // Hash and update password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await prisma.user.update({
+        where: { id: req.user.id },
+        data: { password: hashedPassword },
+      });
+
+      req.flash("success", "Contraseña actualizada correctamente");
+      res.redirect("/settings");
+    } catch (err) {
+      next(err);
     }
-
-    // Validate inputs
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      req.flash("error", "Por favor completa todos los campos");
-      return res.redirect("/settings");
-    }
-
-    // Verify current password
-    const isValidPassword = await bcrypt.compare(currentPassword, user.password);
-    if (!isValidPassword) {
-      req.flash("error", "La contraseña actual es incorrecta");
-      return res.redirect("/settings");
-    }
-
-    // Validate new password
-    if (newPassword.length < 6) {
-      req.flash("error", "La nueva contraseña debe tener al menos 6 caracteres");
-      return res.redirect("/settings");
-    }
-
-    if (newPassword !== confirmPassword) {
-      req.flash("error", "Las contraseñas nuevas no coinciden");
-      return res.redirect("/settings");
-    }
-
-    // Hash and update password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await prisma.user.update({
-      where: { id: req.user.id },
-      data: { password: hashedPassword },
-    });
-
-    req.flash("success", "Contraseña actualizada correctamente");
-    res.redirect("/settings");
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 export default router;

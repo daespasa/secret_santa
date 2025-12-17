@@ -1,7 +1,11 @@
 import express from "express";
 import passport, { bcrypt } from "../auth.js";
 import prisma from "../prisma.js";
-import { registerLimiter, loginLimiter, loginSpeedLimiter } from "../middleware/rate-limit.js";
+import {
+  registerLimiter,
+  loginLimiter,
+  loginSpeedLimiter,
+} from "../middleware/rate-limit.js";
 import {
   isDisposableEmail,
   isValidName,
@@ -33,22 +37,34 @@ router.get("/register", (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
   }
-  res.render("auth/register", { csrfToken: res.locals.csrfToken });
+
+  // Save returnTo from query param
+  if (req.query.returnTo) {
+    req.session.returnTo = req.query.returnTo;
+    console.log(`Register GET: Saved returnTo = ${req.query.returnTo}`);
+  }
+
+  res.render("auth/register", { csrfToken: res.locals.csrfToken, returnTo: req.query.returnTo || null });
 });
 
 router.post("/register", registerLimiter, async (req, res, next) => {
-  let { email, name, password, passwordConfirm } = req.body;
+  let { email, name, password, passwordConfirm, returnTo } = req.body;
 
   // Sanitizar inputs
   email = sanitizeInput(email)?.toLowerCase();
   name = sanitizeInput(name);
   password = sanitizeInput(password);
   passwordConfirm = sanitizeInput(passwordConfirm);
+  returnTo = sanitizeInput(returnTo);
 
   // Detectar actividad sospechosa
   const suspiciousPatterns = detectSuspiciousActivity(req);
   if (suspiciousPatterns.length > 0) {
-    console.warn(`Suspicious registration attempt: ${suspiciousPatterns.join(", ")} - IP: ${req.ip}`);
+    console.warn(
+      `Suspicious registration attempt: ${suspiciousPatterns.join(
+        ", "
+      )} - IP: ${req.ip}`
+    );
   }
 
   // Validation
@@ -71,7 +87,10 @@ router.post("/register", registerLimiter, async (req, res, next) => {
 
   // Validar nombre
   if (!isValidName(name)) {
-    req.flash("error", "Por favor ingresa un nombre válido (mínimo 2 caracteres)");
+    req.flash(
+      "error",
+      "Por favor ingresa un nombre válido (mínimo 2 caracteres)"
+    );
     return res.redirect("/register");
   }
 
@@ -108,7 +127,15 @@ router.post("/register", registerLimiter, async (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return next(err);
       req.flash("success", "¡Cuenta creada y sesión iniciada correctamente!");
-      res.redirect("/dashboard");
+      
+      // Only use returnTo if it's a valid path
+      let redirectTo = "/dashboard";
+      if (returnTo && returnTo.trim() && returnTo.startsWith("/")) {
+        redirectTo = returnTo;
+      }
+      
+      console.log(`New user ${user.id} (${user.email}) registered. Redirecting to: ${redirectTo}`);
+      res.redirect(redirectTo);
     });
   } catch (err) {
     console.error(err);
@@ -122,7 +149,13 @@ router.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
   }
-  res.render("auth/login", { csrfToken: res.locals.csrfToken });
+
+  // Save returnTo from query param
+  if (req.query.returnTo) {
+    req.session.returnTo = req.query.returnTo;
+  }
+
+  res.render("auth/login", { csrfToken: res.locals.csrfToken, returnTo: req.query.returnTo || null });
 });
 
 router.post(
@@ -135,9 +168,17 @@ router.post(
   }),
   (req, res) => {
     req.flash("success", "¡Bienvenido!");
-    const redirectTo = req.session.returnTo || "/dashboard";
-    delete req.session.returnTo;
-    res.redirect(redirectTo);
+    
+    // Get returnTo from form body (hidden field), then session, then default
+    let returnTo = req.body.returnTo;
+    if (!returnTo || !returnTo.trim() || !returnTo.startsWith("/")) {
+      returnTo = req.session.returnTo || "/dashboard";
+    }
+    
+    if (req.session.returnTo) {
+      delete req.session.returnTo;
+    }
+    res.redirect(returnTo);
   }
 );
 

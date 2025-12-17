@@ -35,7 +35,8 @@ export function isValidName(name) {
   }
 
   // Nombre no debe tener demasiados caracteres especiales
-  const specialCharsCount = (name.match(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g) || []).length;
+  const specialCharsCount = (name.match(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]/g) || [])
+    .length;
   if (specialCharsCount > 3) {
     return false;
   }
@@ -52,7 +53,10 @@ export function isValidEmail(email) {
 export function isStrongPassword(password) {
   // Al menos 6 caracteres (ya validado en otra parte)
   if (password.length < 6) {
-    return { valid: false, message: "La contraseña debe tener al menos 6 caracteres" };
+    return {
+      valid: false,
+      message: "La contraseña debe tener al menos 6 caracteres",
+    };
   }
 
   // Recomendación: al menos una letra y un número
@@ -91,7 +95,11 @@ export function detectSuspiciousActivity(req) {
 
   // Detectar user agents sospechosos
   const userAgent = req.get("user-agent") || "";
-  if (!userAgent || userAgent.toLowerCase().includes("bot") || userAgent.length < 10) {
+  if (
+    !userAgent ||
+    userAgent.toLowerCase().includes("bot") ||
+    userAgent.length < 10
+  ) {
     suspiciousPatterns.push("suspicious_user_agent");
   }
 

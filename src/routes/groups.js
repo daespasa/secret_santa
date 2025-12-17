@@ -78,15 +78,9 @@ router.post("/groups", ensureAuth, createGroupLimiter, async (req, res, next) =>
   }
 });
 
-router.get("/groups/:id", ensureAuth, async (req, res, next) => {
+router.get("/groups/:id", async (req, res, next) => {
   const groupId = Number(req.params.id);
   try {
-    const isMember = await assertMembership(req.user.id, groupId);
-    if (!isMember) {
-      req.flash("error", "No perteneces a este grupo");
-      return res.redirect("/dashboard");
-    }
-
     const group = await prisma.group.findUnique({
       where: { id: groupId },
       include: {
@@ -107,10 +101,45 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
         .render("error", { message: "Grupo no encontrado" });
     }
 
-    // Buscar el participante actual (puede ser user o guest)
-    const currentParticipant = group.participants.find(
-      (p) => p.userId === req.user.id
-    );
+    // Check if user is authenticated or guest with cookie
+    let currentParticipant = null;
+    let isGuest = false;
+    let guestInfo = null;
+
+    if (req.user) {
+      // Logged in user - check membership
+      const isMember = await assertMembership(req.user.id, groupId);
+      if (!isMember && group.adminUserId !== req.user.id) {
+        req.flash("error", "No perteneces a este grupo");
+        return res.redirect("/dashboard");
+      }
+      
+      currentParticipant = group.participants.find(
+        (p) => p.userId === req.user.id
+      );
+    } else {
+      // Check if guest has cookie for this group
+      const guestCookie = req.cookies[`guest_${groupId}`];
+      if (guestCookie) {
+        try {
+          guestInfo = JSON.parse(guestCookie);
+          currentParticipant = group.participants.find(
+            (p) => p.id === guestInfo.participantId && p.isGuest
+          );
+          if (currentParticipant) {
+            isGuest = true;
+          }
+        } catch (e) {
+          console.error("Error parsing guest cookie:", e);
+        }
+      }
+      
+      // If no guest cookie or invalid, redirect to login
+      if (!isGuest) {
+        req.flash("error", "Debes iniciar sesión o unirte como invitado para ver este grupo");
+        return res.redirect("/");
+      }
+    }
     
     const participantNames = group.participants.map((p) => 
       p.isGuest ? p.guestName : p.user.name
@@ -133,6 +162,8 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
       receiverName,
       dayjs,
       config,
+      isGuest,
+      guestInfo,
     });
   } catch (err) {
     next(err);
@@ -166,16 +197,24 @@ router.get("/join/:token", async (req, res, next) => {
 
     // If user is logged in, join directly
     if (req.user) {
-      const existing = await prisma.groupUser.findUnique({
-        where: { groupId_userId: { groupId: group.id, userId: req.user.id } },
-      });
-      if (!existing) {
-        await prisma.groupUser.create({
-          data: { groupId: group.id, userId: req.user.id },
+      console.log(`User ${req.user.id} (${req.user.email}) attempting to join group ${group.id} (${group.name})`);
+      try {
+        const existing = await prisma.groupUser.findUnique({
+          where: { groupId_userId: { groupId: group.id, userId: req.user.id } },
         });
-        req.flash("success", "Te has unido al grupo");
-      } else {
-        req.flash("info", "Ya formas parte del grupo");
+        if (!existing) {
+          await prisma.groupUser.create({
+            data: { groupId: group.id, userId: req.user.id },
+          });
+          console.log(`User ${req.user.id} successfully joined group ${group.id}`);
+          req.flash("success", `¡Te has unido al grupo "${group.name}"!`);
+        } else {
+          console.log(`User ${req.user.id} is already a member of group ${group.id}`);
+          req.flash("info", "Ya formas parte de este grupo");
+        }
+      } catch (err) {
+        console.error("Error joining group:", err);
+        req.flash("error", "Error al unirse al grupo");
       }
       return res.redirect(`/groups/${group.id}`);
     }
@@ -239,7 +278,7 @@ router.post("/join/:token/guest", async (req, res, next) => {
     }
     
     // Create guest participant
-    await prisma.groupUser.create({
+    const guestParticipant = await prisma.groupUser.create({
       data: { 
         groupId: group.id, 
         guestName,
@@ -248,8 +287,23 @@ router.post("/join/:token/guest", async (req, res, next) => {
       },
     });
     
-    req.flash("success", `¡Bienvenido ${guestName}! Te hemos añadido al grupo. Recibirás un correo cuando se realice el sorteo.`);
-    return res.redirect("/");
+    // Store guest info in cookie for future access (expires in 30 days)
+    const guestData = {
+      participantId: guestParticipant.id,
+      groupId: group.id,
+      name: guestName,
+      email: guestEmail.toLowerCase(),
+    };
+    
+    // Set cookie with guest data (httpOnly for security, signed)
+    res.cookie(`guest_${group.id}`, JSON.stringify(guestData), {
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      httpOnly: true,
+      sameSite: 'lax',
+    });
+    
+    req.flash("success", `¡Bienvenido ${guestName}! Te hemos añadido al grupo.`);
+    return res.redirect(`/groups/${group.id}`);
   } catch (err) {
     next(err);
   }

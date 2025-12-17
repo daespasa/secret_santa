@@ -14,27 +14,33 @@
       </div>
 
       <!-- Flash Messages -->
-      <% if (flash.error) { %>
-        <% flash.error.forEach((msg) => { %>
-          <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded">
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div class="ml-3">
-                <p class="text-sm text-red-800"><%= msg %></p>
-              </div>
-            </div>
+      <% if (flash.error) { %> <% flash.error.forEach((msg) => { %>
+      <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg
+              class="h-5 w-5 text-red-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd"
+              />
+            </svg>
           </div>
-        <% }) %>
-      <% } %>
+          <div class="ml-3">
+            <p class="text-sm text-red-800"><%= msg %></p>
+          </div>
+        </div>
+      </div>
+      <% }) %> <% } %>
 
       <!-- Group Info Card -->
       <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div class="flex items-center mb-4">
-          <span style="color: <%= group.color || '#dc2626' %>;">
+          <span style="color: <%= group.color || '#dc2626' %>">
             <%- renderGroupIcon(group.icon, "text-4xl") %>
           </span>
           <div class="ml-4">
@@ -44,7 +50,7 @@
         </div>
 
         <% if (group.description) { %>
-          <p class="text-gray-700 mb-4"><%= group.description %></p>
+        <p class="text-gray-700 mb-4"><%= group.description %></p>
         <% } %>
 
         <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
@@ -53,40 +59,42 @@
             <span class="font-semibold"><%= group.participants.length %></span>
           </div>
           <% if (group.priceMax) { %>
-            <div>
-              <span class="text-gray-600">Precio máximo:</span>
-              <span class="font-semibold"><%= group.priceMax %>€</span>
-            </div>
-          <% } %>
-          <% if (group.drawDeadline) { %>
-            <div class="col-span-2">
-              <span class="text-gray-600">Fecha límite:</span>
-              <span class="font-semibold"><%= dayjs(group.drawDeadline).format('DD MMM YYYY') %></span>
-            </div>
+          <div>
+            <span class="text-gray-600">Precio máximo:</span>
+            <span class="font-semibold"><%= group.priceMax %>€</span>
+          </div>
+          <% } %> <% if (group.drawDeadline) { %>
+          <div class="col-span-2">
+            <span class="text-gray-600">Fecha límite:</span>
+            <span class="font-semibold"
+              ><%= dayjs(group.drawDeadline).format('DD MMM YYYY') %></span
+            >
+          </div>
           <% } %>
         </div>
 
         <% if (group.participants.length > 0) { %>
-          <div class="border-t pt-4">
-            <p class="text-sm text-gray-600 mb-2">Participantes actuales:</p>
-            <div class="flex flex-wrap gap-2">
-              <% group.participants.forEach(p => { %>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
-                  <% if (p.isGuest) { %>
-                    <%= p.guestName %> (invitado)
-                  <% } else { %>
-                    <%= p.user.name %>
-                  <% } %>
-                </span>
-              <% }) %>
-            </div>
+        <div class="border-t pt-4">
+          <p class="text-sm text-gray-600 mb-2">Participantes actuales:</p>
+          <div class="flex flex-wrap gap-2">
+            <% group.participants.forEach(p => { %>
+            <span
+              class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700"
+            >
+              <% if (p.isGuest) { %> <%= p.guestName %> (invitado) <% } else {
+              %> <%= p.user.name %> <% } %>
+            </span>
+            <% }) %>
           </div>
+        </div>
         <% } %>
       </div>
 
       <!-- Join Options -->
       <div class="bg-white rounded-lg shadow-lg p-6">
-        <h3 class="text-xl font-bold text-gray-900 mb-4">¿Cómo quieres unirte?</h3>
+        <h3 class="text-xl font-bold text-gray-900 mb-4">
+          ¿Cómo quieres unirte?
+        </h3>
 
         <!-- Guest Option -->
         <div class="border border-gray-200 rounded-lg p-6 mb-4">
@@ -95,16 +103,28 @@
               person_add
             </span>
             <div>
-              <h4 class="text-lg font-semibold text-gray-900">Continuar como invitado</h4>
-              <p class="text-sm text-gray-600">Únete rápidamente sin crear una cuenta. Solo necesitamos tu nombre y correo para enviarte el resultado del sorteo.</p>
+              <h4 class="text-lg font-semibold text-gray-900">
+                Continuar como invitado
+              </h4>
+              <p class="text-sm text-gray-600">
+                Únete rápidamente sin crear una cuenta. Solo necesitamos tu
+                nombre y correo para enviarte el resultado del sorteo.
+              </p>
             </div>
           </div>
 
-          <form action="/join/<%= token %>/guest" method="POST" class="space-y-4">
+          <form
+            action="/join/<%= token %>/guest"
+            method="POST"
+            class="space-y-4"
+          >
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            
+
             <div>
-              <label for="guestName" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="guestName"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Nombre
               </label>
               <input
@@ -120,7 +140,10 @@
             </div>
 
             <div>
-              <label for="guestEmail" class="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                for="guestEmail"
+                class="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Correo electrónico
               </label>
               <input
@@ -148,24 +171,31 @@
         <!-- Register/Login Option -->
         <div class="border border-gray-200 rounded-lg p-6">
           <div class="flex items-start mb-4">
-            <span class="material-symbols-outlined text-3xl text-green-600 mr-3">
+            <span
+              class="material-symbols-outlined text-3xl text-green-600 mr-3"
+            >
               account_circle
             </span>
             <div>
-              <h4 class="text-lg font-semibold text-gray-900">Crear cuenta o iniciar sesión</h4>
-              <p class="text-sm text-gray-600">Crea una cuenta para gestionar tus grupos, ver tu historial y recibir notificaciones.</p>
+              <h4 class="text-lg font-semibold text-gray-900">
+                Crear cuenta o iniciar sesión
+              </h4>
+              <p class="text-sm text-gray-600">
+                Crea una cuenta para gestionar tus grupos, ver tu historial y
+                recibir notificaciones.
+              </p>
             </div>
           </div>
 
           <div class="flex gap-3">
             <a
-              href="/auth/login?returnTo=/join/<%= token %>"
+              href="/login?returnTo=/join/<%= token %>"
               class="flex-1 bg-white hover:bg-gray-50 text-green-600 border-2 border-green-600 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 text-center"
             >
               Iniciar sesión
             </a>
             <a
-              href="/auth/register?returnTo=/join/<%= token %>"
+              href="/register?returnTo=/join/<%= token %>"
               class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 text-center"
             >
               Crear cuenta
