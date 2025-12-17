@@ -1,0 +1,4 @@
+<% if (flash) { %> <% Object.keys(flash).forEach(function(key){
+flash[key].forEach(function(msg){ %>
+<div class="flash <%= key %>"><%= msg %></div>
+<% }) }) %> <% } %>

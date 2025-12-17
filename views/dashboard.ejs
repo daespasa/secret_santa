@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mis grupos</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav>
+      <span>Hola, <%= currentUser?.name %></span>
+      <form method="post" action="/logout" style="display: inline">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit">Salir</button>
+      </form>
+    </nav>
+
+    <% include partials/flash %>
+
+    <section class="actions">
+      <a class="button" href="/groups/new">Crear grupo</a>
+    </section>
+
+    <section>
+      <h2>Mis grupos</h2>
+      <% if (!groups.length) { %>
+      <p>No participas en ningún grupo aún.</p>
+      <% } %>
+      <ul class="card-list">
+        <% groups.forEach(g => { %>
+        <li class="card">
+          <div class="card-header">
+            <h3><a href="/groups/<%= g.id %>"><%= g.name %></a></h3>
+            <span class="status <%= g.drawn ? 'done' : 'pending' %>"
+              ><%= g.drawn ? 'Sorteado' : 'Pendiente' %></span
+            >
+          </div>
+          <p><%= g.participantCount %> participantes</p>
+          <% if (g.isAdmin && !g.drawn) { %>
+          <form method="post" action="/groups/<%= g.id %>/draw">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button type="submit">Iniciar sorteo</button>
+          </form>
+          <% } %>
+        </li>
+        <% }) %>
+      </ul>
+    </section>
+  </body>
+</html>

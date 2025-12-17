@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crear grupo</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav><a href="/dashboard">Volver</a></nav>
+    <% include ../partials/flash %>
+    <h1>Nuevo grupo</h1>
+    <form method="post" action="/groups">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      <label>Nombre*<input type="text" name="name" required /></label>
+      <label>Descripción<textarea name="description"></textarea></label>
+      <label
+        >Precio mínimo<input type="number" step="0.01" name="price_min"
+      /></label>
+      <label
+        >Precio máximo<input type="number" step="0.01" name="price_max"
+      /></label>
+      <label>Fecha del evento<input type="date" name="event_date" /></label>
+      <label
+        >Fecha límite de inscripción<input type="date" name="draw_deadline"
+      /></label>
+      <label>Ubicación<input type="text" name="location" /></label>
+      <label>Reglas<textarea name="rules"></textarea></label>
+      <button type="submit">Crear</button>
+    </form>
+  </body>
+</html>

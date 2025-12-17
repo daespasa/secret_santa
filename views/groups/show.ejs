@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= group.name %></title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav><a href="/dashboard">Dashboard</a></nav>
+    <% include ../partials/flash %>
+
+    <header>
+      <h1><%= group.name %></h1>
+      <p><%= group.description || '' %></p>
+      <p>
+        Estado: <strong><%= group.drawnAt ? 'Sorteado' : 'Pendiente' %></strong>
+      </p>
+      <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
+      <form method="post" action="/groups/<%= group.id %>/draw">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit">Iniciar sorteo</button>
+      </form>
+      <% } %>
+    </header>
+
+    <section>
+      <h2>Detalles</h2>
+      <ul>
+        <% if (group.priceMin || group.priceMax) { %>
+        <li>
+          Precio: <%= group.priceMin || '' %> - <%= group.priceMax || '' %>
+        </li>
+        <% } %> <% if (group.eventDate) { %>
+        <li>Evento: <%= dayjs(group.eventDate).format('YYYY-MM-DD') %></li>
+        <% } %> <% if (group.drawDeadline) { %>
+        <li>
+          Límite inscripción: <%= dayjs(group.drawDeadline).format('YYYY-MM-DD')
+          %>
+        </li>
+        <% } %> <% if (group.location) { %>
+        <li>Ubicación: <%= group.location %></li>
+        <% } %> <% if (group.rules) { %>
+        <li>Reglas: <%= group.rules %></li>
+        <% } %>
+        <li>
+          Invitación:
+          <code><%= `${config?.baseUrl || ''}/join/${group.joinToken}` %></code>
+        </li>
+        <li>
+          <a href="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
+            >Link de invitación</a
+          >
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Participantes (<%= participantNames.length %>)</h2>
+      <ul>
+        <% participantNames.forEach(name => { %>
+        <li><%= name %></li>
+        <% }) %>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tu resultado</h2>
+      <% if (group.drawnAt && receiverName) { %>
+      <p>Tu amigo invisible es: <strong><%= receiverName %></strong></p>
+      <% } else if (!group.drawnAt) { %>
+      <p>Aún no se ha realizado el sorteo.</p>
+      <% } else { %>
+      <p>No se encontró asignación.</p>
+      <% } %>
+    </section>
+  </body>
+</html>

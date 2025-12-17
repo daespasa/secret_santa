@@ -1,0 +1,38 @@
+{
+  "name": "secret-santa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@prisma/client": "^5.15.0",
+    "connect-flash": "^0.1.1",
+    "csurf": "^1.11.0",
+    "dayjs": "^1.11.11",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "morgan": "^1.10.0",
+    "nanoid": "^5.0.7",
+    "nodemailer": "^6.9.13",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "prisma": "^5.15.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.10.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^17.9.0",
+    "eslint-plugin-promise": "^7.1.0",
+    "nodemon": "^3.1.4"
+  }
+}
