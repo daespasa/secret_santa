@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-  <head>
-    <%- include('../partials/head') %>
-    <title>Crear cuenta - Amigo Invisible</title>
-    <meta name="description" content="Crea tu cuenta de amigo invisible" />
-  </head>
-  <body class="h-full flex flex-col bg-gradient-to-br from-red-50 to-pink-50">
-    <%- include('../partials/header') %>
-
-    <main
-      class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
-    >
-      <div class="w-full max-w-md">
-        <div class="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-          <!-- Header -->
-          <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Crear cuenta</h1>
-            <p class="text-gray-600">Únete a nuestro amigo invisible</p>
-          </div>
-
-          <!-- Flash Messages -->
-          <%- include('../partials/flash') %>
-
+<%- include('../../partials/layout-auth', {
+  title: 'Crear cuenta - Amigo Invisible',
+  description: 'Crea tu cuenta de amigo invisible',
+  body: `
           <!-- Register Form -->
           <form method="post" action="/register" class="space-y-4">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -155,10 +135,4 @@
               Inicia sesión
             </a>
           </p>
-        </div>
-      </div>
-    </main>
-
-    <%- include('../partials/footer') %>
-  </body>
-</html>
+` }) %>
