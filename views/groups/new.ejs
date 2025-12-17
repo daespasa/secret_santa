@@ -3,29 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <title>Crear grupo</title>
-    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <nav><a href="/dashboard">Volver</a></nav>
-    <% include ../partials/flash %>
-    <h1>Nuevo grupo</h1>
-    <form method="post" action="/groups">
+    <nav class="bg-white shadow-sm p-4"><a class="text-blue-600" href="/dashboard">Volver</a></nav>
+    <%- include('../partials/flash') %>
+    <h1 class="text-2xl font-bold mb-4">Nuevo grupo</h1>
+    <form class="max-w-xl space-y-4" method="post" action="/groups">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-      <label>Nombre*<input type="text" name="name" required /></label>
-      <label>Descripción<textarea name="description"></textarea></label>
-      <label
-        >Precio mínimo<input type="number" step="0.01" name="price_min"
-      /></label>
-      <label
-        >Precio máximo<input type="number" step="0.01" name="price_max"
-      /></label>
-      <label>Fecha del evento<input type="date" name="event_date" /></label>
-      <label
-        >Fecha límite de inscripción<input type="date" name="draw_deadline"
-      /></label>
-      <label>Ubicación<input type="text" name="location" /></label>
-      <label>Reglas<textarea name="rules"></textarea></label>
-      <button type="submit">Crear</button>
+      <label class="block font-semibold">Nombre*
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="text" name="name" required />
+      </label>
+      <label class="block font-semibold">Descripción
+        <textarea class="mt-1 border rounded px-3 py-2 w-full" name="description"></textarea>
+      </label>
+      <label class="block font-semibold">Precio mínimo
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="number" step="0.01" name="price_min" />
+      </label>
+      <label class="block font-semibold">Precio máximo
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="number" step="0.01" name="price_max" />
+      </label>
+      <label class="block font-semibold">Fecha del evento
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="date" name="event_date" />
+      </label>
+      <label class="block font-semibold">Fecha límite de inscripción
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="date" name="draw_deadline" />
+      </label>
+      <label class="block font-semibold">Ubicación
+        <input class="mt-1 border rounded px-3 py-2 w-full" type="text" name="location" />
+      </label>
+      <label class="block font-semibold">Reglas
+        <textarea class="mt-1 border rounded px-3 py-2 w-full" name="rules"></textarea>
+      </label>
+      <button class="bg-red-600 text-white px-4 py-2 rounded" type="submit">Crear</button>
     </form>
   </body>
 </html>

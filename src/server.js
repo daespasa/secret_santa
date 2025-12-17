@@ -3,7 +3,6 @@ import session from "express-session";
 import path from "path";
 import morgan from "morgan";
 import flash from "connect-flash";
-import { doubleCsrf } from "csrf-csrf";
 import passport from "./auth.js";
 import { config } from "./config.js";
 import { attachUserToLocals } from "./middleware/auth.js";
@@ -33,24 +32,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(attachUserToLocals);
-
-// CSRF protection for form posts
-const csrfProtection = doubleCsrf({
-  getSecret: () => config.sessionSecret,
-  cookieName: "__Host-psifi.x-csrf-token",
-  cookieOptions: {
-    sameSite: "lax",
-    path: "/",
-    secure: false, // set true in production with HTTPS
-    httpOnly: true,
-  },
-  size: 64,
-  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
-});
-
-app.use(csrfProtection.doubleCsrfProtection);
+// CSRF disabled for MVP; relying on SameSite=Lax cookies
 app.use((req, res, next) => {
-  res.locals.csrfToken = csrfProtection.generateToken(req, res);
+  res.locals.csrfToken = "csrf-disabled";
   next();
 });
 

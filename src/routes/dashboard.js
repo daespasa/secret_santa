@@ -25,7 +25,29 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
       isAdmin: m.group.adminUserId === req.user.id,
     }));
 
-    res.render("dashboard", { groups });
+    // Get user statistics
+    const totalGroups = groups.length;
+    const adminGroups = groups.filter((g) => g.isAdmin).length;
+    const drawnGroups = groups.filter((g) => g.drawn).length;
+    const pendingGroups = totalGroups - drawnGroups;
+
+    // Get assignment where user is giver (to show their current gifts to give)
+    const myAssignments = await prisma.assignment.findMany({
+      where: { giverUserId: req.user.id },
+      include: {
+        receiver: true,
+        group: true,
+      },
+    });
+
+    const stats = {
+      totalGroups,
+      adminGroups,
+      drawnGroups,
+      pendingGroups,
+    };
+
+    res.render("dashboard", { groups, stats, myAssignments });
   } catch (err) {
     next(err);
   }

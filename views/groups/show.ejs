@@ -3,75 +3,106 @@
   <head>
     <meta charset="UTF-8" />
     <title><%= group.name %></title>
-    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <nav><a href="/dashboard">Dashboard</a></nav>
-    <% include ../partials/flash %>
+  <body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="/dashboard" class="text-blue-600 hover:underline">Volver</a>
+        <h1 class="text-xl font-semibold text-red-600">🎁 Amigo Invisible</h1>
+      </div>
+    </nav>
 
-    <header>
-      <h1><%= group.name %></h1>
-      <p><%= group.description || '' %></p>
-      <p>
-        Estado: <strong><%= group.drawnAt ? 'Sorteado' : 'Pendiente' %></strong>
-      </p>
-      <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
-      <form method="post" action="/groups/<%= group.id %>/draw">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <button type="submit">Iniciar sorteo</button>
-      </form>
-      <% } %>
-    </header>
+    <main class="max-w-5xl mx-auto px-4 py-8">
+      <%- include('../partials/flash') %>
 
-    <section>
-      <h2>Detalles</h2>
-      <ul>
-        <% if (group.priceMin || group.priceMax) { %>
-        <li>
-          Precio: <%= group.priceMin || '' %> - <%= group.priceMax || '' %>
-        </li>
-        <% } %> <% if (group.eventDate) { %>
-        <li>Evento: <%= dayjs(group.eventDate).format('YYYY-MM-DD') %></li>
-        <% } %> <% if (group.drawDeadline) { %>
-        <li>
-          Límite inscripción: <%= dayjs(group.drawDeadline).format('YYYY-MM-DD')
-          %>
-        </li>
-        <% } %> <% if (group.location) { %>
-        <li>Ubicación: <%= group.location %></li>
-        <% } %> <% if (group.rules) { %>
-        <li>Reglas: <%= group.rules %></li>
+      <header class="bg-white shadow rounded-lg p-6 mb-6">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900"><%= group.name %></h2>
+            <p class="text-gray-600 mt-1"><%= group.description || '' %></p>
+            <p class="mt-2 text-sm">
+              Estado:
+              <% if (group.drawnAt) { %>
+                <span class="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">Sorteado</span>
+              <% } else { %>
+                <span class="px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-800">Pendiente</span>
+              <% } %>
+            </p>
+          </div>
+          <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
+            <form method="post" action="/groups/<%= group.id %>/draw">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="inline-flex items-center px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700">🎲 Iniciar sorteo</button>
+            </form>
+          <% } %>
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <section class="bg-white shadow rounded-lg p-6 lg:col-span-2">
+          <h3 class="text-lg font-semibold mb-4">Detalles</h3>
+          <dl class="divide-y divide-gray-200">
+            <% if (group.priceMin || group.priceMax) { %>
+              <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="text-sm font-medium text-gray-500">Precio</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= group.priceMin || '' %> - <%= group.priceMax || '' %></dd>
+              </div>
+            <% } %>
+            <% if (group.eventDate) { %>
+              <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="text-sm font-medium text-gray-500">Evento</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= dayjs(group.eventDate).format('YYYY-MM-DD') %></dd>
+              </div>
+            <% } %>
+            <% if (group.drawDeadline) { %>
+              <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="text-sm font-medium text-gray-500">Límite inscripción</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= dayjs(group.drawDeadline).format('YYYY-MM-DD') %></dd>
+              </div>
+            <% } %>
+            <% if (group.location) { %>
+              <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="text-sm font-medium text-gray-500">Ubicación</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= group.location %></dd>
+              </div>
+            <% } %>
+            <% if (group.rules) { %>
+              <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="text-sm font-medium text-gray-500">Reglas</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2 whitespace-pre-line"><%= group.rules %></dd>
+              </div>
+            <% } %>
+            <div class="py-3 grid grid-cols-3 gap-4">
+              <dt class="text-sm font-medium text-gray-500">Invitación</dt>
+              <dd class="mt-0 text-sm text-gray-900 col-span-2">
+                <div class="bg-gray-100 rounded px-3 py-2 break-all"><%= `${config?.baseUrl || ''}/join/${group.joinToken}` %></div>
+                <a class="text-blue-600 hover:underline inline-block mt-2" href="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>">Abrir enlace</a>
+              </dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="bg-white shadow rounded-lg p-6">
+          <h3 class="text-lg font-semibold mb-4">Participantes (<%= participantNames.length %>)</h3>
+          <ul class="list-disc pl-5 space-y-1 text-gray-800">
+            <% participantNames.forEach(name => { %>
+              <li><%= name %></li>
+            <% }) %>
+          </ul>
+        </section>
+      </div>
+
+      <section class="bg-white shadow rounded-lg p-6 mt-6">
+        <h3 class="text-lg font-semibold mb-2">Tu resultado</h3>
+        <% if (group.drawnAt && receiverName) { %>
+          <p>Tu amigo invisible es: <span class="font-semibold"><%= receiverName %></span></p>
+        <% } else if (!group.drawnAt) { %>
+          <p class="text-gray-600">Aún no se ha realizado el sorteo.</p>
+        <% } else { %>
+          <p class="text-gray-600">No se encontró asignación.</p>
         <% } %>
-        <li>
-          Invitación:
-          <code><%= `${config?.baseUrl || ''}/join/${group.joinToken}` %></code>
-        </li>
-        <li>
-          <a href="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
-            >Link de invitación</a
-          >
-        </li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Participantes (<%= participantNames.length %>)</h2>
-      <ul>
-        <% participantNames.forEach(name => { %>
-        <li><%= name %></li>
-        <% }) %>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Tu resultado</h2>
-      <% if (group.drawnAt && receiverName) { %>
-      <p>Tu amigo invisible es: <strong><%= receiverName %></strong></p>
-      <% } else if (!group.drawnAt) { %>
-      <p>Aún no se ha realizado el sorteo.</p>
-      <% } else { %>
-      <p>No se encontró asignación.</p>
-      <% } %>
-    </section>
+      </section>
+    </main>
   </body>
 </html>

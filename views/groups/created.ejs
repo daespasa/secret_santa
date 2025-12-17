@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <title>Grupo creado</title>
-    <link rel="stylesheet" href="/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <h1>Grupo creado</h1>
-    <p>Comparte este enlace para que se unan:</p>
-    <p><code><%= inviteLink %></code></p>
-    <p><a href="/groups/<%= group.id %>">Ver grupo</a></p>
+  <body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm p-4">
+      <div class="max-w-3xl mx-auto flex justify-between items-center">
+        <a href="/dashboard" class="text-blue-600 hover:underline">Volver</a>
+        <h1 class="text-xl font-semibold text-red-600">🎁 Amigo Invisible</h1>
+      </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-2xl font-bold mb-2">¡Grupo creado!</h2>
+        <p class="text-gray-600 mb-6">Comparte este enlace para que se unan:</p>
+
+        <div class="bg-gray-100 rounded px-4 py-3 font-mono break-all mb-6">
+          <%= inviteLink %>
+        </div>
+
+        <div class="flex gap-3">
+          <a href="/groups/<%= group.id %>" class="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700">Ver grupo</a>
+          <a href="/dashboard" class="inline-flex items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50">Ir al dashboard</a>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
