@@ -13,6 +13,7 @@
       content="La página que buscas no existe. Vuelve al inicio de Amigo Invisible."
     />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" />
   </head>
   <body class="h-full flex flex-col">
     <div class="flex-1 flex flex-col">
@@ -44,7 +45,9 @@
           <!-- 404 Icon -->
           <div class="mb-8">
             <div class="text-9xl font-bold text-gray-200 mb-4">404</div>
-            <div class="text-gray-400 flex justify-center"><%- renderIcon("search", "w-24 h-24") %></div>
+            <div class="text-gray-400 flex justify-center">
+              <%- renderIcon("search", "text-9xl") %>
+            </div>
           </div>
 
           <!-- Error Message -->
@@ -102,9 +105,10 @@
 
           <!-- Helpful Tips -->
           <div class="mt-12 p-6 bg-blue-50 border-l-4 border-blue-400 rounded">
-            <h3 class="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-              <%- renderIcon("lightbulb", "w-5 h-5") %>
-              Consejos útiles
+            <h3
+              class="font-semibold text-blue-900 mb-2 flex items-center gap-2"
+            >
+              <%- renderIcon("lightbulb", "text-lg") %> Consejos útiles
             </h3>
             <ul class="text-sm text-blue-800 text-left space-y-1">
               <li>• Verifica que el enlace esté escrito correctamente</li>

@@ -12,6 +12,7 @@
       content="Detalles del grupo <%= group.name %>: participantes, invitación y estado del sorteo de amigo invisible."
     />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" />
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <nav class="bg-white shadow-sm">
@@ -36,10 +37,8 @@
       <header class="bg-white shadow rounded-lg p-6 mb-6">
         <div class="flex items-start justify-between">
           <div class="flex items-start">
-            <span
-              class="mr-3"
-              style="color: <%= group.color || '#DC2626' %>"
-              ><%- renderGroupIcon(group.icon, "w-10 h-10") %></span
+            <span class="mr-3" style="color: <%= group.color || '#DC2626' %>"
+              ><%- renderGroupIcon(group.icon, "text-4xl") %></span
             >
             <div>
               <h2 class="text-2xl font-bold text-gray-900">
@@ -68,8 +67,7 @@
               type="submit"
               class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700"
             >
-              <%- renderIcon("dice", "w-5 h-5") %>
-              Iniciar sorteo
+              <%- renderIcon("dice", "text-base") %> Iniciar sorteo
             </button>
           </form>
           <% } %>

@@ -13,6 +13,7 @@
       content="Gestiona tus grupos de amigo invisible, revisa participantes y controla el estado de los sorteos."
     />
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" />
   </head>
   <body class="h-full flex flex-col">
     <div class="flex-1 flex flex-col">
@@ -21,9 +22,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between h-16">
             <div class="flex items-center">
-              <h1 class="text-2xl font-bold text-red-600 flex items-center gap-2">
-                <%- renderIcon("gift", "w-8 h-8") %>
-                Amigo Invisible
+              <h1
+                class="text-2xl font-bold text-red-600 flex items-center gap-2"
+              >
+                <%- renderIcon("gift", "text-3xl") %> Amigo Invisible
               </h1>
             </div>
             <div class="flex items-center space-x-4">
@@ -75,7 +77,7 @@
             </div>
           </div>
         </div>
-        <% }) %> <% } %> <% if (flash.success) { %> <% flash.success.forEach(msg => { %>
+        <% }) %> <% } %> <% if (flash.success) { %> <% flash.success.forEach((msg) => { %>
         <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4 rounded">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -96,8 +98,7 @@
             </div>
           </div>
         </div>
-        <% }) %> <% } %> <% if (flash.info) { %> <% flash.info.forEach(msg => {
-        %>
+        <% }) %> <% } %> <% if (flash.info) { %> <% flash.info.forEach((msg) => { %>
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 rounded">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -160,7 +161,9 @@
               <div class="p-5">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="text-yellow-500"><%- renderIcon("crown", "w-12 h-12") %></div>
+                    <div class="text-yellow-500">
+                      <%- renderIcon("crown", "text-4xl") %>
+                    </div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
@@ -180,7 +183,9 @@
               <div class="p-5">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="text-green-600"><%- renderIcon("check", "w-12 h-12") %></div>
+                    <div class="text-green-600">
+                      <%- renderIcon("check", "text-4xl") %>
+                    </div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
@@ -284,7 +289,7 @@
             </div>
             <% } else { %>
             <ul class="divide-y divide-gray-200">
-              <% groups.forEach(g => { %>
+              <% groups.forEach((g) => { %>
               <li>
                 <div class="px-4 py-4 sm:px-6 hover:bg-gray-50 transition">
                   <div class="flex items-center justify-between">
@@ -296,7 +301,7 @@
                           <span
                             class="mr-2"
                             style="color: <%= g.color || '#DC2626' %>"
-                            ><%- renderGroupIcon(g.icon, "w-6 h-6") %></span
+                            ><%- renderGroupIcon(g.icon, "text-xl") %></span
                           >
                           <a href="/groups/<%= g.id %>" class="hover:underline"
                             ><%= g.name %></a
@@ -367,8 +372,7 @@
                           type="submit"
                           class="inline-flex items-center gap-2 px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                         >
-                          <%- renderIcon("dice", "w-5 h-5") %>
-                          Sortear
+                          <%- renderIcon("dice", "text-base") %> Sortear
                         </button>
                       </form>
                       <% } %>
