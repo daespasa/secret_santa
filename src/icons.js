@@ -5,6 +5,7 @@ const iconMap = {
   home: "home",
   chart: "bar_chart",
   users: "group",
+  groups: "groups",
   settings: "settings",
   lock: "lock",
   heart: "favorite",
@@ -13,6 +14,7 @@ const iconMap = {
   trash: "delete",
   edit: "edit",
   check: "check",
+  check_circle: "check_circle",
   close: "close",
   dice: "casino",
   crown: "workspace_premium",
@@ -33,12 +35,41 @@ const iconMap = {
   beach: "beach_access",
   unlock: "lock_open",
   pencil: "edit",
+  "wand-2": "wand_stars",
+  shuffle: "shuffle",
+  schedule: "schedule",
 };
 
+// Mapeo de tamaños de Tailwind a px
+const sizeMap = {
+  "text-xs": "12px",
+  "text-sm": "14px",
+  "text-base": "16px",
+  "text-lg": "18px",
+  "text-xl": "20px",
+  "text-2xl": "24px",
+  "text-3xl": "30px",
+  "text-4xl": "36px",
+  "text-5xl": "48px",
+  "text-6xl": "60px",
+  "text-7xl": "72px",
+  "text-8xl": "96px",
+  "text-9xl": "128px",
+};
+
+function extractFontSize(className) {
+  const sizeClass = className.split(" ").find(c => sizeMap[c]);
+  return sizeMap[sizeClass] || "24px";
+}
+
 export function renderIcon(name, className = "text-2xl") {
-  // Buscar en el mapa o usar el nombre directamente
   const iconName = iconMap[name] || name;
-  return `<span class="material-symbols-outlined ${className}">${iconName}</span>`;
+  const fontSize = extractFontSize(className);
+  // Remove size classes and apply inline font-size
+  const otherClasses = className.split(" ").filter(c => !sizeMap[c]).join(" ");
+  const style = `font-size: ${fontSize}; display: inline-block; vertical-align: -0.25em; line-height: 1;`;
+  
+  return `<span class="material-symbols-outlined ${otherClasses}" style="${style}">${iconName}</span>`;
 }
 
 // Helper para renderizar iconos de grupos
@@ -49,7 +80,10 @@ export function renderGroupIcon(iconValue, className = "text-2xl") {
       return renderIcon(iconValue, className);
     }
     // Si no está en el mapa, intentar usarlo directamente como nombre de Material Icon
-    return `<span class="material-symbols-outlined ${className}">${iconValue}</span>`;
+    const fontSize = extractFontSize(className);
+    const otherClasses = className.split(" ").filter(c => !sizeMap[c]).join(" ");
+    const style = `font-size: ${fontSize}; display: inline-block; vertical-align: -0.25em; line-height: 1;`;
+    return `<span class="material-symbols-outlined ${otherClasses}" style="${style}">${iconValue}</span>`;
   }
   // Default: icono de regalo
   return renderIcon("gift", className);

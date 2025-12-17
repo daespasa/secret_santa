@@ -13,7 +13,10 @@
       content="Gestiona tus grupos de amigo invisible, revisa participantes y controla el estado de los sorteos."
     />
     <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
+    />
   </head>
   <body class="h-full flex flex-col">
     <div class="flex-1 flex flex-col">
@@ -77,7 +80,8 @@
             </div>
           </div>
         </div>
-        <% }) %> <% } %> <% if (flash.success) { %> <% flash.success.forEach((msg) => { %>
+        <% }) %> <% } %> <% if (flash.success) { %> <%
+        flash.success.forEach((msg) => { %>
         <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4 rounded">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -98,7 +102,8 @@
             </div>
           </div>
         </div>
-        <% }) %> <% } %> <% if (flash.info) { %> <% flash.info.forEach((msg) => { %>
+        <% }) %> <% } %> <% if (flash.info) { %> <% flash.info.forEach((msg) =>
+        { %>
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 rounded">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -125,23 +130,16 @@
 
       <main>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <!-- Stats -->
-          <div
-            class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
-          >
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-              <div class="p-5">
+          <!-- Stats Cards -->
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+            <!-- Total Grupos -->
+            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition">
+              <div class="p-6">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <svg
-                      class="w-8 h-8 text-red-600"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"
-                      />
-                    </svg>
+                    <div class="text-red-600">
+                      <%- renderIcon("groups", "text-4xl") %>
+                    </div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
@@ -157,8 +155,9 @@
               </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-              <div class="p-5">
+            <!-- Administrados -->
+            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition">
+              <div class="p-6">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
                     <div class="text-yellow-500">
@@ -179,12 +178,13 @@
               </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-              <div class="p-5">
+            <!-- Sorteados -->
+            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition">
+              <div class="p-6">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
                     <div class="text-green-600">
-                      <%- renderIcon("check", "text-4xl") %>
+                      <%- renderIcon("check_circle", "text-4xl") %>
                     </div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
@@ -201,11 +201,14 @@
               </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow rounded-lg">
-              <div class="p-5">
+            <!-- Pendientes -->
+            <div class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition">
+              <div class="p-6">
                 <div class="flex items-center">
                   <div class="flex-shrink-0">
-                    <div class="text-3xl">⏳</div>
+                    <div class="text-orange-600">
+                      <%- renderIcon("schedule", "text-4xl") %>
+                    </div>
                   </div>
                   <div class="ml-5 w-0 flex-1">
                     <dl>
