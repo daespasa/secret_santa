@@ -27,7 +27,7 @@
             </div>
             <div class="flex items-center space-x-4">
               <span class="text-gray-700 font-medium"
-                >Hola, <%= currentUser?.name %></span
+                >Hola, <% if (currentUser) { %><%= currentUser.name %><% } %></span
               >
               <a
                 href="/settings"
