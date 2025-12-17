@@ -3,16 +3,13 @@ import session from "express-session";
 import path from "path";
 import morgan from "morgan";
 import flash from "connect-flash";
-import csurf from "csurf";
+import { doubleCsrf } from "csrf-csrf";
 import passport from "./auth.js";
 import { config } from "./config.js";
 import { attachUserToLocals } from "./middleware/auth.js";
 import authRoutes from "./routes/auth.js";
 import groupRoutes from "./routes/groups.js";
 import dashboardRoutes from "./routes/dashboard.js";
-
-// Ensure DATABASE_URL for Prisma
-process.env.DATABASE_URL = config.databaseUrl;
 
 const app = express();
 
@@ -38,9 +35,22 @@ app.use(passport.session());
 app.use(attachUserToLocals);
 
 // CSRF protection for form posts
-app.use(csurf());
+const csrfProtection = doubleCsrf({
+  getSecret: () => config.sessionSecret,
+  cookieName: "__Host-psifi.x-csrf-token",
+  cookieOptions: {
+    sameSite: "lax",
+    path: "/",
+    secure: false, // set true in production with HTTPS
+    httpOnly: true,
+  },
+  size: 64,
+  ignoredMethods: ["GET", "HEAD", "OPTIONS"],
+});
+
+app.use(csrfProtection.doubleCsrfProtection);
 app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
+  res.locals.csrfToken = csrfProtection.generateToken(req, res);
   next();
 });
 
@@ -57,7 +67,7 @@ app.use(groupRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);
-  if (err.code === "EBADCSRFTOKEN") {
+  if (err.code === "EBADCSRFTOKEN" || err.message?.includes("csrf")) {
     return res.status(403).render("error", { message: "Token CSRF inválido" });
   }
   res

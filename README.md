@@ -64,4 +64,4 @@ Consulta `.env.example` para la lista completa:
 - `BASE_URL`, `SESSION_SECRET`
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL`
 - `EMAIL_MODE` (`dev`|`smtp`), `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM`
-- `DB_PATH`, `DATABASE_URL`
+- `DB_PATH`, `DATABASE_URL` (ruta del archivo SQLite)

@@ -11,12 +11,10 @@ required.forEach((key) => {
 });
 
 const dbPath = process.env.DB_PATH || "/data/app.db";
-const databaseUrl = process.env.DATABASE_URL || `file:${path.resolve(dbPath)}`;
 
 export const config = {
   baseUrl: process.env.BASE_URL || "http://localhost:3000",
   sessionSecret: process.env.SESSION_SECRET || "change-me",
-  databaseUrl,
   dbPath,
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID || "",
