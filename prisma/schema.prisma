@@ -17,8 +17,7 @@ model User {
   createdAt DateTime @default(now())
   groups    Group[]  @relation("GroupAdmin")
   memberships GroupUser[]
-  giving    Assignment[] @relation("GivingAssignments")
-  receiving Assignment[] @relation("ReceivingAssignments")
+  notifications Notification[]
 }
 
 model Group {
@@ -43,23 +42,50 @@ model Group {
 }
 
 model GroupUser {
+  id      Int   @id @default(autoincrement())
   group   Group @relation(fields: [groupId], references: [id])
   groupId Int
-  user    User  @relation(fields: [userId], references: [id])
-  userId  Int
+  user    User?  @relation(fields: [userId], references: [id])
+  userId  Int?
+  
+  // Campos para invitados (sin cuenta)
+  guestName  String?
+  guestEmail String?
+  isGuest    Boolean @default(false)
+  
   createdAt DateTime @default(now())
 
-  @@id([groupId, userId])
+  givingAssignments Assignment[] @relation("GivingAssignments")
+  receivingAssignments Assignment[] @relation("ReceivingAssignments")
+
+  @@unique([groupId, userId])
+  @@index([groupId])
+  @@index([guestEmail])
 }
 
 model Assignment {
-  group         Group @relation(fields: [groupId], references: [id])
-  groupId       Int
-  giver         User  @relation("GivingAssignments", fields: [giverUserId], references: [id])
-  giverUserId   Int
-  receiver      User  @relation("ReceivingAssignments", fields: [receiverUserId], references: [id])
-  receiverUserId Int
+  id             Int       @id @default(autoincrement())
+  group          Group     @relation(fields: [groupId], references: [id])
+  groupId        Int
+  giver          GroupUser @relation("GivingAssignments", fields: [giverParticipantId], references: [id])
+  giverParticipantId Int
+  receiver       GroupUser @relation("ReceivingAssignments", fields: [receiverParticipantId], references: [id])
+  receiverParticipantId Int
 
-  @@id([groupId, giverUserId])
-  @@unique([groupId, receiverUserId])
+  @@unique([groupId, giverParticipantId])
+  @@unique([groupId, receiverParticipantId])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  type      String   // 'draw_completed', 'group_invite', 'group_update', etc.
+  title     String
+  message   String
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
 }

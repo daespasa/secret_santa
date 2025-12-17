@@ -45,11 +45,18 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
     const drawnGroups = groups.filter((g) => g.drawn).length;
     const pendingGroups = totalGroups - drawnGroups;
 
+    // Get user's participant IDs
+    const userParticipants = await prisma.groupUser.findMany({
+      where: { userId: req.user.id },
+      select: { id: true },
+    });
+    const participantIds = userParticipants.map((p) => p.id);
+
     // Get assignment where user is giver (to show their current gifts to give)
     const myAssignments = await prisma.assignment.findMany({
-      where: { giverUserId: req.user.id },
+      where: { giverParticipantId: { in: participantIds } },
       include: {
-        receiver: true,
+        receiver: { include: { user: true } },
         group: true,
       },
     });

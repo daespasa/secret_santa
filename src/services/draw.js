@@ -17,19 +17,28 @@ export async function performDraw(groupId) {
     where: { groupId },
     include: { user: true },
   });
-  if (participants.length < 3) {
-    throw new Error("Se requieren al menos 3 participantes para sortear");
+  
+  const minParticipants = await prisma.group.findUnique({
+    where: { id: groupId },
+    select: { minParticipants: true },
+  });
+
+  if (participants.length < minParticipants.minParticipants) {
+    throw new Error(
+      `Se requieren al menos ${minParticipants.minParticipants} participantes para sortear`
+    );
   }
+  
   const shuffled = shuffle(participants);
   const assignments = shuffled.map((entry, idx) => {
     const receiver = shuffled[(idx + 1) % shuffled.length];
-    if (entry.userId === receiver.userId) {
+    if (entry.id === receiver.id) {
       throw new Error("Asignación inválida detectada");
     }
     return {
       groupId,
-      giverUserId: entry.userId,
-      receiverUserId: receiver.userId,
+      giverParticipantId: entry.id,
+      receiverParticipantId: receiver.id,
     };
   });
 

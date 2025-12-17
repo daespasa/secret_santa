@@ -92,7 +92,12 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
       include: {
         admin: true,
         participants: { include: { user: true } },
-        assignments: { include: { giver: true, receiver: true } },
+        assignments: { 
+          include: { 
+            giver: { include: { user: true } }, 
+            receiver: { include: { user: true } } 
+          } 
+        },
       },
     });
 
@@ -102,18 +107,30 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
         .render("error", { message: "Grupo no encontrado" });
     }
 
-    const participantNames = group.participants.map((p) => p.user.name);
-    const userAssignment = group.assignments.find(
-      (a) => a.giverUserId === req.user.id
+    // Buscar el participante actual (puede ser user o guest)
+    const currentParticipant = group.participants.find(
+      (p) => p.userId === req.user.id
     );
+    
+    const participantNames = group.participants.map((p) => 
+      p.isGuest ? p.guestName : p.user.name
+    );
+    
+    const userAssignment = currentParticipant 
+      ? group.assignments.find((a) => a.giverParticipantId === currentParticipant.id)
+      : null;
+    
     const receiver = userAssignment ? userAssignment.receiver : null;
+    const receiverName = receiver 
+      ? (receiver.isGuest ? receiver.guestName : receiver.user.name)
+      : null;
 
     res.render("groups/show", {
       group,
       participants: group.participants,
       participantNames,
       receiver,
-      receiverName: receiver ? receiver.name : null,
+      receiverName,
       dayjs,
       config,
     });
@@ -122,38 +139,117 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
   }
 });
 
-router.get("/join/:token", ensureAuth, async (req, res, next) => {
+// Join page - shows choice between guest or register/login
+router.get("/join/:token", async (req, res, next) => {
   const { token } = req.params;
   try {
     const group = await prisma.group.findUnique({
       where: { joinToken: token },
+      include: { 
+        admin: true,
+        participants: { include: { user: true } } 
+      },
     });
+    
     if (!group) {
       req.flash("error", "Invitación no válida");
-      return res.redirect("/dashboard");
+      return res.redirect("/");
     }
     if (group.drawnAt) {
-      req.flash("error", "El grupo ya fue sorteado");
-      return res.redirect("/dashboard");
+      req.flash("error", "El grupo ya fue sorteado, no se pueden unir más participantes");
+      return res.redirect("/");
     }
     if (group.drawDeadline && dayjs().isAfter(group.drawDeadline)) {
       req.flash("error", "La fecha límite de inscripción ha pasado");
-      return res.redirect("/dashboard");
+      return res.redirect("/");
     }
 
-    const existing = await prisma.groupUser.findUnique({
-      where: { groupId_userId: { groupId: group.id, userId: req.user.id } },
-    });
-    if (!existing) {
-      await prisma.groupUser.create({
-        data: { groupId: group.id, userId: req.user.id },
+    // If user is logged in, join directly
+    if (req.user) {
+      const existing = await prisma.groupUser.findUnique({
+        where: { groupId_userId: { groupId: group.id, userId: req.user.id } },
       });
-      req.flash("success", "Te has unido al grupo");
-    } else {
-      req.flash("info", "Ya formas parte del grupo");
+      if (!existing) {
+        await prisma.groupUser.create({
+          data: { groupId: group.id, userId: req.user.id },
+        });
+        req.flash("success", "Te has unido al grupo");
+      } else {
+        req.flash("info", "Ya formas parte del grupo");
+      }
+      return res.redirect(`/groups/${group.id}`);
     }
 
-    return res.redirect(`/groups/${group.id}`);
+    // Show join page with options
+    res.render("groups/join", { 
+      group, 
+      token,
+      dayjs,
+      config,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Join as guest - POST
+router.post("/join/:token/guest", async (req, res, next) => {
+  const { token } = req.params;
+  const { guestName, guestEmail } = req.body;
+  
+  try {
+    const group = await prisma.group.findUnique({
+      where: { joinToken: token },
+    });
+    
+    if (!group) {
+      req.flash("error", "Invitación no válida");
+      return res.redirect("/");
+    }
+    if (group.drawnAt) {
+      req.flash("error", "El grupo ya fue sorteado");
+      return res.redirect("/");
+    }
+    
+    // Validate inputs
+    if (!guestName || !guestEmail) {
+      req.flash("error", "Nombre y correo son requeridos");
+      return res.redirect(`/join/${token}`);
+    }
+    
+    // Check if email already used in this group (guest or user)
+    const existingGuest = await prisma.groupUser.findFirst({
+      where: { 
+        groupId: group.id, 
+        guestEmail: guestEmail.toLowerCase() 
+      },
+    });
+    
+    const existingUser = await prisma.groupUser.findFirst({
+      where: { 
+        groupId: group.id,
+        user: { email: guestEmail.toLowerCase() }
+      },
+      include: { user: true },
+    });
+    
+    if (existingGuest || existingUser) {
+      req.flash("error", "Este correo ya está registrado en el grupo");
+      return res.redirect(`/join/${token}`);
+    }
+    
+    // Create guest participant
+    await prisma.groupUser.create({
+      data: { 
+        groupId: group.id, 
+        guestName,
+        guestEmail: guestEmail.toLowerCase(),
+        isGuest: true,
+      },
+    });
+    
+    req.flash("success", `¡Bienvenido ${guestName}! Te hemos añadido al grupo. Recibirás un correo cuando se realice el sorteo.`);
+    return res.redirect("/");
   } catch (err) {
     next(err);
   }
@@ -181,23 +277,43 @@ router.post("/groups/:id/draw", ensureAuth, drawLimiter, async (req, res, next) 
 
     const { assignments } = await performDraw(groupId);
 
+    // Reload group with assignments to get participant details
+    const updatedGroup = await prisma.group.findUnique({
+      where: { id: groupId },
+      include: { 
+        participants: { include: { user: true } },
+        assignments: { 
+          include: { 
+            giver: { include: { user: true } }, 
+            receiver: { include: { user: true } } 
+          } 
+        }
+      },
+    });
+
     // Send emails best-effort; failures logged
     if (config.email.mode === "smtp" || config.email.mode === "dev") {
       await Promise.all(
-        assignments.map(async (a) => {
-          const giver = group.participants.find(
-            (p) => p.userId === a.giverUserId
-          )?.user;
-          const receiver = group.participants.find(
-            (p) => p.userId === a.receiverUserId
-          )?.user;
-          if (!giver || !receiver) return null;
+        updatedGroup.assignments.map(async (assignment) => {
+          const giver = assignment.giver;
+          const receiver = assignment.receiver;
+          
+          // Determine email and names (could be registered user or guest)
+          const giverEmail = giver.isGuest ? giver.guestEmail : giver.user.email;
+          const giverName = giver.isGuest ? giver.guestName : giver.user.name;
+          const receiverName = receiver.isGuest ? receiver.guestName : receiver.user.name;
+          
+          if (!giverEmail) {
+            console.error("No email for giver", giver);
+            return null;
+          }
+          
           try {
             await sendAssignmentEmail({
-              to: giver.email,
-              groupName: group.name,
-              receiverName: receiver.name,
-              priceMax: group.priceMax,
+              to: giverEmail,
+              groupName: updatedGroup.name,
+              receiverName,
+              priceMax: updatedGroup.priceMax,
               groupUrl: `${config.baseUrl}/groups/${groupId}`,
             });
           } catch (err) {
@@ -368,19 +484,24 @@ router.post("/groups/:id/leave", ensureAuth, async (req, res, next) => {
       return res.redirect("/dashboard");
     }
 
+    // Find the participant record
+    const participant = await prisma.groupUser.findUnique({
+      where: { groupId_userId: { groupId, userId: req.user.id } },
+    });
+
     // Remove user from group
     await prisma.groupUser.delete({
       where: { groupId_userId: { groupId, userId: req.user.id } },
     });
 
     // If group has draw, also remove user's assignment
-    if (group.drawnAt) {
+    if (group.drawnAt && participant) {
       await prisma.assignment.deleteMany({
         where: {
           groupId,
           OR: [
-            { giverUserId: req.user.id },
-            { receiverUserId: req.user.id },
+            { giverParticipantId: participant.id },
+            { receiverParticipantId: participant.id },
           ],
         },
       });

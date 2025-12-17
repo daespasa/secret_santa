@@ -185,23 +185,30 @@
           </h3>
           <ul class="space-y-2 sm:space-y-3 text-gray-800">
             <% participants.forEach(p => { %>
+            <% const displayName = p.isGuest ? p.guestName : p.user.name; %>
+            <% const hasPhoto = !p.isGuest && p.user.profilePhoto; %>
             <li class="flex items-center gap-2 sm:gap-3 p-2 sm:p-0 rounded hover:bg-gray-50 transition">
               <div class="flex-shrink-0">
-                <% if (p.user.profilePhoto) { %>
+                <% if (hasPhoto) { %>
                 <img
                   src="<%= p.user.profilePhoto %>"
-                  alt="<%= p.user.name %>"
+                  alt="<%= displayName %>"
                   class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover border border-gray-300"
                 />
                 <% } else { %>
                 <div
-                  class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs sm:text-sm font-semibold flex-shrink-0"
+                  class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br <%= p.isGuest ? 'from-blue-400 to-blue-600' : 'from-gray-400 to-gray-600' %> flex items-center justify-center text-white text-xs sm:text-sm font-semibold flex-shrink-0"
                 >
-                  <%= p.user.name.charAt(0).toUpperCase() %>
+                  <%= displayName.charAt(0).toUpperCase() %>
                 </div>
                 <% } %>
               </div>
-              <span class="font-medium text-xs sm:text-base truncate"><%= p.user.name %></span>
+              <span class="font-medium text-xs sm:text-base truncate">
+                <%= displayName %>
+                <% if (p.isGuest) { %>
+                  <span class="text-xs text-gray-500 ml-1">(invitado)</span>
+                <% } %>
+              </span>
             </li>
             <% }) %>
           </ul>

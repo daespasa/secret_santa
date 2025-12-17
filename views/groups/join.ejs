@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unirse a <%= group.name %> - Secret Santa</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="bg-gradient-to-br from-red-50 to-green-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <a href="/" class="inline-block mb-4">
+          <h1 class="text-4xl font-bold text-red-600">🎅 Secret Santa</h1>
+        </a>
+      </div>
+
+      <!-- Flash Messages -->
+      <% if (flash.error) { %>
+        <% flash.error.forEach((msg) => { %>
+          <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-red-800"><%= msg %></p>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      <% } %>
+
+      <!-- Group Info Card -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <span class="material-symbols-outlined text-4xl" style="color: <%= group.color || '#dc2626' %>;">
+            <%= group.icon || 'redeem' %>
+          </span>
+          <div class="ml-4">
+            <h2 class="text-2xl font-bold text-gray-900"><%= group.name %></h2>
+            <p class="text-gray-600">Organizado por <%= group.admin.name %></p>
+          </div>
+        </div>
+
+        <% if (group.description) { %>
+          <p class="text-gray-700 mb-4"><%= group.description %></p>
+        <% } %>
+
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+          <div>
+            <span class="text-gray-600">Participantes:</span>
+            <span class="font-semibold"><%= group.participants.length %></span>
+          </div>
+          <% if (group.priceMax) { %>
+            <div>
+              <span class="text-gray-600">Precio máximo:</span>
+              <span class="font-semibold"><%= group.priceMax %>€</span>
+            </div>
+          <% } %>
+          <% if (group.drawDeadline) { %>
+            <div class="col-span-2">
+              <span class="text-gray-600">Fecha límite:</span>
+              <span class="font-semibold"><%= dayjs(group.drawDeadline).format('DD MMM YYYY') %></span>
+            </div>
+          <% } %>
+        </div>
+
+        <% if (group.participants.length > 0) { %>
+          <div class="border-t pt-4">
+            <p class="text-sm text-gray-600 mb-2">Participantes actuales:</p>
+            <div class="flex flex-wrap gap-2">
+              <% group.participants.forEach(p => { %>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                  <% if (p.isGuest) { %>
+                    <%= p.guestName %> (invitado)
+                  <% } else { %>
+                    <%= p.user.name %>
+                  <% } %>
+                </span>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+      </div>
+
+      <!-- Join Options -->
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h3 class="text-xl font-bold text-gray-900 mb-4">¿Cómo quieres unirte?</h3>
+
+        <!-- Guest Option -->
+        <div class="border border-gray-200 rounded-lg p-6 mb-4">
+          <div class="flex items-start mb-4">
+            <span class="material-symbols-outlined text-3xl text-blue-600 mr-3">
+              person_add
+            </span>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900">Continuar como invitado</h4>
+              <p class="text-sm text-gray-600">Únete rápidamente sin crear una cuenta. Solo necesitamos tu nombre y correo para enviarte el resultado del sorteo.</p>
+            </div>
+          </div>
+
+          <form action="/join/<%= token %>/guest" method="POST" class="space-y-4">
+            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+            
+            <div>
+              <label for="guestName" class="block text-sm font-medium text-gray-700 mb-1">
+                Nombre
+              </label>
+              <input
+                type="text"
+                id="guestName"
+                name="guestName"
+                required
+                minlength="2"
+                maxlength="50"
+                placeholder="Tu nombre"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label for="guestEmail" class="block text-sm font-medium text-gray-700 mb-1">
+                Correo electrónico
+              </label>
+              <input
+                type="email"
+                id="guestEmail"
+                name="guestEmail"
+                required
+                placeholder="tu@email.com"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <p class="text-xs text-gray-500 mt-1">
+                Te enviaremos el resultado del sorteo a este correo
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
+            >
+              Unirse como invitado
+            </button>
+          </form>
+        </div>
+
+        <!-- Register/Login Option -->
+        <div class="border border-gray-200 rounded-lg p-6">
+          <div class="flex items-start mb-4">
+            <span class="material-symbols-outlined text-3xl text-green-600 mr-3">
+              account_circle
+            </span>
+            <div>
+              <h4 class="text-lg font-semibold text-gray-900">Crear cuenta o iniciar sesión</h4>
+              <p class="text-sm text-gray-600">Crea una cuenta para gestionar tus grupos, ver tu historial y recibir notificaciones.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <a
+              href="/auth/login?returnTo=/join/<%= token %>"
+              class="flex-1 bg-white hover:bg-gray-50 text-green-600 border-2 border-green-600 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 text-center"
+            >
+              Iniciar sesión
+            </a>
+            <a
+              href="/auth/register?returnTo=/join/<%= token %>"
+              class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 text-center"
+            >
+              Crear cuenta
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Link -->
+      <div class="text-center mt-6">
+        <a href="/" class="text-gray-600 hover:text-gray-800 text-sm">
+          ← Volver al inicio
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
