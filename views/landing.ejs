@@ -45,11 +45,16 @@
       }
     </script>
     <link rel="stylesheet" href="/style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
+    />
   </head>
-  <body class="h-full flex flex-col bg-gradient-to-br from-red-50 via-white to-green-50">
+  <body
+    class="h-full flex flex-col bg-gradient-to-br from-red-50 via-white to-green-50"
+  >
     <%- include('./partials/header') %>
-    
+
     <div class="flex-1 flex flex-col">
       <!-- Hero Section -->
       <div class="flex-1 flex flex-col">
@@ -57,91 +62,95 @@
         <main
           class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8"
         >
-        <div class="max-w-4xl mx-auto text-center">
-          <div class="mb-8">
-            <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
-          </div>
-          <h2
-            class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
-          >
-            Organiza tu <span class="text-red-600">Amigo Invisible</span>
-            <br class="hidden sm:block" />
-            en minutos
-          </h2>
-          <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            La forma más fácil de organizar tu intercambio de regalos. Crea
-            grupos, personaliza con iconos y colores, comparte invitaciones,
-            sortea de forma justa y todos reciben las asignaciones por email.
-          </p>
+          <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-8">
+              <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
+            </div>
+            <h2
+              class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
+            >
+              Organiza tu <span class="text-red-600">Amigo Invisible</span>
+              <br class="hidden sm:block" />
+              en minutos
+            </h2>
+            <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              La forma más fácil de organizar tu intercambio de regalos. Crea
+              grupos, personaliza con iconos y colores, comparte invitaciones,
+              sortea de forma justa y todos reciben las asignaciones por email.
+            </p>
 
-          <!-- Features -->
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 mt-12"
-          >
+            <!-- Features -->
             <div
-              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 mt-12"
             >
-              <%- renderIcon("lock", "text-4xl mx-auto mb-3 text-blue-600") %>
-              <h3 class="font-semibold text-lg mb-2">Acceso Rápido</h3>
-              <p class="text-gray-600 text-sm">
-                Accede en segundos. Tu perfil personal con foto y configuración.
-              </p>
+              <div
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >
+                <%- renderIcon("lock", "text-4xl mx-auto mb-3 text-blue-600") %>
+                <h3 class="font-semibold text-lg mb-2">Acceso Rápido</h3>
+                <p class="text-gray-600 text-sm">
+                  Accede en segundos. Tu perfil personal con foto y
+                  configuración.
+                </p>
+              </div>
+              <div
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >
+                <%- renderIcon("mail", "text-4xl mx-auto mb-3 text-green-600") %>
+                <h3 class="font-semibold text-lg mb-2">Emails Automáticos</h3>
+                <p class="text-gray-600 text-sm">
+                  Cada participante recibe su asignación al instante.
+                </p>
+              </div>
+              <div
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >
+                <%- renderIcon("shuffle", "text-4xl mx-auto mb-3 text-purple-600") %>
+                <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
+                <p class="text-gray-600 text-sm">
+                  Algoritmo circular: cada uno regala a uno y recibe de uno.
+                </p>
+              </div>
+              <div
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
+              >
+                <%- renderIcon("wand-2", "text-4xl mx-auto mb-3 text-pink-600") %>
+                <h3 class="font-semibold text-lg mb-2">Personalización</h3>
+                <p class="text-gray-600 text-sm">
+                  Elige icono y color para cada grupo. Hazlo único.
+                </p>
+              </div>
             </div>
-            <div
-              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-            >
-              <%- renderIcon("mail", "text-4xl mx-auto mb-3 text-green-600") %>
-              <h3 class="font-semibold text-lg mb-2">Emails Automáticos</h3>
-              <p class="text-gray-600 text-sm">
-                Cada participante recibe su asignación al instante.
-              </p>
-            </div>
-            <div
-              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-            >
-              <%- renderIcon("shuffle", "text-4xl mx-auto mb-3 text-purple-600") %>
-              <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
-              <p class="text-gray-600 text-sm">
-                Algoritmo circular: cada uno regala a uno y recibe de uno.
-              </p>
-            </div>
-            <div
-              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-            >
-              <%- renderIcon("wand-2", "text-4xl mx-auto mb-3 text-pink-600") %>
-              <h3 class="font-semibold text-lg mb-2">Personalización</h3>
-              <p class="text-gray-600 text-sm">
-                Elige icono y color para cada grupo. Hazlo único.
-              </p>
-            </div>
-          </div>
 
-          <div
-            class="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <% if (currentUser) { %>
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            >
+              <% if (currentUser) { %>
               <a
                 href="/dashboard"
                 class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
               >
-                <%- renderIcon("arrow-right", "text-lg mr-2") %>
-                Ir a Dashboard
+                <%- renderIcon("arrow-right", "text-lg mr-2") %> Ir a Dashboard
               </a>
-            <% } else { %>
+              <% } else { %>
               <a
                 href="/auth/google"
                 class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
               >
-                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  class="w-6 h-6 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
                   />
                 </svg>
                 Empezar con Google
               </a>
-            <% } %>
+              <% } %>
+            </div>
           </div>
-        </div>
         </main>
       </div>
     </div>
