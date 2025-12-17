@@ -20,6 +20,8 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
     const groups = memberships.map((m) => ({
       id: m.group.id,
       name: m.group.name,
+      icon: m.group.icon,
+      color: m.group.color,
       participantCount: m.group.participants.length,
       drawn: Boolean(m.group.drawnAt),
       isAdmin: m.group.adminUserId === req.user.id,

@@ -23,12 +23,12 @@ model Group {
   id          Int        @id @default(autoincrement())
   name        String
   description String?
-  priceMin    Float?
   priceMax    Float?
   eventDate   DateTime?
   drawDeadline DateTime?
-  location    String?
   rules       String?
+  icon        String?
+  color       String?
   joinToken   String     @unique
   drawnAt     DateTime?
   createdAt   DateTime   @default(now())

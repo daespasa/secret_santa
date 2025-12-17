@@ -18,8 +18,10 @@
 
       <header class="bg-white shadow rounded-lg p-6 mb-6">
         <div class="flex items-start justify-between">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900"><%= group.name %></h2>
+          <div class="flex items-start">
+            <span class="text-4xl mr-3" style="color:<%= group.color || '#DC2626' %>"><%= group.icon || '🎁' %></span>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900"><%= group.name %></h2>
             <p class="text-gray-600 mt-1"><%= group.description || '' %></p>
             <p class="mt-2 text-sm">
               Estado:
@@ -29,6 +31,7 @@
                 <span class="px-2 py-1 rounded-full text-xs bg-orange-100 text-orange-800">Pendiente</span>
               <% } %>
             </p>
+            </div>
           </div>
           <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
             <form method="post" action="/groups/<%= group.id %>/draw">
@@ -43,10 +46,10 @@
         <section class="bg-white shadow rounded-lg p-6 lg:col-span-2">
           <h3 class="text-lg font-semibold mb-4">Detalles</h3>
           <dl class="divide-y divide-gray-200">
-            <% if (group.priceMin || group.priceMax) { %>
+            <% if (group.priceMax) { %>
               <div class="py-3 grid grid-cols-3 gap-4">
-                <dt class="text-sm font-medium text-gray-500">Precio</dt>
-                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= group.priceMin || '' %> - <%= group.priceMax || '' %></dd>
+                <dt class="text-sm font-medium text-gray-500">Precio máximo</dt>
+                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= group.priceMax %></dd>
               </div>
             <% } %>
             <% if (group.eventDate) { %>
@@ -59,12 +62,6 @@
               <div class="py-3 grid grid-cols-3 gap-4">
                 <dt class="text-sm font-medium text-gray-500">Límite inscripción</dt>
                 <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= dayjs(group.drawDeadline).format('YYYY-MM-DD') %></dd>
-              </div>
-            <% } %>
-            <% if (group.location) { %>
-              <div class="py-3 grid grid-cols-3 gap-4">
-                <dt class="text-sm font-medium text-gray-500">Ubicación</dt>
-                <dd class="mt-0 text-sm text-gray-900 col-span-2"><%= group.location %></dd>
               </div>
             <% } %>
             <% if (group.rules) { %>

@@ -26,16 +26,10 @@ export async function sendAssignmentEmail({
   to,
   groupName,
   receiverName,
-  priceMin,
   priceMax,
   groupUrl,
 }) {
-  const priceLine =
-    priceMin || priceMax
-      ? `Rango de precio: ${priceMin ? priceMin : ""}${
-          priceMin && priceMax ? " - " : ""
-        }${priceMax ? priceMax : ""}`
-      : "";
+  const priceLine = priceMax ? `Precio máximo: ${priceMax}` : "";
   const text = `Tu amigo invisible para el grupo "${groupName}" es ${receiverName}.
 ${priceLine ? priceLine + "\n" : ""}Detalles: ${groupUrl}`;
   const html = `<p>Tu amigo invisible para <strong>${groupName}</strong> es <strong>${receiverName}</strong>.</p>${

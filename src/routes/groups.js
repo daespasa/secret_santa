@@ -29,12 +29,12 @@ router.post("/groups", ensureAuth, async (req, res, next) => {
     const {
       name,
       description,
-      price_min: priceMin,
       price_max: priceMax,
       event_date: eventDate,
       draw_deadline: drawDeadline,
-      location,
       rules,
+      icon,
+      color,
     } = req.body;
 
     if (!name) {
@@ -48,12 +48,12 @@ router.post("/groups", ensureAuth, async (req, res, next) => {
         data: {
           name,
           description: description || null,
-          priceMin: priceMin ? Number(priceMin) : null,
           priceMax: priceMax ? Number(priceMax) : null,
           eventDate: eventDate ? new Date(eventDate) : null,
           drawDeadline: drawDeadline ? new Date(drawDeadline) : null,
-          location: location || null,
           rules: rules || null,
+          icon: icon || null,
+          color: color || null,
           adminUserId: req.user.id,
           joinToken,
         },
@@ -190,7 +190,6 @@ router.post("/groups/:id/draw", ensureAuth, async (req, res, next) => {
               to: giver.email,
               groupName: group.name,
               receiverName: receiver.name,
-              priceMin: group.priceMin,
               priceMax: group.priceMax,
               groupUrl: `${config.baseUrl}/groups/${groupId}`,
             });
