@@ -25,7 +25,7 @@ router.get("/register", (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
   }
-  res.render("auth/register", { csrfToken: req.csrfToken() });
+  res.render("auth/register", { csrfToken: res.locals.csrfToken });
 });
 
 router.post("/register", async (req, res, next) => {
@@ -84,7 +84,7 @@ router.get("/login", (req, res) => {
   if (req.isAuthenticated()) {
     return res.redirect("/dashboard");
   }
-  res.render("auth/login", { csrfToken: req.csrfToken() });
+  res.render("auth/login", { csrfToken: res.locals.csrfToken });
 });
 
 router.post(
