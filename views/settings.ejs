@@ -142,6 +142,77 @@
             </form>
           </div>
 
+          <% if (user.password) { %>
+          <!-- Change Password Section -->
+          <div class="bg-white shadow rounded-lg p-6 mt-6">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+              <%- renderIcon("lock", "text-xl") %> Cambiar Contraseña
+            </h3>
+            
+            <form
+              method="post"
+              action="/settings/change-password"
+              class="space-y-4"
+            >
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+              <div>
+                <label for="currentPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                  Contraseña actual
+                </label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  name="currentPassword"
+                  required
+                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  placeholder="Tu contraseña actual"
+                />
+              </div>
+
+              <div>
+                <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                  Nueva contraseña
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  required
+                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  placeholder="Mínimo 6 caracteres"
+                />
+                <p class="mt-1 text-xs text-gray-500">
+                  Mínimo 6 caracteres
+                </p>
+              </div>
+
+              <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">
+                  Confirmar nueva contraseña
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  required
+                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  placeholder="Repite la nueva contraseña"
+                />
+              </div>
+
+              <div class="flex justify-end pt-4">
+                <button
+                  type="submit"
+                  class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+                >
+                  <%- renderIcon("check", "text-base") %> Cambiar Contraseña
+                </button>
+              </div>
+            </form>
+          </div>
+          <% } %>
+
           <!-- Info Section -->
           <div class="mt-8 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
             <h3
