@@ -4,10 +4,10 @@
     <div class="flex justify-between h-16">
       <div class="flex items-center gap-8">
         <a href="/" class="text-2xl font-bold text-red-600 flex items-center gap-2 hover:text-red-700 transition">
-          <%- renderIcon("gift", "text-3xl") %> Amigo Invisible
+          <%- renderIcon("gift", "text-3xl") %> <span class="hidden sm:inline">Amigo Invisible</span>
         </a>
         <% if (currentUser) { %>
-        <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium transition">
+        <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium transition text-sm sm:text-base">
           Dashboard
         </a>
         <% } %>
@@ -32,11 +32,11 @@
               </div>
               <% } %>
             </div>
-            <span class="text-gray-700 font-medium text-sm"><%= currentUser.name %></span>
+            <span class="text-gray-700 font-medium text-sm hidden sm:inline"><%= currentUser.name %></span>
           </div>
           <a
             href="/settings"
-            class="text-gray-600 hover:text-gray-900 font-medium transition"
+            class="text-gray-600 hover:text-gray-900 font-medium transition text-sm"
           >
             Ajustes
           </a>
@@ -44,7 +44,7 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <button
               type="submit"
-              class="text-gray-600 hover:text-gray-900 font-medium transition"
+              class="text-gray-600 hover:text-gray-900 font-medium transition text-sm"
             >
               Salir
             </button>
