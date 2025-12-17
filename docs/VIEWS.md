@@ -47,16 +47,16 @@ Las siguientes vistas ya usan el partial compartido:
 
 ### Vistas Pendientes
 
-Si creas nuevas vistas o actualizas las existentes, usa el partial para mantener consistencia:
+Todas las vistas han sido actualizadas para usar el partial compartido:
 
-- `views/landing.ejs`
-- `views/dashboard.ejs`
-- `views/settings.ejs`
-- `views/not-found.ejs`
-- `views/credits.ejs`
-- `views/privacy.ejs`
-- `views/groups/edit.ejs`
-- `views/groups/created.ejs`
+- ✅ `views/landing.ejs`
+- ✅ `views/dashboard.ejs`
+- ✅ `views/settings.ejs`
+- ✅ `views/not-found.ejs`
+- ✅ `views/credits.ejs`
+- ✅ `views/privacy.ejs`
+- ✅ `views/groups/edit.ejs`
+- ✅ `views/groups/created.ejs`
 
 ### Layout Completo (Opcional)
 
