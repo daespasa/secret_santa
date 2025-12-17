@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-gray-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página no encontrada - 404</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png" />
+    <meta name="theme-color" content="#ef4444" />
+    <meta
+      name="description"
+      content="La página que buscas no existe. Vuelve al inicio de Amigo Invisible."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full">
+    <div class="min-h-full flex flex-col">
+      <!-- Navigation -->
+      <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex items-center">
+              <a href="/" class="text-2xl font-bold text-red-600">
+                🎁 Amigo Invisible
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="flex-grow flex items-center justify-center px-4 py-12">
+        <div class="text-center max-w-md">
+          <!-- 404 Icon -->
+          <div class="mb-8">
+            <div class="text-9xl font-bold text-gray-200 mb-4">404</div>
+            <div class="text-6xl mb-4">🔍</div>
+          </div>
+
+          <!-- Error Message -->
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">
+            Página no encontrada
+          </h1>
+          <p class="text-lg text-gray-600 mb-8">
+            Lo sentimos, la página que buscas no existe. Puede que el enlace sea
+            incorrecto o la página haya sido eliminada.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition"
+            >
+              🏠 Volver al Inicio
+            </a>
+            <% if (user) { %>
+            <a
+              href="/dashboard"
+              class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-gray-900 font-medium hover:bg-gray-300 transition"
+            >
+              📊 Dashboard
+            </a>
+            <% } %>
+          </div>
+
+          <!-- Helpful Tips -->
+          <div class="mt-12 p-6 bg-blue-50 border-l-4 border-blue-400 rounded">
+            <h3 class="font-semibold text-blue-900 mb-2">💡 Consejos útiles</h3>
+            <ul class="text-sm text-blue-800 text-left space-y-1">
+              <li>• Verifica que el enlace esté escrito correctamente</li>
+              <li>• Usa la barra de navegación para moverte por la app</li>
+              <li>• Si el problema persiste, contacta con soporte</li>
+            </ul>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <%- include('./partials/footer') %>
+  </body>
+</html>

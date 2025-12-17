@@ -51,6 +51,12 @@ app.use(dashboardRoutes);
 app.use(settingsRoutes);
 app.use(groupRoutes);
 
+// 404 handler for non-existent routes
+app.use((req, res) => {
+  res.status(404).render("not-found");
+});
+
+// Error handler middleware (must be last)
 app.use((err, req, res, next) => {
   console.error(err);
   if (err.code === "EBADCSRFTOKEN" || err.message?.includes("csrf")) {
