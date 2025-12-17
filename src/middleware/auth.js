@@ -3,7 +3,7 @@ export function ensureAuth(req, res, next) {
     return next();
   }
   req.session.returnTo = req.originalUrl;
-  return res.redirect("/auth/google");
+  return res.redirect("/");
 }
 
 export function attachUserToLocals(req, res, next) {

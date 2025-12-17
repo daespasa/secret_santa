@@ -10,6 +10,7 @@ import authRoutes from "./routes/auth.js";
 import groupRoutes from "./routes/groups.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import settingsRoutes from "./routes/settings.js";
+import pagesRoutes from "./routes/pages.js";
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use(authRoutes);
 app.use(dashboardRoutes);
 app.use(settingsRoutes);
 app.use(groupRoutes);
+app.use(pagesRoutes);
 
 // 404 handler for non-existent routes
 app.use((req, res) => {
