@@ -28,7 +28,8 @@
       <%- include('../partials/flash') %>
 
       <header class="bg-white shadow rounded-lg p-4 sm:p-6 mb-6">
-        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+        <div class="flex flex-col gap-4">
+          <!-- Header Top: Icon, Title, Status -->
           <div class="flex items-start gap-3 flex-1">
             <span class="flex-shrink-0 text-3xl sm:text-4xl" style="color: <%= group.color || '#DC2626' %>"
               ><%- renderGroupIcon(group.icon, "text-3xl sm:text-4xl") %></span
@@ -55,15 +56,17 @@
               </p>
             </div>
           </div>
-          <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          
+          <!-- Action Buttons Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-auto gap-2 sm:gap-2 auto-cols-max sm:flex sm:flex-wrap">
             <% if (!group.drawnAt && group.adminUserId === currentUser.id) { %>
             <form method="post" action="/groups/<%= group.id %>/draw" class="w-full sm:w-auto">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button
                 type="submit"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 whitespace-nowrap transition text-sm sm:text-base"
+                class="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition text-xs sm:text-sm font-medium"
               >
-                <%- renderIcon("dice", "text-base") %> Iniciar sorteo
+                <%- renderIcon("dice", "text-sm") %> <span class="hidden sm:inline">Iniciar sorteo</span><span class="sm:hidden">Sorteo</span>
               </button>
             </form>
             <% } %>
@@ -71,28 +74,28 @@
             <% if (group.adminUserId === currentUser.id) { %>
             <a
               href="/groups/<%= group.id %>/edit"
-              class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap transition text-sm sm:text-base"
+              class="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm font-medium"
             >
-              <%- renderIcon("edit", "text-base") %> Editar
+              <%- renderIcon("edit", "text-sm") %> <span class="hidden sm:inline">Editar</span><span class="sm:hidden">Editar</span>
             </a>
             <% } %>
 
             <% if (group.adminUserId === currentUser.id) { %>
             <button
               type="button"
-              class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 whitespace-nowrap transition text-sm sm:text-base toggle-delete-modal"
+              class="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-xs sm:text-sm font-medium toggle-delete-modal"
             >
-              <%- renderIcon("delete", "text-base") %> Eliminar
+              <%- renderIcon("delete", "text-sm") %> <span class="hidden sm:inline">Eliminar</span><span class="sm:hidden">Eliminar</span>
             </button>
             <% } else { %>
             <form method="post" action="/groups/<%= group.id %>/leave" class="w-full sm:w-auto">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button
                 type="submit"
-                class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 whitespace-nowrap transition text-sm sm:text-base"
+                class="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition text-xs sm:text-sm font-medium"
                 onclick="return confirm('¿Estás seguro de que quieres dejar este grupo?')"
               >
-                <%- renderIcon("logout", "text-base") %> Dejar grupo
+                <%- renderIcon("logout", "text-sm") %> <span class="hidden sm:inline">Dejar grupo</span><span class="sm:hidden">Salir</span>
               </button>
             </form>
             <% } %>
@@ -105,66 +108,66 @@
           <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
             <%- renderIcon("info", "text-xl") %> Detalles
           </h3>
-          <dl class="divide-y divide-gray-200">
+          <dl class="divide-y divide-gray-200 text-sm sm:text-base">
             <% if (group.priceMax) { %>
             <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">Precio máximo</dt>
-              <dd class="text-sm text-gray-900 sm:col-span-2">
-                <%= group.priceMax %>
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">Precio máximo</dt>
+              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+                $<%= group.priceMax %>
               </dd>
             </div>
             <% } %> <% if (group.eventDate) { %>
             <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">Evento</dt>
-              <dd class="text-sm text-gray-900 sm:col-span-2">
-                <%= dayjs(group.eventDate).format('YYYY-MM-DD') %>
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">Evento</dt>
+              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+                <%= dayjs(group.eventDate).format('DD MMM YYYY') %>
               </dd>
             </div>
             <% } %> <% if (group.drawDeadline) { %>
             <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">
                 Límite inscripción
               </dt>
-              <dd class="text-sm text-gray-900 sm:col-span-2">
-                <%= dayjs(group.drawDeadline).format('YYYY-MM-DD') %>
+              <dd class="text-sm sm:text-base text-gray-900 sm:col-span-2 font-medium">
+                <%= dayjs(group.drawDeadline).format('DD MMM YYYY') %>
               </dd>
             </div>
             <% } %> <% if (group.rules) { %>
             <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">Reglas</dt>
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">Reglas</dt>
               <dd
-                class="text-sm text-gray-900 sm:col-span-2 whitespace-pre-line break-words"
+                class="text-xs sm:text-sm text-gray-700 sm:col-span-2 whitespace-pre-wrap break-words mt-2 sm:mt-0 max-h-32 overflow-y-auto"
               >
                 <%= group.rules %>
               </dd>
             </div>
             <% } %>
-            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-1 sm:gap-4">
-              <dt class="text-sm font-medium text-gray-500">Invitación</dt>
-              <dd class="text-sm text-gray-900 sm:col-span-2">
-                <div class="bg-gray-100 rounded px-3 py-2 break-all text-xs sm:text-sm mb-2">
+            <div class="py-3 flex flex-col sm:grid sm:grid-cols-3 gap-2 sm:gap-4">
+              <dt class="text-xs sm:text-sm font-medium text-gray-500">Invitación</dt>
+              <dd class="text-xs sm:text-sm text-gray-900 sm:col-span-2">
+                <div class="bg-gray-100 rounded px-2 sm:px-3 py-2 break-all text-xs mb-2 font-mono">
                   <%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-2">
+                <div class="flex flex-col xs:flex-row gap-1 sm:gap-2">
                   <a
-                    class="inline-flex items-center justify-center sm:justify-start gap-1 text-blue-600 hover:bg-blue-50 text-sm px-3 py-2 rounded border border-blue-200 hover:underline transition"
+                    class="inline-flex items-center justify-center sm:justify-start gap-1 text-blue-600 hover:bg-blue-50 text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 sm:py-2 rounded border border-blue-200 hover:underline transition flex-1 xs:flex-1"
                     href="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
-                    ><%- renderIcon("open_in_new", "text-sm") %> Abrir</a>
+                    ><%- renderIcon("open_in_new", "text-xs sm:text-sm") %> <span class="hidden sm:inline">Abrir</span></a>
                   <button
                     type="button"
-                    class="copy-group-link inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-sm px-3 py-2 rounded border border-gray-300 transition"
+                    class="copy-group-link inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 sm:py-2 rounded border border-gray-300 transition flex-1 xs:flex-1"
                     data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                     >
-                    <%- renderIcon("link", "text-sm") %> Copiar
+                    <%- renderIcon("link", "text-xs sm:text-sm") %> <span class="hidden sm:inline">Copiar</span>
                   </button>
-                  <div class="share-dropdown-container">
+                  <div class="share-dropdown-container flex-1 xs:flex-1">
                     <button
                       type="button"
-                      class="share-group-btn inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-sm px-3 py-2 rounded border border-gray-300 transition"
+                      class="share-group-btn w-full inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 sm:py-2 rounded border border-gray-300 transition"
                       data-group-name="<%= group.name %>"
                       data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                       >
-                      <%- renderIcon("share", "text-sm") %> Compartir
+                      <%- renderIcon("share", "text-xs sm:text-sm") %> <span class="hidden sm:inline">Compartir</span>
                     </button>
                   </div>
                 </div>
@@ -179,7 +182,7 @@
           </h3>
           <ul class="space-y-2 sm:space-y-3 text-gray-800">
             <% participants.forEach(p => { %>
-            <li class="flex items-center gap-2 sm:gap-3">
+            <li class="flex items-center gap-2 sm:gap-3 p-2 sm:p-0 rounded hover:bg-gray-50 transition">
               <div class="flex-shrink-0">
                 <% if (p.user.profilePhoto) { %>
                 <img
@@ -189,13 +192,13 @@
                 />
                 <% } else { %>
                 <div
-                  class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs sm:text-sm font-semibold"
+                  class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs sm:text-sm font-semibold flex-shrink-0"
                 >
                   <%= p.user.name.charAt(0).toUpperCase() %>
                 </div>
                 <% } %>
               </div>
-              <span class="font-medium text-sm sm:text-base truncate"><%= p.user.name %></span>
+              <span class="font-medium text-xs sm:text-base truncate"><%= p.user.name %></span>
             </li>
             <% }) %>
           </ul>
@@ -208,75 +211,90 @@
         </h3>
         <% if (group.drawnAt && receiver) { %>
         <div
-          class="flex items-center gap-3 sm:gap-4 p-4 bg-red-50 rounded-lg border border-red-200"
+          class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 sm:p-6 bg-gradient-to-br from-red-50 to-pink-50 rounded-lg border-2 border-red-200"
         >
           <div class="flex-shrink-0">
             <% if (receiver.profilePhoto) { %>
             <img
               src="<%= receiver.profilePhoto %>"
               alt="<%= receiver.name %>"
-              class="h-12 w-12 sm:h-16 sm:w-16 rounded-full object-cover border-2 border-red-300"
+              class="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-cover border-2 sm:border-3 border-red-300 shadow-md"
             />
             <% } else { %>
             <div
-              class="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-lg sm:text-xl font-semibold"
+              class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-semibold shadow-md"
             >
               <%= receiver.name.charAt(0).toUpperCase() %>
             </div>
             <% } %>
           </div>
-          <div class="min-w-0 flex-1">
-            <p class="text-xs sm:text-sm text-gray-600 mb-1">Tu amigo invisible es:</p>
-            <p class="text-xl sm:text-2xl font-bold text-red-600 break-words"><%= receiver.name %></p>
+          <div class="text-center sm:text-left flex-1">
+            <p class="text-xs sm:text-sm text-gray-600 font-medium mb-2">Tu amigo invisible es:</p>
+            <p class="text-2xl sm:text-3xl font-bold text-red-600 break-words"><%= receiver.name %></p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-2">¡Que comience la aventura! 🎁</p>
           </div>
         </div>
         <% } else if (!group.drawnAt) { %>
-        <p class="text-gray-600 text-sm sm:text-base">Aún no se ha realizado el sorteo.</p>
+        <div class="p-4 sm:p-6 bg-orange-50 rounded-lg border border-orange-200">
+          <p class="text-gray-700 text-sm sm:text-base flex items-center gap-2">
+            <%- renderIcon("schedule", "text-xl text-orange-600") %>
+            Aún no se ha realizado el sorteo.
+          </p>
+        </div>
         <% } else { %>
-        <p class="text-gray-600 text-sm sm:text-base">No se encontró asignación.</p>
+        <div class="p-4 sm:p-6 bg-blue-50 rounded-lg border border-blue-200">
+          <p class="text-gray-700 text-sm sm:text-base flex items-center gap-2">
+            <%- renderIcon("info", "text-xl text-blue-600") %>
+            No se encontró asignación.
+          </p>
+        </div>
         <% } %>
       </section>
     </main>
     <%- include('../partials/footer') %>
 
     <!-- Delete Group Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
-      <div class="bg-white rounded-lg max-w-sm w-full p-6 shadow-xl">
-        <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4 sm:p-6">
+      <div class="bg-white rounded-lg max-w-sm w-full p-5 sm:p-6 shadow-xl">
+        <h3 class="text-base sm:text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
           <%- renderIcon("warning", "text-2xl text-red-600") %> Eliminar grupo
         </h3>
-        <p class="text-gray-600 mb-6">¿Qué deseas hacer con este grupo?</p>
+        <p class="text-gray-600 text-sm sm:text-base mb-6">¿Qué deseas hacer con este grupo?</p>
         
-        <div class="space-y-3 mb-6">
-          <p class="text-sm text-gray-500">
-            <strong>Archivar:</strong> El grupo se ocultará pero los datos se conservarán.
-          </p>
-          <p class="text-sm text-gray-500">
-            <strong>Eliminar:</strong> El grupo y todos sus datos se eliminarán permanentemente.
-          </p>
+        <div class="space-y-3 mb-6 text-xs sm:text-sm">
+          <div class="p-3 bg-yellow-50 rounded border border-yellow-200">
+            <p class="text-gray-700">
+              <strong class="text-yellow-700">Archivar:</strong> El grupo se ocultará pero los datos se conservarán.
+            </p>
+          </div>
+          <div class="p-3 bg-red-50 rounded border border-red-200">
+            <p class="text-gray-700">
+              <strong class="text-red-700">Eliminar:</strong> El grupo y todos sus datos se eliminarán permanentemente.
+            </p>
+          </div>
         </div>
 
-        <form method="post" action="/groups/<%= group.id %>/delete" id="deleteForm" class="flex flex-col sm:flex-row gap-3">
+        <form method="post" action="/groups/<%= group.id %>/delete" id="deleteForm" class="flex flex-col gap-2 sm:gap-3">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
           <input type="hidden" name="action" id="actionInput" value="" />
           
           <button
             type="button"
-            class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition cancel-delete-modal text-sm"
+            class="px-3 sm:px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition cancel-delete-modal text-xs sm:text-sm font-medium"
           >
             Cancelar
           </button>
           <button
             type="button"
-            class="flex-1 px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition text-sm archive-btn"
+            class="px-3 sm:px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition text-xs sm:text-sm font-medium archive-btn flex items-center justify-center gap-2"
           >
-            <%- renderIcon("archive", "text-base mr-1") %> Archivar
+            <%- renderIcon("archive", "text-base") %> Archivar
           </button>
           <button
             type="button"
-            class="flex-1 px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-sm delete-btn"
+            class="px-3 sm:px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-xs sm:text-sm font-medium delete-btn flex items-center justify-center gap-2"
           >
-            <%- renderIcon("delete_forever", "text-base mr-1") %> Eliminar
+            <%- renderIcon("delete_forever", "text-base") %> Eliminar
           </button>
         </form>
       </div>
