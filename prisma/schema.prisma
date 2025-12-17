@@ -25,6 +25,7 @@ model Group {
   name        String
   description String?
   priceMax    Float?
+  minParticipants Int     @default(2)
   eventDate   DateTime?
   drawDeadline DateTime?
   rules       String?

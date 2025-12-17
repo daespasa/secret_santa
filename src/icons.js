@@ -42,10 +42,10 @@ const iconMap = {
   add_circle: "add_circle",
   star: "star",
   arrow_forward: "arrow_forward",
-  schedule: "schedule",
   inbox: "inbox",
-  star: "star",
   "arrow-right": "arrow_forward",
+  close: "close",
+  list: "list",
 };
 
 // Mapeo de tamaños de Tailwind a px

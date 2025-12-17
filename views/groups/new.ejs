@@ -31,121 +31,200 @@
             Configura los detalles de tu intercambio.
           </p>
 
-          <form class="space-y-5" method="post" action="/groups">
+          <form class="space-y-6" method="post" action="/groups" id="groupForm">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <input type="hidden" name="rules" id="rulesInput" value="" />
 
+            <!-- Nombre -->
             <div>
-              <label class="block text-sm font-medium text-gray-700"
-                >Nombre*</label
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Nombre del Grupo*</label
               >
               <input
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 type="text"
                 name="name"
+                placeholder="Ej: Amigos de la Uni"
                 required
               />
             </div>
 
+            <!-- Descripción -->
             <div>
-              <label class="block text-sm font-medium text-gray-700"
+              <label class="block text-sm font-medium text-gray-700 mb-2"
                 >Descripción</label
               >
               <textarea
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 name="description"
-                rows="3"
+                rows="2"
+                placeholder="Describe el propósito o contexto del grupo"
               ></textarea>
             </div>
 
+            <!-- Precio Máximo en Euros -->
             <div>
-              <label class="block text-sm font-medium text-gray-700"
-                >Precio máximo</label
+              <label class="block text-sm font-medium text-gray-700 mb-2"
+                >Presupuesto Máximo</label
               >
-              <input
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                type="number"
-                step="0.01"
-                name="price_max"
-              />
+              <div class="relative">
+                <span class="absolute left-4 top-2.5 text-gray-500">€</span>
+                <input
+                  class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                  type="number"
+                  step="0.50"
+                  min="0"
+                  name="price_max"
+                  placeholder="0,00"
+                />
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Fechas -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700"
-                  >Fecha del evento</label
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Fecha del Evento</label
                 >
                 <input
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   type="date"
                   name="event_date"
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700"
-                  >Fecha límite de inscripción</label
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Límite de Inscripción</label
                 >
                 <input
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   type="date"
                   name="draw_deadline"
                 />
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label class="block text-sm font-medium text-gray-700"
-                  >Icono del grupo</label
-                >
-                <select
-                  name="icon"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                >
-                  <option value="">(sin icono)</option>
-                  <option value="gift">Regalo</option>
-                  <option value="tree">Árbol</option>
-                  <option value="party">Fiesta</option>
-                  <option value="beer">Cervezas</option>
-                  <option value="chocolate">Chocolate</option>
-                  <option value="book">Libros</option>
-                  <option value="gamepad">Videojuegos</option>
-                  <option value="beach">Playa</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700"
-                  >Color del grupo</label
-                >
-                <input
-                  name="color"
-                  type="color"
-                  class="mt-1 h-10 w-20 p-0 border-0 bg-transparent"
-                />
-              </div>
-            </div>
-
+            <!-- Mínimo de Participantes -->
             <div>
-              <label class="block text-sm font-medium text-gray-700"
-                >Reglas</label
-              >
-              <textarea
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
-                name="rules"
-                rows="3"
-              ></textarea>
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                <%- renderIcon("people", "text-base text-gray-500 mr-1") %>
+                Mínimo de Participantes
+              </label>
+              <input
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                type="number"
+                min="2"
+                value="2"
+                name="min_participants"
+              />
             </div>
 
-            <div class="flex justify-end gap-3 pt-2">
+            <!-- Seleccionador de Icono con Preview -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3"
+                  >Icono del Grupo</label
+                >
+                <div class="grid grid-cols-3 gap-2">
+                  <% const icons = ['gift', 'tree', 'party', 'beer', 'chocolate', 'book', 'gamepad', 'beach', '']; %>
+                  <% icons.forEach((icon) => { %>
+                  <label class="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="icon"
+                      value="<%= icon %>"
+                      class="hidden peer"
+                      <%= icon === '' ? 'checked' : '' %>
+                    />
+                    <div
+                      class="p-3 border-2 border-gray-300 rounded-lg text-center hover:border-red-500 peer-checked:border-red-600 peer-checked:bg-red-50 transition"
+                    >
+                      <% if (icon === '') { %>
+                      <div class="text-2xl text-gray-400 h-8 flex items-center justify-center">-</div>
+                      <p class="text-xs text-gray-500 mt-1">Ninguno</p>
+                      <% } else { %>
+                      <div class="text-3xl">
+                        <%- renderIcon(icon, "text-4xl") %>
+                      </div>
+                      <p class="text-xs text-gray-600 mt-1 truncate">
+                        <%= icon %>
+                      </p>
+                      <% } %>
+                    </div>
+                  </label>
+                  <% }) %>
+                </div>
+              </div>
+
+              <!-- Color del Grupo -->
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-3"
+                  >Color del Grupo</label
+                >
+                <div class="flex items-end gap-3">
+                  <div class="flex-1">
+                    <div
+                      id="colorPreview"
+                      class="h-20 rounded-lg border-2 border-gray-300 shadow-sm transition"
+                      style="background-color: #DC2626"
+                    ></div>
+                  </div>
+                  <input
+                    name="color"
+                    id="colorInput"
+                    type="color"
+                    value="#DC2626"
+                    class="h-12 w-16 p-0 border-0 rounded-lg cursor-pointer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Reglas como Lista -->
+            <div class="border-t-2 pt-6">
+              <label class="block text-sm font-medium text-gray-700 mb-3">
+                <%- renderIcon("list", "text-base text-gray-500 mr-1") %>
+                Reglas del Grupo
+              </label>
+              <div id="rulesList" class="space-y-2 mb-4">
+                <div class="hidden empty-state text-center py-6">
+                  <p class="text-gray-500 text-sm">No hay reglas aún</p>
+                </div>
+              </div>
+
+              <!-- Agregar Nueva Regla -->
+              <div class="flex gap-2">
+                <input
+                  type="text"
+                  id="ruleInput"
+                  placeholder="Escribe una regla y presiona Enter"
+                  class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+                <button
+                  type="button"
+                  id="addRuleBtn"
+                  class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                >
+                  <%- renderIcon("add_circle", "text-lg") %>
+                </button>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex justify-end gap-3 pt-4 border-t">
               <a
                 href="/dashboard"
-                class="inline-flex items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
-                >Cancelar</a
+                class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 font-medium transition"
               >
+                <%- renderIcon("close", "text-base mr-1.5") %>
+                Cancelar
+              </a>
               <button
-                class="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                class="inline-flex items-center px-6 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 font-medium transition"
                 type="submit"
               >
-                Crear
+                <%- renderIcon("check_circle", "text-base mr-1.5") %>
+                Crear Grupo
               </button>
             </div>
           </form>
@@ -153,5 +232,87 @@
       </div>
     </main>
     <%- include('../partials/footer') %>
+
+    <script>
+      let rules = [];
+
+      // Color preview update
+      const colorInput = document.getElementById("colorInput");
+      const colorPreview = document.getElementById("colorPreview");
+      colorInput.addEventListener("change", (e) => {
+        colorPreview.style.backgroundColor = e.target.value;
+      });
+
+      // Reglas functionality
+      const ruleInput = document.getElementById("ruleInput");
+      const addRuleBtn = document.getElementById("addRuleBtn");
+      const rulesList = document.getElementById("rulesList");
+      const rulesInputField = document.getElementById("rulesInput");
+      const groupForm = document.getElementById("groupForm");
+
+      function addRule(text) {
+        if (!text.trim()) return;
+        if (rules.includes(text)) return;
+
+        rules.push(text);
+        renderRules();
+        ruleInput.value = "";
+      }
+
+      function removeRule(index) {
+        rules.splice(index, 1);
+        renderRules();
+      }
+
+      function renderRules() {
+        rulesList.innerHTML = "";
+
+        if (rules.length === 0) {
+          rulesList.innerHTML =
+            '<div class="text-center py-6"><p class="text-gray-500 text-sm">No hay reglas aún</p></div>';
+          return;
+        }
+
+        rules.forEach((rule, index) => {
+          const ruleEl = document.createElement("div");
+          ruleEl.className =
+            "flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition";
+          ruleEl.innerHTML = `
+            <div class="flex items-start flex-1">
+              <span class="text-blue-600 font-bold mr-3 mt-0.5">${index + 1}.</span>
+              <span class="text-gray-700">${rule}</span>
+            </div>
+            <button
+              type="button"
+              class="ml-3 p-1.5 text-red-600 hover:bg-red-100 rounded transition flex-shrink-0"
+              onclick="removeRule(${index})"
+              title="Eliminar regla"
+            >
+              <%- renderIcon("close", "text-lg") %>
+            </button>
+          `;
+          rulesList.appendChild(ruleEl);
+        });
+      }
+
+      addRuleBtn.addEventListener("click", () => {
+        addRule(ruleInput.value);
+      });
+
+      ruleInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addRule(ruleInput.value);
+        }
+      });
+
+      // Form submission - serialize rules
+      groupForm.addEventListener("submit", (e) => {
+        rulesInputField.value = rules.join("|");
+      });
+
+      // Initialize
+      renderRules();
+    </script>
   </body>
 </html>
