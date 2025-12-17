@@ -1,6 +1,14 @@
 import express from "express";
 import passport, { bcrypt } from "../auth.js";
 import prisma from "../prisma.js";
+import { registerLimiter, loginLimiter, loginSpeedLimiter } from "../middleware/rate-limit.js";
+import {
+  isDisposableEmail,
+  isValidName,
+  isValidEmail,
+  sanitizeInput,
+  detectSuspiciousActivity,
+} from "../middleware/validation.js";
 
 const router = express.Router();
 
@@ -28,12 +36,42 @@ router.get("/register", (req, res) => {
   res.render("auth/register", { csrfToken: res.locals.csrfToken });
 });
 
-router.post("/register", async (req, res, next) => {
-  const { email, name, password, passwordConfirm } = req.body;
+router.post("/register", registerLimiter, async (req, res, next) => {
+  let { email, name, password, passwordConfirm } = req.body;
+
+  // Sanitizar inputs
+  email = sanitizeInput(email)?.toLowerCase();
+  name = sanitizeInput(name);
+  password = sanitizeInput(password);
+  passwordConfirm = sanitizeInput(passwordConfirm);
+
+  // Detectar actividad sospechosa
+  const suspiciousPatterns = detectSuspiciousActivity(req);
+  if (suspiciousPatterns.length > 0) {
+    console.warn(`Suspicious registration attempt: ${suspiciousPatterns.join(", ")} - IP: ${req.ip}`);
+  }
 
   // Validation
   if (!email || !name || !password || !passwordConfirm) {
     req.flash("error", "Por favor completa todos los campos");
+    return res.redirect("/register");
+  }
+
+  // Validar formato de email
+  if (!isValidEmail(email)) {
+    req.flash("error", "Por favor ingresa un email válido");
+    return res.redirect("/register");
+  }
+
+  // Validar email desechable
+  if (isDisposableEmail(email)) {
+    req.flash("error", "No se permiten emails temporales o desechables");
+    return res.redirect("/register");
+  }
+
+  // Validar nombre
+  if (!isValidName(name)) {
+    req.flash("error", "Por favor ingresa un nombre válido (mínimo 2 caracteres)");
     return res.redirect("/register");
   }
 
@@ -89,6 +127,8 @@ router.get("/login", (req, res) => {
 
 router.post(
   "/login",
+  loginSpeedLimiter,
+  loginLimiter,
   passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,

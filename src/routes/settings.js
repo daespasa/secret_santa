@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { bcrypt } from "../auth.js";
 import prisma from "../prisma.js";
 import { ensureAuth } from "../middleware/auth.js";
+import { changePasswordLimiter } from "../middleware/rate-limit.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const uploadsDir = path.join(__dirname, "../..", "public/uploads");
@@ -106,7 +107,7 @@ router.post(
   }
 );
 
-router.post("/settings/change-password", ensureAuth, async (req, res, next) => {
+router.post("/settings/change-password", ensureAuth, changePasswordLimiter, async (req, res, next) => {
   try {
     const { currentPassword, newPassword, confirmPassword } = req.body;
 

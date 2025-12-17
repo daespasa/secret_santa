@@ -6,6 +6,7 @@ import { ensureAuth } from "../middleware/auth.js";
 import { performDraw } from "../services/draw.js";
 import { sendAssignmentEmail } from "../services/email.js";
 import { config } from "../config.js";
+import { createGroupLimiter, drawLimiter } from "../middleware/rate-limit.js";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.get("/groups/new", ensureAuth, (req, res) => {
   res.render("groups/new");
 });
 
-router.post("/groups", ensureAuth, async (req, res, next) => {
+router.post("/groups", ensureAuth, createGroupLimiter, async (req, res, next) => {
   try {
     const {
       name,
@@ -158,7 +159,7 @@ router.get("/join/:token", ensureAuth, async (req, res, next) => {
   }
 });
 
-router.post("/groups/:id/draw", ensureAuth, async (req, res, next) => {
+router.post("/groups/:id/draw", ensureAuth, drawLimiter, async (req, res, next) => {
   const groupId = Number(req.params.id);
   try {
     const group = await prisma.group.findUnique({
