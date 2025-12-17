@@ -26,9 +26,9 @@
               </h1>
             </div>
             <div class="flex items-center space-x-4">
-              <span class="text-gray-700 font-medium"
-                >Hola, <% if (currentUser) { %><%= currentUser.name %><% } %></span
-              >
+              <% if (currentUser) { %>
+              <span class="text-gray-700 font-medium">Hola, <%= currentUser.name %></span>
+              <% } %>
               <a
                 href="/settings"
                 class="text-gray-600 hover:text-gray-900 font-medium"
