@@ -69,6 +69,80 @@ También se ha creado `views/layout.ejs` como un layout más completo que puede 
 3. **DRY**: No repetir código
 4. **Performance**: Asegurar que todos los preconnect y preload estén configurados igual
 
+## Layouts Especializados
+
+Se han creado varios layouts para diferentes tipos de páginas, eliminando duplicación:
+
+### `layout-page.ejs` - Páginas Estándar
+Para páginas autenticadas con header, contenido y footer:
+```ejs
+<%- include('../partials/layout-page', { 
+  title: 'Mi Página', 
+  description: 'Descripción de mi página',
+  body: renderedContent 
+}) %>
+```
+
+**Características**:
+- Header fijo
+- Fondo gris
+- Flash messages automáticos
+- Footer integrado
+- Máximo ancho (max-w-7xl)
+
+### `layout-full.ejs` - Páginas Públicas
+Para landing pages y páginas públicas:
+```ejs
+<%- include('../partials/layout-full', { 
+  title: 'Bienvenido',
+  htmlClass: 'h-full scroll-smooth',
+  includeHeader: true,
+  body: renderedContent
+}) %>
+```
+
+**Variables opcionales**:
+- `htmlClass` - Clases para el html tag
+- `includeHeader` - Mostrar header (default: false)
+- `keywords` - Meta keywords para SEO
+- `robots` - Meta robots
+- `canonicalUrl` - URL canónica
+
+### `layout-auth.ejs` - Páginas de Autenticación
+Para login, register y páginas similares:
+```ejs
+<%- include('../partials/layout-auth', {
+  title: 'Iniciar Sesión',
+  body: renderedContent
+}) %>
+```
+
+**Características**:
+- Contenido centrado
+- Gradiente rojo-rosa
+- Ancho máximo 448px
+- Diseño minimalista
+
+### `layout-error.ejs` - Páginas de Error/Info
+Para 404, error pages, etc:
+```ejs
+<%- include('../partials/layout-error', {
+  title: 'Página no encontrada',
+  description: 'La página que buscas no existe',
+  headerOffset: '16', // pt-16 if header shown
+  body: renderedContent
+}) %>
+```
+
+## Partials Compartidos
+
+Todos los layouts usan estos partials comunes:
+
+- `head.ejs` - Meta tags, favicon, estilos
+- `header.ejs` - Navegación fija
+- `footer.ejs` - Pie de página
+- `flash.ejs` - Mensajes de notificación
+
 ## Helpers Disponibles
 
 En todas las vistas tienes acceso a:
