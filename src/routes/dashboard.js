@@ -15,6 +15,11 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
           },
         },
       },
+      orderBy: {
+        group: {
+          createdAt: "desc",
+        },
+      },
     });
 
     const groups = memberships.map((m) => ({
@@ -25,6 +30,8 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
       participantCount: m.group.participants.length,
       drawn: Boolean(m.group.drawnAt),
       isAdmin: m.group.adminUserId === req.user.id,
+      invitationCode: m.group.invitationCode,
+      createdAt: m.group.createdAt,
     }));
 
     // Get user statistics
