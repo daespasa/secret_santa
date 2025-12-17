@@ -50,7 +50,9 @@ router.post("/groups", ensureAuth, async (req, res, next) => {
           name,
           description: description || null,
           priceMax: priceMax ? Number(priceMax) : null,
-          minParticipants: minParticipants ? Math.max(2, Number(minParticipants)) : 2,
+          minParticipants: minParticipants
+            ? Math.max(2, Number(minParticipants))
+            : 2,
           eventDate: eventDate ? new Date(eventDate) : null,
           drawDeadline: drawDeadline ? new Date(drawDeadline) : null,
           rules: rules || null,

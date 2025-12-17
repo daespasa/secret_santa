@@ -44,8 +44,13 @@ const iconMap = {
   arrow_forward: "arrow_forward",
   inbox: "inbox",
   "arrow-right": "arrow_forward",
+  login: "login",
+  logout: "logout",
   close: "close",
   list: "list",
+  github: "code",
+  open_in_new: "open_in_new",
+  info: "info",
 };
 
 // Mapeo de tamaños de Tailwind a px

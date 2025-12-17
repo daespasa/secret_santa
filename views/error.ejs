@@ -11,12 +11,19 @@
       name="description"
       content="Ha ocurrido un error. Vuelve al inicio y sigue organizando tu amigo invisible."
     />
+    <link rel="preload" href="/style.css" as="style" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
+    />
   </head>
-  <body class="bg-gray-50 min-h-screen flex flex-col">
+  <body class="h-full flex flex-col bg-gray-50">
     <%- include('./partials/header') %>
 
-    <main class="flex-1 max-w-3xl mx-auto px-4 py-12 w-full">
+    <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16">
       <div class="bg-white border-l-4 border-red-500 shadow rounded p-6">
         <h1 class="text-2xl font-bold text-red-600 mb-2">Error</h1>
         <p class="text-gray-800 mb-6"><%= message %></p>
