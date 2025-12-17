@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-  <head>
-    <%- include('./partials/head') %>
-    <title>Créditos y Licencias - Amigo Invisible</title>
-    <meta
-      name="description"
-      content="Créditos, licencias y tecnologías utilizadas en Amigo Invisible."
-    />
-  </head>
-  <body class="h-full flex flex-col">
-    <%- include('./partials/header') %>
-
-    <div class="flex-1 flex flex-col bg-gray-50 pt-16">
-      <!-- Main Content -->
-      <main
-        class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full"
-      >
+<%- include('../partials/layout-full', {
+  title: 'Créditos y Licencias - Amigo Invisible',
+  description: 'Créditos, licencias y tecnologías utilizadas en Amigo Invisible.',
+  includeHeader: true,
+  body: `
+      <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         <h1 class="text-4xl font-bold mb-2 text-gray-900">
           Créditos y Licencias
         </h1>
@@ -340,8 +328,4 @@
           </a>
         </section>
       </main>
-    </div>
-
-    <%- include('./partials/footer') %>
-  </body>
-</html>
+` }) %>

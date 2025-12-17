@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-  <head>
-    <%- include('../partials/head') %>
-    <title>Editar grupo <%= group.name %></title>
-  </head>
-  <body class="h-full flex flex-col bg-gray-50">
-    <%- include('../partials/header') %>
-
-    <main
-      class="flex-1 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full pt-16"
-    >
-      <%- include('../partials/flash') %>
+<%- include('../partials/layout-page', {
+  title: `Editar grupo ${group.name}`,
+  description: `Edita los detalles del grupo ${group.name}`,
+  body: `
+    <main class="flex-1 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
 
       <div class="bg-white shadow rounded-lg p-6 sm:p-8">
         <div class="mb-6">
@@ -220,7 +212,4 @@
         </form>
       </div>
     </main>
-
-    <%- include('../partials/footer') %>
-  </body>
-</html>
+` }) %>

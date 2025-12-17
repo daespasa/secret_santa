@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="es" class="h-full">
-  <head>
-    <%- include('../partials/head') %>
-    <title>Crear grupo</title>
-    <meta
-      name="description"
-      content="Crea un nuevo grupo de amigo invisible, configura precio máximo, icono y color, y comparte la invitación."
-    />
-  </head>
-  <body class="h-full flex flex-col">
-    <%- include('../partials/header') %>
-    
-    <div class="flex-1 flex flex-col bg-gray-100 pt-16">
+<%- include('../partials/layout-page', {
+  title: 'Crear grupo',
+  description: 'Crea un nuevo grupo de amigo invisible, configura precio máximo, icono y color, y comparte la invitación.',
+  body: `
       <main class="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div class="mb-4"><%- include('../partials/flash') %></div>
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-2xl font-bold mb-1">Nuevo grupo</h2>
           <p class="text-gray-600 mb-6">
@@ -215,7 +204,7 @@
           </form>
         </div>
       </main>
-    <%- include('../partials/footer') %>
+    ` }) %>
 
     <script>
       let rules = [];
@@ -297,6 +286,4 @@
 
       // Initialize
       renderRules();
-    </script>
-  </body>
-</html>
+</script>
