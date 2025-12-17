@@ -1,7 +1,7 @@
-<%- include('../../partials/layout-auth', {
+<%- include('../../partials/layout-auth-start', {
   title: 'Iniciar sesión - Amigo Invisible',
-  description: 'Inicia sesión en tu cuenta de amigo invisible',
-  body: `
+  description: 'Inicia sesión en tu cuenta de amigo invisible'
+}) %>
           <!-- Login Form -->
           <form method="post" action="/login" class="space-y-4">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -98,4 +98,4 @@
               Crea una aquí
             </a>
           </p>
-` }) %>
+<%- include('../../partials/layout-auth-end') %>

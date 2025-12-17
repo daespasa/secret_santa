@@ -1,7 +1,7 @@
-<%- include('../partials/layout-page', {
+<%- include('../partials/layout-page-start', {
   title: 'Grupo creado',
-  description: 'Grupo de amigo invisible creado. Copia y comparte el enlace de invitación con tus participantes.',
-  body: `
+  description: 'Grupo de amigo invisible creado. Copia y comparte el enlace de invitación con tus participantes.'
+}) %>
     <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
       <div class="bg-white shadow rounded-lg p-6">
         <h2 class="text-2xl font-bold mb-2">¡Grupo creado!</h2>
@@ -25,4 +25,4 @@
         </div>
       </div>
     </main>
-` }) %>
+  <%- include('../partials/layout-page-end') %>

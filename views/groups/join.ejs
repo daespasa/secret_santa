@@ -1,8 +1,8 @@
-<%- include('../partials/layout-full', {
+<%- include('../partials/layout-full-start', {
   title: `Unirse a ${group.name} - Amigo Invisible`,
   description: `Únete al grupo ${group.name} y participa en el sorteo de amigo invisible.`,
-  includeHeader: true,
-  body: `
+  includeHeader: true
+}) %>
     <div class="container mx-auto px-4 py-8 max-w-2xl">
 
       <!-- Flash Messages -->
@@ -197,4 +197,4 @@
       </div>
 
     </div>
-  ` }) %>
+  <%- include('../partials/layout-full-end') %>

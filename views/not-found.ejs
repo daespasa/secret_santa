@@ -1,9 +1,9 @@
-<%- include('../partials/layout-error', {
+<%- include('../partials/layout-error-start', {
   title: 'Página no encontrada - 404',
   description: 'La página que buscas no existe. Vuelve al inicio de Amigo Invisible.',
-  headerOffset: true,
-  body: `
-        <div class="text-center max-w-md">
+  headerOffset: true
+}) %>
+         <div class="text-center max-w-md">
           <!-- 404 Icon -->
           <div class="mb-8">
             <div class="text-9xl font-bold text-gray-200 mb-4">404</div>
@@ -79,4 +79,4 @@
             </ul>
           </div>
         </div>
-` }) %>
+      <%- include('../partials/layout-error-end') %>

@@ -1,13 +1,13 @@
-<%- include('../partials/layout-full', {
+<%- include('../partials/layout-full-start', {
   title: 'Amigo Invisible - Organiza tu intercambio',
   description: 'La forma más fácil de organizar tu intercambio de regalos. Crea grupos, personaliza con iconos y colores, comparte invitaciones, sortea de forma justa y todos reciben las asignaciones por email.',
   htmlClass: 'scroll-smooth',
   includeHeader: true,
   keywords: 'amigo invisible, sorteo, intercambio de regalos, grupos, navidad',
   robots: 'index,follow',
-  canonicalUrl: '/',
-  body: `
-          <div class="max-w-4xl mx-auto text-center">
+  canonicalUrl: '/'
+}) %>
+           <div class="max-w-4xl mx-auto text-center">
             <div class="mb-8">
               <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
             </div>
@@ -93,4 +93,4 @@
               <% } %>
             </div>
           </div>
-` }) %>
+<%- include('../partials/layout-full-end') %>

@@ -1,7 +1,7 @@
-<%- include('../partials/layout-page', {
+<%- include('../partials/layout-page-start', {
   title: 'Dashboard - Amigo Invisible',
-  description: 'Gestiona tus grupos de amigo invisible, revisa participantes y controla el estado de los sorteos.',
-  body: `
+  description: 'Gestiona tus grupos de amigo invisible, revisa participantes y controla el estado de los sorteos.'
+}) %>
           <!-- Stats Cards -->
           <div
             class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
@@ -349,9 +349,9 @@
             <% } %>
           </div>
         </div>
-      ` }) %>
+      <%- include('../partials/layout-page-end') %>
 
-  <script>
+<script>
       // Filter and Search Functionality
       const searchInput = document.getElementById("searchGroups");
       const filterBtns = document.querySelectorAll(".filter-btn");

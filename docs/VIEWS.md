@@ -73,14 +73,15 @@ También se ha creado `views/layout.ejs` como un layout más completo que puede 
 
 Se han creado varios layouts para diferentes tipos de páginas, eliminando duplicación:
 
-### `layout-page.ejs` - Páginas Estándar
+### `layout-page-start/end` - Páginas Estándar
 Para páginas autenticadas con header, contenido y footer:
 ```ejs
-<%- include('../partials/layout-page', { 
+<%- include('../partials/layout-page-start', { 
   title: 'Mi Página', 
-  description: 'Descripción de mi página',
-  body: renderedContent 
+  description: 'Descripción de mi página'
 }) %>
+  <!-- Contenido principal aquí -->
+<%- include('../partials/layout-page-end') %>
 ```
 
 **Características**:
@@ -90,15 +91,16 @@ Para páginas autenticadas con header, contenido y footer:
 - Footer integrado
 - Máximo ancho (max-w-7xl)
 
-### `layout-full.ejs` - Páginas Públicas
+### `layout-full-start/end` - Páginas Públicas
 Para landing pages y páginas públicas:
 ```ejs
-<%- include('../partials/layout-full', { 
+<%- include('../partials/layout-full-start', { 
   title: 'Bienvenido',
   htmlClass: 'h-full scroll-smooth',
   includeHeader: true,
-  body: renderedContent
 }) %>
+  <!-- Contenido principal aquí -->
+<%- include('../partials/layout-full-end') %>
 ```
 
 **Variables opcionales**:
@@ -108,13 +110,14 @@ Para landing pages y páginas públicas:
 - `robots` - Meta robots
 - `canonicalUrl` - URL canónica
 
-### `layout-auth.ejs` - Páginas de Autenticación
+### `layout-auth-start/end` - Páginas de Autenticación
 Para login, register y páginas similares:
 ```ejs
-<%- include('../partials/layout-auth', {
-  title: 'Iniciar Sesión',
-  body: renderedContent
+<%- include('../partials/layout-auth-start', {
+  title: 'Iniciar Sesión'
 }) %>
+  <!-- Formulario de autenticación -->
+<%- include('../partials/layout-auth-end') %>
 ```
 
 **Características**:
@@ -123,15 +126,15 @@ Para login, register y páginas similares:
 - Ancho máximo 448px
 - Diseño minimalista
 
-### `layout-error.ejs` - Páginas de Error/Info
+### `layout-error-start/end` - Páginas de Error/Info
 Para 404, error pages, etc:
 ```ejs
-<%- include('../partials/layout-error', {
+<%- include('../partials/layout-error-start', {
   title: 'Página no encontrada',
-  description: 'La página que buscas no existe',
-  headerOffset: '16', // pt-16 if header shown
-  body: renderedContent
+  description: 'La página que buscas no existe'
 }) %>
+  <!-- Mensaje y acciones -->
+<%- include('../partials/layout-error-end') %>
 ```
 
 ## Partials Compartidos
@@ -157,7 +160,12 @@ En todas las vistas tienes acceso a:
 
 ## Estado de Migración a Layouts
 
-- `layout-page.ejs`: dashboard, settings, groups/new, groups/edit, groups/created
-- `layout-full.ejs`: landing, privacy, credits, groups/join
-- `layout-auth.ejs`: auth/login, auth/register
-- `layout-error.ejs`: not-found
+- `layout-page-start/end`: dashboard, settings, groups/new, groups/edit, groups/created
+- `layout-full-start/end`: landing, privacy, credits, groups/join, groups/show
+- `layout-auth-start/end`: auth/login, auth/register
+- `layout-error-start/end`: not-found
+
+### Notas importantes
+- El offset del header (`pt-16`) se aplica automáticamente en `layout-full-start` cuando `includeHeader` es `true`.
+- Si necesitas mostrar mensajes flash en páginas con `layout-full`, inclúyelos manualmente dentro del contenido: `<%- include('../partials/flash') %>`.
+- Los `<script>` deben ir siempre antes del include de cierre correspondiente (`layout-*-end`) para quedar dentro de `<body>`.

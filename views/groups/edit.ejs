@@ -1,7 +1,7 @@
-<%- include('../partials/layout-page', {
+<%- include('../partials/layout-page-start', {
   title: `Editar grupo ${group.name}`,
-  description: `Edita los detalles del grupo ${group.name}`,
-  body: `
+  description: `Edita los detalles del grupo ${group.name}`
+}) %>
     <main class="flex-1 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
 
       <div class="bg-white shadow rounded-lg p-6 sm:p-8">
@@ -212,4 +212,4 @@
         </form>
       </div>
     </main>
-` }) %>
+  <%- include('../partials/layout-page-end') %>

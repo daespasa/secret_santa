@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+  <head>
+    <%- include('./head') %>
+    <title><%= typeof title !== 'undefined' ? title : 'Error - Amigo Invisible' %></title>
+    <% if (typeof description !== 'undefined') { %>
+    <meta name="description" content="<%= description %>" />
+    <% } %>
+  </head>
+  <body class="h-full flex flex-col">
+    <%- include('./header') %>
+    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10 <%= (typeof headerOffset !== 'undefined' && headerOffset) ? 'pt-16' : '' %>">
+      <div class="max-w-md w-full">

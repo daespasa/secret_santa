@@ -1,8 +1,8 @@
-<%- include('../partials/layout-page', {
+<%- include('../partials/layout-page-start', {
   title: 'Ajustes de Perfil',
-  description: 'Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible.',
-  body: `
-        <div class="bg-white shadow rounded-lg p-6 mt-8">
+  description: 'Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible.'
+}) %>
+         <div class="bg-white shadow rounded-lg p-6 mt-8">
             <h2 class="text-2xl font-bold mb-6">Ajustes de Perfil</h2>
 
             <!-- Profile Card -->
@@ -203,4 +203,4 @@
             </p>
           </div>
         </div>
-` }) %>
+      <%- include('../partials/layout-page-end') %>

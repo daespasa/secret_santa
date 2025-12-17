@@ -1,8 +1,8 @@
-<%- include('../partials/layout-full', {
+<%- include('../partials/layout-full-start', {
   title: 'Créditos y Licencias - Amigo Invisible',
   description: 'Créditos, licencias y tecnologías utilizadas en Amigo Invisible.',
-  includeHeader: true,
-  body: `
+  includeHeader: true
+}) %>
       <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         <h1 class="text-4xl font-bold mb-2 text-gray-900">
           Créditos y Licencias
@@ -328,4 +328,4 @@
           </a>
         </section>
       </main>
-` }) %>
+    <%- include('../partials/layout-full-end') %>
