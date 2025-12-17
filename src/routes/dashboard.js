@@ -7,7 +7,12 @@ const router = express.Router();
 router.get("/dashboard", ensureAuth, async (req, res, next) => {
   try {
     const memberships = await prisma.groupUser.findMany({
-      where: { userId: req.user.id },
+      where: { 
+        userId: req.user.id,
+        group: {
+          archived: false,
+        }
+      },
       include: {
         group: {
           include: {

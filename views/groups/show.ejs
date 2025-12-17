@@ -263,37 +263,29 @@
           </p>
         </div>
 
-        <div class="flex flex-col sm:flex-row gap-3">
+        <form method="post" action="/groups/<%= group.id %>/delete" id="deleteForm" class="flex flex-col sm:flex-row gap-3">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <input type="hidden" name="action" id="actionInput" value="" />
+          
           <button
             type="button"
             class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 transition cancel-delete-modal text-sm"
           >
             Cancelar
           </button>
-          <form method="post" action="/groups/<%= group.id %>/delete" class="flex-1">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button
-              type="submit"
-              name="action"
-              value="archive"
-              class="w-full px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition text-sm"
-            >
-              <%- renderIcon("archive", "text-base mr-1") %> Archivar
-            </button>
-          </form>
-          <form method="post" action="/groups/<%= group.id %>/delete" class="flex-1">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button
-              type="submit"
-              name="action"
-              value="delete"
-              class="w-full px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-sm"
-              onclick="return confirm('⚠️ Esta acción es irreversible. ¿Estás completamente seguro?')"
-            >
-              <%- renderIcon("delete_forever", "text-base mr-1") %> Eliminar
-            </button>
-          </form>
-        </div>
+          <button
+            type="button"
+            class="flex-1 px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition text-sm archive-btn"
+          >
+            <%- renderIcon("archive", "text-base mr-1") %> Archivar
+          </button>
+          <button
+            type="button"
+            class="flex-1 px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition text-sm delete-btn"
+          >
+            <%- renderIcon("delete_forever", "text-base mr-1") %> Eliminar
+          </button>
+        </form>
       </div>
     </div>
 
@@ -321,6 +313,26 @@
           deleteModal.classList.add("hidden");
         }
       });
+
+      // Archive button handler
+      const archiveBtn = document.querySelector(".archive-btn");
+      if (archiveBtn) {
+        archiveBtn.addEventListener("click", () => {
+          document.getElementById("actionInput").value = "archive";
+          document.getElementById("deleteForm").submit();
+        });
+      }
+
+      // Delete button handler
+      const deleteBtn = document.querySelector(".delete-btn");
+      if (deleteBtn) {
+        deleteBtn.addEventListener("click", () => {
+          if (confirm("⚠️ Esta acción es irreversible. ¿Estás completamente seguro?")) {
+            document.getElementById("actionInput").value = "delete";
+            document.getElementById("deleteForm").submit();
+          }
+        });
+      }
 
       // Copy group link functionality
       const copyGroupLinkBtns = document.querySelectorAll(".copy-group-link");
