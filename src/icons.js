@@ -68,6 +68,7 @@ const iconMap = {
   emoji_emotions: "emoji_emotions",
   palette: "palette",
   warning: "warning",
+  person_add: "person_add",
 };
 
 // Mapeo de tamaños de Tailwind a px
