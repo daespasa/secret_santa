@@ -22,8 +22,8 @@
     <%- include('../partials/header') %>
     
     <div class="flex-1 flex flex-col bg-gray-100">
-      <main>
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main class="flex-1">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mt-4">
         <div class="mb-4"><%- include('../partials/flash') %></div>
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-2xl font-bold mb-1">Nuevo grupo</h2>
@@ -128,7 +128,7 @@
                 <div class="grid grid-cols-3 gap-2">
                   <% const icons = ['gift', 'tree', 'party', 'beer', 'chocolate', 'book', 'gamepad', 'beach', '']; %>
                   <% icons.forEach((icon) => { %>
-                  <label class="cursor-pointer">
+                  <label class="cursor-pointer" title="<%= icon || 'Sin icono' %>">
                     <input
                       type="radio"
                       name="icon"
@@ -141,14 +141,10 @@
                     >
                       <% if (icon === '') { %>
                       <div class="text-2xl text-gray-400 h-8 flex items-center justify-center">-</div>
-                      <p class="text-xs text-gray-500 mt-1">Ninguno</p>
                       <% } else { %>
                       <div class="text-3xl">
                         <%- renderIcon(icon, "text-4xl") %>
                       </div>
-                      <p class="text-xs text-gray-600 mt-1 truncate">
-                        <%= icon %>
-                      </p>
                       <% } %>
                     </div>
                   </label>
@@ -165,7 +161,7 @@
                   <div class="flex-1">
                     <div
                       id="colorPreview"
-                      class="h-20 rounded-lg border-2 border-gray-300 shadow-sm transition"
+                      class="h-12 rounded-lg border-2 border-gray-300 shadow-sm transition"
                       style="background-color: #DC2626"
                     ></div>
                   </div>
@@ -174,7 +170,7 @@
                     id="colorInput"
                     type="color"
                     value="#DC2626"
-                    class="h-12 w-16 p-0 border-0 rounded-lg cursor-pointer"
+                    class="h-10 w-12 p-0 border-0 rounded-lg cursor-pointer"
                   />
                 </div>
               </div>
