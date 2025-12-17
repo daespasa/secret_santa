@@ -51,6 +51,23 @@ const iconMap = {
   github: "code",
   open_in_new: "open_in_new",
   info: "info",
+  share: "share",
+  share_alt: "share_alt",
+  facebook: "share",
+  twitter: "chat",
+  whatsapp: "message",
+  telegram: "send",
+  email_icon: "mail",
+  description: "description",
+  delete: "delete",
+  delete_forever: "delete_forever",
+  archive: "archive",
+  rule: "rule",
+  attach_money: "attach_money",
+  event: "event",
+  emoji_emotions: "emoji_emotions",
+  palette: "palette",
+  warning: "warning",
 };
 
 // Mapeo de tamaños de Tailwind a px

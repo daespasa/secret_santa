@@ -214,4 +214,182 @@ router.post("/groups/:id/draw", ensureAuth, async (req, res, next) => {
   }
 });
 
+// Edit group GET
+router.get("/groups/:id/edit", ensureAuth, async (req, res, next) => {
+  const groupId = Number(req.params.id);
+  try {
+    const group = await prisma.group.findUnique({
+      where: { id: groupId },
+    });
+    if (!group) {
+      return res
+        .status(404)
+        .render("error", { message: "Grupo no encontrado" });
+    }
+    if (group.adminUserId !== req.user.id) {
+      req.flash("error", "Solo el admin puede editar el grupo");
+      return res.redirect(`/groups/${groupId}`);
+    }
+
+    res.render("groups/edit", { group, dayjs });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Edit group POST
+router.post("/groups/:id/edit", ensureAuth, async (req, res, next) => {
+  const groupId = Number(req.params.id);
+  try {
+    const group = await prisma.group.findUnique({
+      where: { id: groupId },
+    });
+    if (!group) {
+      req.flash("error", "Grupo no encontrado");
+      return res.redirect("/dashboard");
+    }
+    if (group.adminUserId !== req.user.id) {
+      req.flash("error", "Solo el admin puede editar el grupo");
+      return res.redirect(`/groups/${groupId}`);
+    }
+
+    const {
+      name,
+      description,
+      price_max: priceMax,
+      min_participants: minParticipants,
+      event_date: eventDate,
+      draw_deadline: drawDeadline,
+      rules,
+      icon,
+      color,
+    } = req.body;
+
+    if (!name) {
+      req.flash("error", "El nombre es obligatorio");
+      return res.redirect(`/groups/${groupId}/edit`);
+    }
+
+    await prisma.group.update({
+      where: { id: groupId },
+      data: {
+        name,
+        description: description || null,
+        priceMax: priceMax ? Number(priceMax) : null,
+        minParticipants: minParticipants
+          ? Math.max(2, Number(minParticipants))
+          : 2,
+        eventDate: eventDate ? new Date(eventDate) : null,
+        drawDeadline: drawDeadline ? new Date(drawDeadline) : null,
+        rules: rules || null,
+        icon: icon || null,
+        color: color || null,
+      },
+    });
+
+    req.flash("success", "Grupo actualizado");
+    res.redirect(`/groups/${groupId}`);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Delete group POST
+router.post("/groups/:id/delete", ensureAuth, async (req, res, next) => {
+  const groupId = Number(req.params.id);
+  try {
+    const group = await prisma.group.findUnique({
+      where: { id: groupId },
+    });
+    if (!group) {
+      req.flash("error", "Grupo no encontrado");
+      return res.redirect("/dashboard");
+    }
+    if (group.adminUserId !== req.user.id) {
+      req.flash("error", "Solo el admin puede eliminar el grupo");
+      return res.redirect(`/groups/${groupId}`);
+    }
+
+    const { action } = req.body;
+
+    if (action === "archive") {
+      await prisma.group.update({
+        where: { id: groupId },
+        data: { archived: true },
+      });
+      req.flash("success", "Grupo archivado");
+    } else if (action === "delete") {
+      // Delete related data first
+      await prisma.assignment.deleteMany({
+        where: { groupId },
+      });
+      await prisma.groupUser.deleteMany({
+        where: { groupId },
+      });
+      await prisma.group.delete({
+        where: { id: groupId },
+      });
+      req.flash("success", "Grupo eliminado");
+    }
+
+    res.redirect("/dashboard");
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Leave group POST
+router.post("/groups/:id/leave", ensureAuth, async (req, res, next) => {
+  const groupId = Number(req.params.id);
+  try {
+    const group = await prisma.group.findUnique({
+      where: { id: groupId },
+      include: { participants: true },
+    });
+    if (!group) {
+      req.flash("error", "Grupo no encontrado");
+      return res.redirect("/dashboard");
+    }
+
+    // Check if user is admin - admins cannot leave
+    if (group.adminUserId === req.user.id) {
+      req.flash(
+        "error",
+        "El admin no puede dejar el grupo. Elimina o archiva el grupo."
+      );
+      return res.redirect(`/groups/${groupId}`);
+    }
+
+    // Check if user is member
+    const isMember = await assertMembership(req.user.id, groupId);
+    if (!isMember) {
+      req.flash("error", "No perteneces a este grupo");
+      return res.redirect("/dashboard");
+    }
+
+    // Remove user from group
+    await prisma.groupUser.delete({
+      where: { groupId_userId: { groupId, userId: req.user.id } },
+    });
+
+    // If group has draw, also remove user's assignment
+    if (group.drawnAt) {
+      await prisma.assignment.deleteMany({
+        where: {
+          groupId,
+          OR: [
+            { giverUserId: req.user.id },
+            { receiverUserId: req.user.id },
+          ],
+        },
+      });
+    }
+
+    req.flash("success", "Has dejado el grupo");
+    res.redirect("/dashboard");
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

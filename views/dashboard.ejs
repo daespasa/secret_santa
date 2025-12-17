@@ -384,6 +384,39 @@
                           <span class="hidden sm:inline">Copiar</span>
                         </button>
 
+                        <!-- Share Invitation Link Button -->
+                        <div class="relative group">
+                          <button
+                            type="button"
+                            class="share-btn inline-flex items-center gap-1.5 px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition"
+                            data-group-id="<%= g.id %>"
+                            data-invitation-code="<%= g.invitationCode %>"
+                            title="Compartir"
+                          >
+                            <%- renderIcon("share", "text-base") %>
+                            <span class="hidden sm:inline">Compartir</span>
+                          </button>
+                          <!-- Share Menu -->
+                          <div class="absolute right-0 mt-0 w-40 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                            <a href="#" class="share-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="whatsapp" data-group-id="<%= g.id %>" data-code="<%= g.invitationCode %>">
+                              <%- renderIcon("whatsapp", "text-base mr-1.5") %>
+                              WhatsApp
+                            </a>
+                            <a href="#" class="share-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="telegram" data-group-id="<%= g.id %>" data-code="<%= g.invitationCode %>">
+                              <%- renderIcon("telegram", "text-base mr-1.5") %>
+                              Telegram
+                            </a>
+                            <a href="#" class="share-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="twitter" data-group-id="<%= g.id %>" data-code="<%= g.invitationCode %>">
+                              <%- renderIcon("twitter", "text-base mr-1.5") %>
+                              Twitter
+                            </a>
+                            <a href="#" class="share-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="email" data-group-id="<%= g.id %>" data-code="<%= g.invitationCode %>">
+                              <%- renderIcon("email_icon", "text-base mr-1.5") %>
+                              Email
+                            </a>
+                          </div>
+                        </div>
+
                         <% if (g.isAdmin && !g.drawn) { %>
                         <form
                           method="post"
@@ -529,6 +562,39 @@
           } catch (err) {
             console.error("Error copying to clipboard:", err);
             alert("Error al copiar el enlace");
+          }
+        });
+      });
+
+      // Share functionality
+      const shareLinks = document.querySelectorAll(".share-link");
+      shareLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const platform = link.getAttribute("data-platform");
+          const invitationCode = link.getAttribute("data-code");
+          const baseUrl = window.location.origin;
+          const invitationUrl = `${baseUrl}/join/${invitationCode}`;
+          const message = `¡Únete a nuestro Amigo Invisible! ${invitationUrl}`;
+
+          let shareUrl;
+          switch (platform) {
+            case "whatsapp":
+              shareUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+              break;
+            case "telegram":
+              shareUrl = `https://t.me/share/url?url=${encodeURIComponent(invitationUrl)}&text=${encodeURIComponent("¡Únete a nuestro Amigo Invisible!")}`;
+              break;
+            case "twitter":
+              shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent("¡Únete a nuestro Amigo Invisible! " + invitationUrl)}`;
+              break;
+            case "email":
+              shareUrl = `mailto:?subject=${encodeURIComponent("¡Únete a nuestro Amigo Invisible!")}&body=${encodeURIComponent(message)}`;
+              break;
+          }
+
+          if (shareUrl) {
+            window.open(shareUrl, "_blank");
           }
         });
       });
