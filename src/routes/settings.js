@@ -20,7 +20,10 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${req.user.id}-${uniqueSuffix}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${req.user.id}-${uniqueSuffix}${path.extname(file.originalname)}`
+    );
   },
 });
 
@@ -52,44 +55,54 @@ router.get("/settings", ensureAuth, async (req, res, next) => {
   }
 });
 
-router.post("/settings", ensureAuth, upload.single("profilePhoto"), async (req, res, next) => {
-  try {
-    const { name } = req.body;
-    if (!name || !name.trim()) {
-      req.flash("error", "El nombre no puede estar vacío");
-      return res.redirect("/settings");
-    }
-
-    const updateData = { name: name.trim() };
-
-    // Handle photo upload
-    if (req.file) {
-      // Delete old photo if exists
-      const user = await prisma.user.findUnique({
-        where: { id: req.user.id },
-      });
-      if (user.profilePhoto) {
-        const oldPath = path.join(__dirname, "../..", "public", user.profilePhoto);
-        if (fs.existsSync(oldPath)) {
-          fs.unlinkSync(oldPath);
-        }
+router.post(
+  "/settings",
+  ensureAuth,
+  upload.single("profilePhoto"),
+  async (req, res, next) => {
+    try {
+      const { name } = req.body;
+      if (!name || !name.trim()) {
+        req.flash("error", "El nombre no puede estar vacío");
+        return res.redirect("/settings");
       }
-      updateData.profilePhoto = `/uploads/${req.file.filename}`;
-    }
 
-    await prisma.user.update({
-      where: { id: req.user.id },
-      data: updateData,
-    });
-    req.flash("success", "Perfil actualizado");
-    res.redirect("/settings");
-  } catch (err) {
-    // Clean up uploaded file if error occurs
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
+      const updateData = { name: name.trim() };
+
+      // Handle photo upload
+      if (req.file) {
+        // Delete old photo if exists
+        const user = await prisma.user.findUnique({
+          where: { id: req.user.id },
+        });
+        if (user.profilePhoto) {
+          const oldPath = path.join(
+            __dirname,
+            "../..",
+            "public",
+            user.profilePhoto
+          );
+          if (fs.existsSync(oldPath)) {
+            fs.unlinkSync(oldPath);
+          }
+        }
+        updateData.profilePhoto = `/uploads/${req.file.filename}`;
+      }
+
+      await prisma.user.update({
+        where: { id: req.user.id },
+        data: updateData,
+      });
+      req.flash("success", "Perfil actualizado");
+      res.redirect("/settings");
+    } catch (err) {
+      // Clean up uploaded file if error occurs
+      if (req.file) {
+        fs.unlinkSync(req.file.path);
+      }
+      next(err);
     }
-    next(err);
   }
-});
+);
 
 export default router;

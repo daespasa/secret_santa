@@ -12,7 +12,7 @@
       name="description"
       content="Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body class="h-full">
     <div class="min-h-full">
@@ -79,7 +79,12 @@
             </div>
 
             <!-- Form -->
-            <form method="post" action="/settings" enctype="multipart/form-data" class="space-y-6">
+            <form
+              method="post"
+              action="/settings"
+              enctype="multipart/form-data"
+              class="space-y-6"
+            >
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
               <div>

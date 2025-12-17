@@ -4,31 +4,37 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "concurrently \"npx tailwindcss -i src/input.css -o public/style.css --watch\" \"nodemon src/server.js\"",
     "start": "node src/server.js",
+    "build:css": "npx tailwindcss -i src/input.css -o public/style.css --minify",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^6.19.1",
     "connect-flash": "^0.1.1",
     "csrf-csrf": "^4.0.3",
-    "dayjs": "^1.11.11",
-    "dotenv": "^16.4.5",
+    "dayjs": "^1.11.19",
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-session": "^1.17.3",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "lucide": "^0.561.0",
     "morgan": "^1.10.0",
     "multer": "^2.0.2",
     "nanoid": "^5.0.7",
     "nodemailer": "^7.0.11",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "prisma": "^5.22.0",
+    "prisma": "^6.19.1",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.23",
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.4",
-    "sharp": "^0.34.5"
+    "postcss": "^8.5.6",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.19"
   }
 }

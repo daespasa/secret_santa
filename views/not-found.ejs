@@ -12,7 +12,7 @@
       name="description"
       content="La página que buscas no existe. Vuelve al inicio de Amigo Invisible."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body class="h-full">
     <div class="min-h-full flex flex-col">
@@ -22,7 +22,8 @@
           <div class="flex justify-between h-16">
             <div class="flex items-center">
               <a href="/" class="text-2xl font-bold text-red-600">
-                🎁 Amigo Invisible
+                <svg class="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z"/></svg>
+                Amigo Invisible
               </a>
             </div>
           </div>
@@ -53,14 +54,16 @@
               href="/"
               class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition"
             >
-              🏠 Volver al Inicio
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4"/></svg>
+              Volver al Inicio
             </a>
             <% if (currentUser) { %>
             <a
               href="/dashboard"
               class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-gray-900 font-medium hover:bg-gray-300 transition"
             >
-              📊 Dashboard
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              Dashboard
             </a>
             <% } %>
           </div>
