@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Unirse a <%= group.name %> - Secret Santa</title>
     <link rel="stylesheet" href="/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body class="bg-gradient-to-br from-red-50 to-green-50 min-h-screen">
     <div class="container mx-auto px-4 py-8 max-w-2xl">
@@ -36,8 +42,8 @@
       <!-- Group Info Card -->
       <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
         <div class="flex items-center mb-4">
-          <span class="material-symbols-outlined text-4xl" style="color: <%= group.color || '#dc2626' %>;">
-            <%= group.icon || 'redeem' %>
+          <span style="color: <%= group.color || '#dc2626' %>;">
+            <%- renderGroupIcon(group.icon, "text-4xl") %>
           </span>
           <div class="ml-4">
             <h2 class="text-2xl font-bold text-gray-900"><%= group.name %></h2>
@@ -103,7 +109,7 @@
           </div>
 
           <form action="/join/<%= token %>/guest" method="POST" class="space-y-4">
-            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             
             <div>
               <label for="guestName" class="block text-sm font-medium text-gray-700 mb-1">
