@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crear grupo</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png" />
+    <meta name="theme-color" content="#ef4444" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="h-full">
@@ -15,7 +19,11 @@
             <h1 class="text-2xl font-bold text-red-600">🎁 Amigo Invisible</h1>
           </div>
           <div class="flex items-center space-x-4">
-            <a class="text-gray-600 hover:text-gray-900 font-medium" href="/dashboard">Volver</a>
+            <a
+              class="text-gray-600 hover:text-gray-900 font-medium"
+              href="/dashboard"
+              >Volver</a
+            >
           </div>
         </div>
       </div>
@@ -23,46 +31,83 @@
 
     <main>
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mb-4">
-          <%- include('../partials/flash') %>
-        </div>
+        <div class="mb-4"><%- include('../partials/flash') %></div>
         <div class="bg-white shadow rounded-lg p-6">
           <h2 class="text-2xl font-bold mb-1">Nuevo grupo</h2>
-          <p class="text-gray-600 mb-6">Configura los detalles de tu intercambio.</p>
+          <p class="text-gray-600 mb-6">
+            Configura los detalles de tu intercambio.
+          </p>
 
           <form class="space-y-5" method="post" action="/groups">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">Nombre*</label>
-              <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" type="text" name="name" required />
+              <label class="block text-sm font-medium text-gray-700"
+                >Nombre*</label
+              >
+              <input
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                type="text"
+                name="name"
+                required
+              />
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">Descripción</label>
-              <textarea class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" name="description" rows="3"></textarea>
+              <label class="block text-sm font-medium text-gray-700"
+                >Descripción</label
+              >
+              <textarea
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                name="description"
+                rows="3"
+              ></textarea>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">Precio máximo</label>
-              <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" type="number" step="0.01" name="price_max" />
+              <label class="block text-sm font-medium text-gray-700"
+                >Precio máximo</label
+              >
+              <input
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                type="number"
+                step="0.01"
+                name="price_max"
+              />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700">Fecha del evento</label>
-                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" type="date" name="event_date" />
+                <label class="block text-sm font-medium text-gray-700"
+                  >Fecha del evento</label
+                >
+                <input
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                  type="date"
+                  name="event_date"
+                />
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700">Fecha límite de inscripción</label>
-                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" type="date" name="draw_deadline" />
+                <label class="block text-sm font-medium text-gray-700"
+                  >Fecha límite de inscripción</label
+                >
+                <input
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                  type="date"
+                  name="draw_deadline"
+                />
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label class="block text-sm font-medium text-gray-700">Icono del grupo</label>
-                <select name="icon" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500">
+                <label class="block text-sm font-medium text-gray-700"
+                  >Icono del grupo</label
+                >
+                <select
+                  name="icon"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                >
                   <option value="">(sin icono)</option>
                   <option>🎁</option>
                   <option>🎄</option>
@@ -75,19 +120,40 @@
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700">Color del grupo</label>
-                <input name="color" type="color" class="mt-1 h-10 w-20 p-0 border-0 bg-transparent" />
+                <label class="block text-sm font-medium text-gray-700"
+                  >Color del grupo</label
+                >
+                <input
+                  name="color"
+                  type="color"
+                  class="mt-1 h-10 w-20 p-0 border-0 bg-transparent"
+                />
               </div>
             </div>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">Reglas</label>
-              <textarea class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500" name="rules" rows="3"></textarea>
+              <label class="block text-sm font-medium text-gray-700"
+                >Reglas</label
+              >
+              <textarea
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
+                name="rules"
+                rows="3"
+              ></textarea>
             </div>
 
             <div class="flex justify-end gap-3 pt-2">
-              <a href="/dashboard" class="inline-flex items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50">Cancelar</a>
-              <button class="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700" type="submit">Crear</button>
+              <a
+                href="/dashboard"
+                class="inline-flex items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-50"
+                >Cancelar</a
+              >
+              <button
+                class="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                type="submit"
+              >
+                Crear
+              </button>
             </div>
           </form>
         </div>

@@ -1,82 +1,120 @@
 <!DOCTYPE html>
 <html lang="es" class="h-full">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amigo Invisible - Organiza tu intercambio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="h-full bg-gradient-to-br from-red-50 via-white to-green-50">
-  <!-- Hero Section -->
-  <div class="min-h-screen flex flex-col">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-          <div class="flex items-center">
-            <h1 class="text-2xl font-bold text-red-600">🎁 Amigo Invisible</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amigo Invisible - Organiza tu intercambio</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192.png" />
+    <meta name="theme-color" content="#ef4444" />
+    <meta property="og:title" content="Amigo Invisible" />
+    <meta
+      property="og:description"
+      content="Crea grupos, invita amigos y sortea tu amigo invisible en minutos."
+    />
+    <meta property="og:image" content="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full bg-gradient-to-br from-red-50 via-white to-green-50">
+    <!-- Hero Section -->
+    <div class="min-h-screen flex flex-col">
+      <!-- Navigation -->
+      <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between h-16">
+            <div class="flex items-center">
+              <h1 class="text-2xl font-bold text-red-600">
+                🎁 Amigo Invisible
+              </h1>
+            </div>
+            <div class="flex items-center">
+              <a
+                href="/auth/google"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition"
+              >
+                Iniciar Sesión
+              </a>
+            </div>
           </div>
-          <div class="flex items-center">
-            <a href="/auth/google" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition">
-              Iniciar Sesión
+        </div>
+      </nav>
+
+      <!-- Hero Content -->
+      <main
+        class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      >
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="mb-8">
+            <span class="text-6xl mb-6 inline-block animate-bounce">🎄</span>
+          </div>
+          <h2
+            class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
+          >
+            Organiza tu <span class="text-red-600">Amigo Invisible</span>
+            <br class="hidden sm:block" />
+            en minutos
+          </h2>
+          <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Crea grupos, invita amigos y sortea de forma automática. Todos
+            reciben su asignación por email de manera instantánea.
+          </p>
+
+          <!-- Features -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 mt-12">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-4xl mb-3">🔐</div>
+              <h3 class="font-semibold text-lg mb-2">Seguro y Privado</h3>
+              <p class="text-gray-600 text-sm">
+                Login con Google OAuth. Nadie ve las asignaciones de otros.
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-4xl mb-3">📧</div>
+              <h3 class="font-semibold text-lg mb-2">Notificaciones Email</h3>
+              <p class="text-gray-600 text-sm">
+                Todos reciben un correo con su destinatario al sortear.
+              </p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <div class="text-4xl mb-3">🎲</div>
+              <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
+              <p class="text-gray-600 text-sm">
+                Algoritmo circular: cada uno regala a uno y recibe de uno.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          >
+            <a
+              href="/auth/google"
+              class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
+            >
+              <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                />
+              </svg>
+              Empezar con Google
             </a>
           </div>
         </div>
-      </div>
-    </nav>
+      </main>
 
-    <!-- Hero Content -->
-    <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div class="max-w-4xl mx-auto text-center">
-        <div class="mb-8">
-          <span class="text-6xl mb-6 inline-block animate-bounce">🎄</span>
+      <!-- Footer -->
+      <footer class="bg-white border-t border-gray-200 py-6">
+        <div
+          class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm"
+        >
+          <p>
+            Desarrollado con ❤️ para hacer más fácil organizar tu intercambio
+            navideño
+          </p>
         </div>
-        <h2 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
-          Organiza tu <span class="text-red-600">Amigo Invisible</span>
-          <br class="hidden sm:block">
-          en minutos
-        </h2>
-        <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          Crea grupos, invita amigos y sortea de forma automática. 
-          Todos reciben su asignación por email de manera instantánea.
-        </p>
-        
-        <!-- Features -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 mt-12">
-          <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-4xl mb-3">🔐</div>
-            <h3 class="font-semibold text-lg mb-2">Seguro y Privado</h3>
-            <p class="text-gray-600 text-sm">Login con Google OAuth. Nadie ve las asignaciones de otros.</p>
-          </div>
-          <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-4xl mb-3">📧</div>
-            <h3 class="font-semibold text-lg mb-2">Notificaciones Email</h3>
-            <p class="text-gray-600 text-sm">Todos reciben un correo con su destinatario al sortear.</p>
-          </div>
-          <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-4xl mb-3">🎲</div>
-            <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
-            <p class="text-gray-600 text-sm">Algoritmo circular: cada uno regala a uno y recibe de uno.</p>
-          </div>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="/auth/google" class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
-            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/>
-            </svg>
-            Empezar con Google
-          </a>
-        </div>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-6">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 text-sm">
-        <p>Desarrollado con ❤️ para hacer más fácil organizar tu intercambio navideño</p>
-      </div>
-    </footer>
-  </div>
-</body>
+      </footer>
+    </div>
+  </body>
 </html>

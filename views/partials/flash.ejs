@@ -1,17 +1,14 @@
-<% if (flash && (flash.error || flash.success || flash.info)) { %>
-	<% if (flash.error) { flash.error.forEach(function(msg){ %>
-		<div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded">
-			<p class="text-sm text-red-800"><%= msg %></p>
-		</div>
-	<% }) } %>
-	<% if (flash.success) { flash.success.forEach(function(msg){ %>
-		<div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4 rounded">
-			<p class="text-sm text-green-800"><%= msg %></p>
-		</div>
-	<% }) } %>
-	<% if (flash.info) { flash.info.forEach(function(msg){ %>
-		<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 rounded">
-			<p class="text-sm text-blue-800"><%= msg %></p>
-		</div>
-	<% }) } %>
-<% } %>
+<% if (flash && (flash.error || flash.success || flash.info)) { %> <% if
+(flash.error) { flash.error.forEach(function(msg){ %>
+<div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded">
+  <p class="text-sm text-red-800"><%= msg %></p>
+</div>
+<% }) } %> <% if (flash.success) { flash.success.forEach(function(msg){ %>
+<div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4 rounded">
+  <p class="text-sm text-green-800"><%= msg %></p>
+</div>
+<% }) } %> <% if (flash.info) { flash.info.forEach(function(msg){ %>
+<div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 rounded">
+  <p class="text-sm text-blue-800"><%= msg %></p>
+</div>
+<% }) } %> <% } %>
