@@ -61,7 +61,7 @@ const sizeMap = {
 };
 
 function extractFontSize(className) {
-  const sizeClass = className.split(" ").find(c => sizeMap[c]);
+  const sizeClass = className.split(" ").find((c) => sizeMap[c]);
   return sizeMap[sizeClass] || "24px";
 }
 
@@ -69,9 +69,12 @@ export function renderIcon(name, className = "text-2xl") {
   const iconName = iconMap[name] || name;
   const fontSize = extractFontSize(className);
   // Remove size classes and apply inline font-size
-  const otherClasses = className.split(" ").filter(c => !sizeMap[c]).join(" ");
+  const otherClasses = className
+    .split(" ")
+    .filter((c) => !sizeMap[c])
+    .join(" ");
   const style = `font-size: ${fontSize}; display: inline-block; vertical-align: -0.25em; line-height: 1;`;
-  
+
   return `<span class="material-symbols-outlined ${otherClasses}" style="${style}">${iconName}</span>`;
 }
 
@@ -84,7 +87,10 @@ export function renderGroupIcon(iconValue, className = "text-2xl") {
     }
     // Si no está en el mapa, intentar usarlo directamente como nombre de Material Icon
     const fontSize = extractFontSize(className);
-    const otherClasses = className.split(" ").filter(c => !sizeMap[c]).join(" ");
+    const otherClasses = className
+      .split(" ")
+      .filter((c) => !sizeMap[c])
+      .join(" ");
     const style = `font-size: ${fontSize}; display: inline-block; vertical-align: -0.25em; line-height: 1;`;
     return `<span class="material-symbols-outlined ${otherClasses}" style="${style}">${iconValue}</span>`;
   }

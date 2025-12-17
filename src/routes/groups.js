@@ -101,12 +101,14 @@ router.get("/groups/:id", ensureAuth, async (req, res, next) => {
     const userAssignment = group.assignments.find(
       (a) => a.giverUserId === req.user.id
     );
-    const receiverName = userAssignment ? userAssignment.receiver.name : null;
+    const receiver = userAssignment ? userAssignment.receiver : null;
 
     res.render("groups/show", {
       group,
+      participants: group.participants,
       participantNames,
-      receiverName,
+      receiver,
+      receiverName: receiver ? receiver.name : null,
       dayjs,
       config,
     });

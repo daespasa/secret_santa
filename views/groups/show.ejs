@@ -132,23 +132,57 @@
 
         <section class="bg-white shadow rounded-lg p-6">
           <h3 class="text-lg font-semibold mb-4">
-            Participantes (<%= participantNames.length %>)
+            Participantes (<%= participants.length %>)
           </h3>
-          <ul class="list-disc pl-5 space-y-1 text-gray-800">
-            <% participantNames.forEach(name => { %>
-            <li><%= name %></li>
+          <ul class="space-y-3 text-gray-800">
+            <% participants.forEach(p => { %>
+            <li class="flex items-center gap-3">
+              <div class="flex-shrink-0">
+                <% if (p.user.profilePhoto) { %>
+                <img
+                  src="<%= p.user.profilePhoto %>"
+                  alt="<%= p.user.name %>"
+                  class="h-8 w-8 rounded-full object-cover border border-gray-300"
+                />
+                <% } else { %>
+                <div
+                  class="h-8 w-8 rounded-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center text-white text-xs font-semibold"
+                >
+                  <%= p.user.name.charAt(0).toUpperCase() %>
+                </div>
+                <% } %>
+              </div>
+              <span class="font-medium"><%= p.user.name %></span>
+            </li>
             <% }) %>
           </ul>
         </section>
       </div>
 
       <section class="bg-white shadow rounded-lg p-6 mt-6">
-        <h3 class="text-lg font-semibold mb-2">Tu resultado</h3>
-        <% if (group.drawnAt && receiverName) { %>
-        <p>
-          Tu amigo invisible es:
-          <span class="font-semibold"><%= receiverName %></span>
-        </p>
+        <h3 class="text-lg font-semibold mb-4">Tu resultado</h3>
+        <% if (group.drawnAt && receiver) { %>
+        <div class="flex items-center gap-4 p-4 bg-red-50 rounded-lg border border-red-200">
+          <div class="flex-shrink-0">
+            <% if (receiver.profilePhoto) { %>
+            <img
+              src="<%= receiver.profilePhoto %>"
+              alt="<%= receiver.name %>"
+              class="h-16 w-16 rounded-full object-cover border-2 border-red-300"
+            />
+            <% } else { %>
+            <div
+              class="h-16 w-16 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-xl font-semibold"
+            >
+              <%= receiver.name.charAt(0).toUpperCase() %>
+            </div>
+            <% } %>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600 mb-1">Tu amigo invisible es:</p>
+            <p class="text-2xl font-bold text-red-600"><%= receiver.name %></p>
+          </div>
+        </div>
         <% } else if (!group.drawnAt) { %>
         <p class="text-gray-600">Aún no se ha realizado el sorteo.</p>
         <% } else { %>
