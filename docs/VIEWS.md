@@ -154,3 +154,10 @@ En todas las vistas tienes acceso a:
 - `flash` - Mensajes flash (success, error, info)
 - `config` - Configuración de la app
 - `dayjs` - Librería de fechas (donde se incluya)
+
+## Estado de Migración a Layouts
+
+- `layout-page.ejs`: dashboard, settings, groups/new, groups/edit, groups/created
+- `layout-full.ejs`: landing, privacy, credits, groups/join
+- `layout-auth.ejs`: auth/login, auth/register
+- `layout-error.ejs`: not-found
