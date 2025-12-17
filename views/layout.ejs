@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" class="<%= typeof htmlClass !== 'undefined' ? htmlClass : '' %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Organiza tu amigo invisible de forma fácil y divertida' %>" />
+    <% if (typeof keywords !== 'undefined') { %>
+    <meta name="keywords" content="<%= keywords %>" />
+    <% } %>
+    <% if (typeof robots !== 'undefined') { %>
+    <meta name="robots" content="<%= robots %>" />
+    <% } %>
+    
+    <!-- Title -->
+    <title><%= typeof title !== 'undefined' ? title : 'Secret Santa - Amigo Invisible' %></title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ef4444" />
+    
+    <!-- Open Graph / Social Media -->
+    <% if (typeof ogTitle !== 'undefined' || typeof title !== 'undefined') { %>
+    <meta property="og:title" content="<%= typeof ogTitle !== 'undefined' ? ogTitle : title %>" />
+    <% } %>
+    <% if (typeof ogDescription !== 'undefined' || typeof description !== 'undefined') { %>
+    <meta property="og:description" content="<%= typeof ogDescription !== 'undefined' ? ogDescription : description %>" />
+    <% } %>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/favicon.svg" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/style.css" />
+    
+    <!-- Google Fonts - Material Symbols -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- Additional head content -->
+    <% if (typeof additionalHead !== 'undefined') { %>
+    <%- additionalHead %>
+    <% } %>
+  </head>
+  <body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : 'bg-gray-50' %>">
+    <!-- Main content -->
+    <% if (typeof content !== 'undefined') { %>
+      <%- content %>
+    <% } %>
+    
+    <!-- Additional scripts -->
+    <% if (typeof additionalScripts !== 'undefined') { %>
+    <%- additionalScripts %>
+    <% } %>
+  </body>
+</html>
