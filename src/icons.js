@@ -41,6 +41,7 @@ const iconMap = {
   schedule: "schedule",
   inbox: "inbox",
   star: "star",
+  "arrow-right": "arrow_forward",
 };
 
 // Mapeo de tamaños de Tailwind a px

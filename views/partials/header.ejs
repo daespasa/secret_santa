@@ -3,59 +3,68 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex items-center gap-8">
-        <a href="/" class="text-2xl font-bold text-red-600 flex items-center gap-2 hover:text-red-700 transition">
-          <%- renderIcon("gift", "text-3xl") %> <span class="hidden sm:inline">Amigo Invisible</span>
+        <a
+          href="/"
+          class="text-2xl font-bold text-red-600 flex items-center gap-2 hover:text-red-700 transition"
+        >
+          <%- renderIcon("gift", "text-3xl") %>
+          <span class="hidden sm:inline">Amigo Invisible</span>
         </a>
         <% if (currentUser) { %>
-        <a href="/dashboard" class="text-gray-600 hover:text-gray-900 font-medium transition text-sm sm:text-base">
+        <a
+          href="/dashboard"
+          class="text-gray-600 hover:text-gray-900 font-medium transition text-sm sm:text-base"
+        >
           Dashboard
         </a>
         <% } %>
       </div>
       <div class="flex items-center space-x-4">
         <% if (currentUser) { %>
-          <div class="flex items-center gap-3">
-            <div class="flex-shrink-0">
-              <% if (currentUser.profilePhoto) { %>
-              <img
-                src="<%= currentUser.profilePhoto %>"
-                alt="<%= currentUser.name %>"
-                class="h-8 w-8 rounded-full object-cover border border-gray-300 cursor-pointer hover:border-gray-400 transition"
-                title="<%= currentUser.name %>"
-              />
-              <% } else { %>
-              <div
-                class="h-8 w-8 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-xs font-semibold cursor-pointer hover:shadow-md transition"
-                title="<%= currentUser.name %>"
-              >
-                <%= currentUser.name.charAt(0).toUpperCase() %>
-              </div>
-              <% } %>
+        <div class="flex items-center gap-3">
+          <div class="flex-shrink-0">
+            <% if (currentUser.profilePhoto) { %>
+            <img
+              src="<%= currentUser.profilePhoto %>"
+              alt="<%= currentUser.name %>"
+              class="h-8 w-8 rounded-full object-cover border border-gray-300 cursor-pointer hover:border-gray-400 transition"
+              title="<%= currentUser.name %>"
+            />
+            <% } else { %>
+            <div
+              class="h-8 w-8 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-xs font-semibold cursor-pointer hover:shadow-md transition"
+              title="<%= currentUser.name %>"
+            >
+              <%= currentUser.name.charAt(0).toUpperCase() %>
             </div>
-            <span class="text-gray-700 font-medium text-sm hidden sm:inline"><%= currentUser.name %></span>
+            <% } %>
           </div>
-          <a
-            href="/settings"
+          <span class="text-gray-700 font-medium text-sm hidden sm:inline"
+            ><%= currentUser.name %></span
+          >
+        </div>
+        <a
+          href="/settings"
+          class="text-gray-600 hover:text-gray-900 font-medium transition text-sm"
+        >
+          Ajustes
+        </a>
+        <form method="post" action="/logout" class="inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button
+            type="submit"
             class="text-gray-600 hover:text-gray-900 font-medium transition text-sm"
           >
-            Ajustes
-          </a>
-          <form method="post" action="/logout" class="inline">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button
-              type="submit"
-              class="text-gray-600 hover:text-gray-900 font-medium transition text-sm"
-            >
-              Salir
-            </button>
-          </form>
+            Salir
+          </button>
+        </form>
         <% } else { %>
-          <a
-            href="/auth/google"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition"
-          >
-            Empezar
-          </a>
+        <a
+          href="/auth/google"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition"
+        >
+          Empezar
+        </a>
         <% } %>
       </div>
     </div>

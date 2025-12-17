@@ -43,9 +43,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  if (req.isAuthenticated && req.isAuthenticated()) {
-    return res.redirect("/dashboard");
-  }
   return res.render("landing");
 });
 
