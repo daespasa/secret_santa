@@ -157,21 +157,21 @@
                     >
                     <%- renderIcon("link", "text-sm") %> Copiar
                   </button>
-                  <div class="relative group inline-block">
+                  <div class="relative inline-block share-dropdown-container">
                     <button
                       type="button"
-                      class="share-group inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-sm px-3 py-2 rounded border border-gray-300 transition"
+                      class="share-group-btn inline-flex items-center justify-center sm:justify-start gap-1 text-gray-700 hover:bg-gray-200 text-sm px-3 py-2 rounded border border-gray-300 transition"
                       data-group-name="<%= group.name %>"
                       data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"
                       >
                       <%- renderIcon("share", "text-sm") %> Compartir
                     </button>
                     <!-- Share Menu -->
-                    <div class="absolute left-0 mt-0 w-40 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="whatsapp" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("whatsapp", "text-base mr-1.5") %>WhatsApp</a>
-                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="telegram" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("telegram", "text-base mr-1.5") %>Telegram</a>
-                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="twitter" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("twitter", "text-base mr-1.5") %>Twitter</a>
-                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-platform="email" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("email_icon", "text-base mr-1.5") %>Email</a>
+                    <div class="share-dropdown-menu absolute left-0 mt-2 w-40 bg-white rounded-md shadow-lg opacity-0 invisible transition-opacity duration-200 z-20">
+                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-md first:rounded-t-md last:rounded-b-md" data-platform="whatsapp" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("whatsapp", "text-base mr-1.5") %>WhatsApp</a>
+                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md last:rounded-b-md" data-platform="telegram" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("telegram", "text-base mr-1.5") %>Telegram</a>
+                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md last:rounded-b-md" data-platform="twitter" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("twitter", "text-base mr-1.5") %>Twitter</a>
+                      <a href="#" class="share-group-link block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 first:rounded-t-md last:rounded-b-md" data-platform="email" data-group-name="<%= group.name %>" data-invite-link="<%= `${config?.baseUrl || ''}/join/${group.joinToken}` %>"><%- renderIcon("email_icon", "text-base mr-1.5") %>Email</a>
                     </div>
                   </div>
                 </div>
@@ -333,6 +333,44 @@
           }
         });
       }
+
+      // Share dropdown functionality
+      const shareDropdownContainers = document.querySelectorAll(".share-dropdown-container");
+      shareDropdownContainers.forEach((container) => {
+        const btn = container.querySelector(".share-group-btn");
+        const menu = container.querySelector(".share-dropdown-menu");
+
+        if (btn && menu) {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            // Toggle menu visibility
+            const isHidden = menu.classList.contains("opacity-0");
+            if (isHidden) {
+              menu.classList.remove("opacity-0", "invisible");
+              menu.classList.add("opacity-100", "visible");
+            } else {
+              menu.classList.add("opacity-0", "invisible");
+              menu.classList.remove("opacity-100", "visible");
+            }
+          });
+
+          // Close menu when clicking outside
+          document.addEventListener("click", (e) => {
+            if (!container.contains(e.target)) {
+              menu.classList.add("opacity-0", "invisible");
+              menu.classList.remove("opacity-100", "visible");
+            }
+          });
+
+          // Close menu when clicking on a link
+          menu.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+              menu.classList.add("opacity-0", "invisible");
+              menu.classList.remove("opacity-100", "visible");
+            });
+          });
+        }
+      });
 
       // Copy group link functionality
       const copyGroupLinkBtns = document.querySelectorAll(".copy-group-link");
