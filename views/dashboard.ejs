@@ -211,7 +211,7 @@
                       <div class="flex items-center min-w-0 flex-1">
                         <span
                           class="flex-shrink-0 mr-3 text-2xl"
-                          style="color: <%= g.color || '#DC2626' %>"
+                          data-group-color="<%= g.color || '#DC2626' %>"
                         >
                           <%- renderGroupIcon(g.icon, "text-2xl") %>
                         </span>
@@ -352,6 +352,14 @@
       <%- include('./partials/layout-page-end') %>
 
 <script>
+      // Apply dynamic group colors
+      document.querySelectorAll("[data-group-color]").forEach((el) => {
+        const color = el.getAttribute("data-group-color");
+        if (color) {
+          el.style.color = color;
+        }
+      });
+
       // Filter and Search Functionality
       const searchInput = document.getElementById("searchGroups");
       const filterBtns = document.querySelectorAll(".filter-btn");

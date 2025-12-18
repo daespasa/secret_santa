@@ -1,19 +1,11 @@
-<%- include('./partials/layout-full-start', {
-  title: 'Amigo Invisible - Organiza tu intercambio',
-  description: 'La forma más fácil de organizar tu intercambio de regalos. Crea grupos, personaliza con iconos y colores, comparte invitaciones, sortea de forma justa y todos reciben las asignaciones por email.',
-  htmlClass: 'scroll-smooth',
-  includeHeader: true,
-  keywords: 'amigo invisible, sorteo, intercambio de regalos, grupos, navidad',
-  robots: 'index,follow',
-  canonicalUrl: '/'
-}) %>
+<!-- prettier-ignore -->
+<%- include('./partials/layout-full-start', { title: 'Amigo Invisible - Organiza tu intercambio', description: 'La forma más fácil de organizar tu intercambio de regalos. Crea grupos, personaliza con iconos y colores, comparte invitaciones, sortea de forma justa y todos reciben las asignaciones por email.', htmlClass: 'scroll-smooth', includeHeader: true, keywords: 'amigo invisible, sorteo, intercambio de regalos, grupos, navidad', robots: 'index,follow', canonicalUrl: '/' }) %>
 <div class="max-w-4xl mx-auto text-center">
   <div class="mb-8">
     <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
   </div>
   <h2
-    class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
-  >
+    class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6">
     Organiza tu <span class="text-red-600">Amigo Invisible</span>
     <br class="hidden sm:block" />
     en minutos
@@ -60,25 +52,22 @@
     <% if (currentUser) { %>
     <a
       href="/dashboard"
-      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-    >
+      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
       <%- renderIcon("arrow-right", "text-lg mr-2") %> Ir a Dashboard
     </a>
     <% } else { %>
     <a
       href="/login"
-      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-    >
+      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
       <%- renderIcon("login", "text-lg mr-2") %> Iniciar sesión
     </a>
     <a
       href="/register"
-      class="inline-flex items-center px-8 py-4 border-2 border-red-600 text-lg font-medium rounded-lg text-red-600 bg-transparent hover:bg-red-50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-    >
+      class="inline-flex items-center px-8 py-4 border-2 border-red-600 text-lg font-medium rounded-lg text-red-600 bg-transparent hover:bg-red-50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
       <%- renderIcon("person_add", "text-lg mr-2") %> Crear cuenta
     </a>
     <% } %>
   </div>
 </div>
-  <div class="h-12"></div>
-  <%- include('./partials/layout-full-end') %>
+<div class="h-12"></div>
+<%- include('./partials/layout-full-end') %>
