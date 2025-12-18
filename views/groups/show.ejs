@@ -186,7 +186,7 @@ de amigo invisible.`, includeHeader: true }) %>
       <ul class="space-y-2 sm:space-y-3 text-gray-800">
         <% participants.forEach(p => { %> <% const displayName = p.isGuest ?
         p.guestName : p.user.name; %> <% const hasPhoto = !p.isGuest &&
-        p.user.profilePhoto; %> <% const isCurrentUser = !p.isGuest && p.userId === currentUser.id; %> <% const isAdmin = p.userId === group.adminUserId; %>
+        p.user.profilePhoto; %> <% const isCurrentUser = !p.isGuest && currentUser && currentUser.id && p.userId === currentUser.id; %> <% const isAdmin = p.userId === group.adminUserId; %>
         <li
           class="flex items-center gap-2 sm:gap-3 p-2 sm:p-0 rounded hover:bg-gray-50 transition justify-between">
           <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
@@ -218,7 +218,7 @@ de amigo invisible.`, includeHeader: true }) %>
               </span>
             </div>
           </div>
-          <% if (!isGuest && group.adminUserId === currentUser.id && !isAdmin && !isCurrentUser) { %>
+          <% if (!isGuest && currentUser && currentUser.id && group.adminUserId === currentUser.id && !isAdmin && !isCurrentUser) { %>
           <form
             method="post"
             action="/groups/<%= group.id %>/remove-participant/<%= p.id %>"
