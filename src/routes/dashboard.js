@@ -35,7 +35,8 @@ router.get("/dashboard", ensureAuth, async (req, res, next) => {
       participantCount: m.group.participants.length,
       drawn: Boolean(m.group.drawnAt),
       isAdmin: m.group.adminUserId === req.user.id,
-      invitationCode: m.group.invitationCode,
+      // Use joinToken as the invitation code used across views
+      invitationCode: m.group.joinToken,
       createdAt: m.group.createdAt,
     }));
 

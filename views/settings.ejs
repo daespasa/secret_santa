@@ -2,8 +2,8 @@
   title: 'Ajustes de Perfil',
   description: 'Gestiona tu perfil, foto, nombre y preferencias personales en Amigo Invisible.'
 }) %>
-         <div class="bg-white shadow rounded-lg p-6 mt-8">
-            <h2 class="text-2xl font-bold mb-6">Ajustes de Perfil</h2>
+        <div class="bg-white shadow rounded-lg p-6 mt-8 max-w-3xl mx-auto">
+          <h2 class="text-2xl font-bold mb-6">Ajustes de Perfil</h2>
 
             <!-- Profile Card -->
             <div class="mb-8 pb-8 border-b border-gray-200">
@@ -49,7 +49,7 @@
                   name="name"
                   value="<%= user.name %>"
                   required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  class="mt-1 block w-full md:max-w-2xl rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
                 />
               </div>
 
@@ -61,7 +61,7 @@
                   type="email"
                   value="<%= user.email %>"
                   disabled
-                  class="mt-1 block w-full rounded-md bg-gray-50 px-3 py-2 border border-gray-300 text-gray-600"
+                  class="mt-1 block w-full md:max-w-2xl rounded-md bg-gray-50 px-3 py-2 border border-gray-300 text-gray-600"
                 />
                 <p class="mt-1 text-xs text-gray-500">
                   El correo está vinculado a tu cuenta y no se puede cambiar.
@@ -88,7 +88,7 @@
                     </div>
                     <% } %>
                   </div>
-                  <div class="flex-grow">
+                  <div class="flex-grow md:max-w-2xl">
                     <input
                       type="file"
                       name="profilePhoto"
@@ -121,7 +121,7 @@
 
           <% if (user.password) { %>
           <!-- Change Password Section -->
-          <div class="bg-white shadow rounded-lg p-6 mt-6">
+          <div class="bg-white shadow rounded-lg p-6 mt-6 max-w-3xl mx-auto">
             <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
               <%- renderIcon("lock", "text-xl") %> Cambiar Contraseña
             </h3>
@@ -142,7 +142,7 @@
                   id="currentPassword"
                   name="currentPassword"
                   required
-                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  class="block w-full md:max-w-2xl rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
                   placeholder="Tu contraseña actual"
                 />
               </div>
@@ -156,7 +156,7 @@
                   id="newPassword"
                   name="newPassword"
                   required
-                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  class="block w-full md:max-w-2xl rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
                   placeholder="Mínimo 6 caracteres"
                 />
                 <p class="mt-1 text-xs text-gray-500">
@@ -173,7 +173,7 @@
                   id="confirmPassword"
                   name="confirmPassword"
                   required
-                  class="block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
+                  class="block w-full md:max-w-2xl rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 px-3 py-2 border"
                   placeholder="Repite la nueva contraseña"
                 />
               </div>
