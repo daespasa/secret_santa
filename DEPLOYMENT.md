@@ -246,7 +246,7 @@ docker-compose -f docker-compose.prod.yml logs -f app
 docker-compose -f docker-compose.prod.yml ps
 ```
 
-**Nota**: El servicio `init` automáticamente crea las carpetas y genera `.env` si no existen.
+**Nota**: El contenedor automáticamente crea las carpetas y genera `.env` si no existen (lógica en el Dockerfile entrypoint).
 
 ---
 

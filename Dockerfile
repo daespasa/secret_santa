@@ -35,6 +35,10 @@ COPY --from=builder /app/public/style.css /app/public/style.css
 # Generate Prisma client in runtime (safer if schema changes at runtime)
 RUN npx prisma generate
 
+# Copy and make init script executable
+COPY init.sh /app/init.sh
+RUN chmod +x /app/init.sh
+
 EXPOSE 3000
-# Default command runs the app; compose can override to run migrations first
-CMD ["npm", "start"]
+# Entrypoint: creates dirs, generates .env, runs migrations, then starts app
+ENTRYPOINT ["/app/init.sh"]
