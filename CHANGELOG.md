@@ -8,6 +8,9 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 
 ## [Unreleased]
 
+### Changes
+- Docs: Update README and DEPLOYMENT.md for CasaOS-friendly compose (env at /DATA/secretsanta/.env, volumes under /DATA/secretsanta, Node healthcheck).
+
 ### Planeado
 
 - [ ] Base de datos PostgreSQL

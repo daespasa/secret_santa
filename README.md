@@ -255,6 +255,20 @@ docker-compose up
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
+### CasaOS (Compose import)
+
+```bash
+# 1) Crea carpetas persistentes en el servidor
+mkdir -p /DATA/secretsanta/data /DATA/secretsanta/uploads
+
+# 2) Coloca tu archivo de entorno en:
+#    /DATA/secretsanta/.env
+#    (usa .env.example como referencia; BASE_URL, SESSION_SECRET, EMAIL_*, DB rutas /data)
+
+# 3) En CasaOS, importa docker-compose.prod.yml y arranca la app
+#    El compose aplica migraciones automáticamente y expone el puerto 3000
+```
+
 ---
 
 ## 📁 Estructura del Proyecto
@@ -442,8 +456,9 @@ GOOGLE_CLIENT_SECRET=
 GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
 
 # ===== BASE DE DATOS =====
-DB_PATH=./data/app.db
-DATABASE_URL=file:./data/app.db
+# Usa rutas internas del contenedor para persistir en /DATA/secretsanta/data (CasaOS)
+DB_PATH=/data/app.db
+DATABASE_URL=file:/data/app.db
 
 # ===== EMAIL (BREVO/SMTP) =====
 EMAIL_MODE=dev                    # dev | smtp
@@ -452,6 +467,11 @@ SMTP_PORT=587
 SMTP_USER=
 SMTP_PASS=
 EMAIL_FROM=Secret Santa <noreply@example.com>
+
+# ===== UBICACIÓN DEL .env (CasaOS) =====
+# docker-compose.prod.yml usa /DATA/secretsanta/.env
+# Coloca tu archivo allí para administración fácil
+# (no requerido en local)
 ```
 
 ---
