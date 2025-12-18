@@ -603,66 +603,70 @@ router.post("/groups/:id/leave", ensureAuth, async (req, res, next) => {
 });
 
 // Remove participant - Admin only
-router.post("/groups/:id/remove-participant/:participantId", ensureAuth, async (req, res, next) => {
-  const groupId = Number(req.params.id);
-  const participantId = Number(req.params.participantId);
+router.post(
+  "/groups/:id/remove-participant/:participantId",
+  ensureAuth,
+  async (req, res, next) => {
+    const groupId = Number(req.params.id);
+    const participantId = Number(req.params.participantId);
 
-  try {
-    const group = await prisma.group.findUnique({
-      where: { id: groupId },
-      include: { participants: true },
-    });
-
-    if (!group) {
-      req.flash("error", "Grupo no encontrado");
-      return res.redirect("/dashboard");
-    }
-
-    // Check if user is admin
-    if (group.adminUserId !== req.user.id) {
-      req.flash("error", "Solo el admin puede eliminar participantes");
-      return res.redirect(`/groups/${groupId}`);
-    }
-
-    // Find participant
-    const participant = await prisma.groupUser.findUnique({
-      where: { id: participantId },
-    });
-
-    if (!participant || participant.groupId !== groupId) {
-      req.flash("error", "Participante no encontrado");
-      return res.redirect(`/groups/${groupId}`);
-    }
-
-    // Cannot remove admin
-    if (participant.userId === group.adminUserId) {
-      req.flash("error", "No puedes eliminar al administrador");
-      return res.redirect(`/groups/${groupId}`);
-    }
-
-    // If group has been drawn, remove assignments involving this participant
-    if (group.drawnAt) {
-      await prisma.assignment.deleteMany({
-        where: {
-          groupId,
-          OR: [
-            { giverParticipantId: participantId },
-            { receiverParticipantId: participantId },
-          ],
-        },
+    try {
+      const group = await prisma.group.findUnique({
+        where: { id: groupId },
+        include: { participants: true },
       });
+
+      if (!group) {
+        req.flash("error", "Grupo no encontrado");
+        return res.redirect("/dashboard");
+      }
+
+      // Check if user is admin
+      if (group.adminUserId !== req.user.id) {
+        req.flash("error", "Solo el admin puede eliminar participantes");
+        return res.redirect(`/groups/${groupId}`);
+      }
+
+      // Find participant
+      const participant = await prisma.groupUser.findUnique({
+        where: { id: participantId },
+      });
+
+      if (!participant || participant.groupId !== groupId) {
+        req.flash("error", "Participante no encontrado");
+        return res.redirect(`/groups/${groupId}`);
+      }
+
+      // Cannot remove admin
+      if (participant.userId === group.adminUserId) {
+        req.flash("error", "No puedes eliminar al administrador");
+        return res.redirect(`/groups/${groupId}`);
+      }
+
+      // If group has been drawn, remove assignments involving this participant
+      if (group.drawnAt) {
+        await prisma.assignment.deleteMany({
+          where: {
+            groupId,
+            OR: [
+              { giverParticipantId: participantId },
+              { receiverParticipantId: participantId },
+            ],
+          },
+        });
+      }
+
+      // Remove participant
+      await prisma.groupUser.delete({
+        where: { id: participantId },
+      });
+
+      req.flash("success", "Participante eliminado del grupo");
+      res.redirect(`/groups/${groupId}`);
+    } catch (err) {
+      next(err);
     }
-
-    // Remove participant
-    await prisma.groupUser.delete({
-      where: { id: participantId },
-    });
-
-    req.flash("success", "Participante eliminado del grupo");
-    res.redirect(`/groups/${groupId}`);
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 export default router;
