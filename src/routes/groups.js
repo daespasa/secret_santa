@@ -669,4 +669,108 @@ router.post(
   }
 );
 
+// Redraw (resortear) group POST
+router.post(
+  "/groups/:id/redraw",
+  ensureAuth,
+  drawLimiter,
+  async (req, res, next) => {
+    const groupId = Number(req.params.id);
+    try {
+      const group = await prisma.group.findUnique({
+        where: { id: groupId },
+        include: { 
+          participants: { include: { user: true } },
+          assignments: true 
+        },
+      });
+
+      if (!group) {
+        req.flash("error", "Grupo no encontrado");
+        return res.redirect("/dashboard");
+      }
+
+      if (group.adminUserId !== req.user.id) {
+        req.flash("error", "Solo el admin puede resortear");
+        return res.redirect(`/groups/${groupId}`);
+      }
+
+      if (!group.drawnAt) {
+        req.flash("error", "El grupo aún no ha sido sorteado");
+        return res.redirect(`/groups/${groupId}`);
+      }
+
+      // Delete old assignments
+      await prisma.assignment.deleteMany({
+        where: { groupId },
+      });
+
+      // Reset drawnAt to null to allow new draw
+      await prisma.group.update({
+        where: { id: groupId },
+        data: { drawnAt: null },
+      });
+
+      // Perform new draw
+      const { assignments } = await performDraw(groupId);
+
+      // Reload group with assignments to get participant details
+      const updatedGroup = await prisma.group.findUnique({
+        where: { id: groupId },
+        include: {
+          participants: { include: { user: true } },
+          assignments: {
+            include: {
+              giver: { include: { user: true } },
+              receiver: { include: { user: true } },
+            },
+          },
+        },
+      });
+
+      // Send emails best-effort; failures logged
+      if (config.email.mode === "smtp" || config.email.mode === "dev") {
+        await Promise.all(
+          updatedGroup.assignments.map(async (assignment) => {
+            const giver = assignment.giver;
+            const receiver = assignment.receiver;
+
+            // Determine email and names (could be registered user or guest)
+            const giverEmail = giver.isGuest
+              ? giver.guestEmail
+              : giver.user.email;
+            const giverName = giver.isGuest ? giver.guestName : giver.user.name;
+            const receiverName = receiver.isGuest
+              ? receiver.guestName
+              : receiver.user.name;
+
+            if (!giverEmail) {
+              console.error("No email for giver", giver);
+              return null;
+            }
+
+            try {
+              await sendAssignmentEmail({
+                to: giverEmail,
+                groupName: updatedGroup.name,
+                receiverName,
+                priceMax: updatedGroup.priceMax,
+                groupUrl: `${config.baseUrl}/groups/${groupId}`,
+              });
+            } catch (err) {
+              console.error("Error enviando email", err);
+            }
+            return null;
+          })
+        );
+      }
+
+      req.flash("success", "Sorteo realizado nuevamente");
+      res.redirect(`/groups/${groupId}`);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 export default router;

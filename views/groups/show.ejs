@@ -57,7 +57,26 @@ de amigo invisible.`, includeHeader: true }) %>
             ><span class="sm:hidden">Sorteo</span>
           </button>
         </form>
-        <% } %> <% if (!isGuest && group.adminUserId === currentUser.id) { %>
+        <% } %> 
+        
+        <% if (!isGuest && group.drawnAt && group.adminUserId ===
+        currentUser.id) { %>
+        <form
+          method="post"
+          action="/groups/<%= group.id %>/redraw"
+          class="w-full sm:w-auto">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button
+            type="submit"
+            class="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-yellow-600 text-white hover:bg-yellow-700 transition text-xs sm:text-sm font-medium">
+            <%- renderIcon("refresh", "text-sm") %>
+            <span class="hidden sm:inline">Resortear</span
+            ><span class="sm:hidden">Resortear</span>
+          </button>
+        </form>
+        <% } %> 
+        
+        <% if (!isGuest && group.adminUserId === currentUser.id) { %>
         <a
           href="/groups/<%= group.id %>/edit"
           class="inline-flex items-center justify-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition text-xs sm:text-sm font-medium">

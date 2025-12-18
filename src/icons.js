@@ -69,6 +69,7 @@ const iconMap = {
   palette: "palette",
   warning: "warning",
   person_add: "person_add",
+  refresh: "refresh",
 };
 
 // Mapeo de tamaños de Tailwind a px
