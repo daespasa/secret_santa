@@ -19,7 +19,7 @@ SMTP_HOST=smtp-relay.brevo.com
 SMTP_PORT=587
 SMTP_USER=
 SMTP_PASS=
-EMAIL_FROM=Secret Santa <noreply@secretsanta.daespasa.com>
+EMAIL_FROM="Secret Santa <noreply@secretsanta.daespasa.com>"
 CLOUDFLARE_TUNNEL_TOKEN=
 EOF
   echo "✓ .env template generated at /data/.env"
@@ -27,13 +27,17 @@ else
   echo "✓ Using existing .env"
 fi
 
-# Load .env variables into environment
+# Normalize Windows line endings if present
 if [ -f /data/.env ]; then
-  set -a
-  . /data/.env
-  set +a
-  echo "✓ Environment variables loaded from /data/.env"
+  if grep -q $'\r' /data/.env; then
+    sed -i 's/\r$//' /data/.env
+    echo "✓ Normalized CRLF line endings in /data/.env"
+  fi
 fi
+
+# Ensure Node dotenv loads the env file from /app
+ln -sf /data/.env /app/.env
+echo "✓ Linked /data/.env to /app/.env for dotenv"
 
 # Run migrations and start app
 npx prisma migrate deploy && npm start
