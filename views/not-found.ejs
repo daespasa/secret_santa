@@ -1,82 +1,78 @@
-<%- include('../partials/layout-error-start', {
+<%- include('./partials/layout-error-start', {
   title: 'Página no encontrada - 404',
   description: 'La página que buscas no existe. Vuelve al inicio de Amigo Invisible.',
   headerOffset: true
 }) %>
-         <div class="text-center max-w-md">
-          <!-- 404 Icon -->
-          <div class="mb-8">
-            <div class="text-9xl font-bold text-gray-200 mb-4">404</div>
-            <div class="text-gray-400 flex justify-center">
-              <%- renderIcon("search", "text-9xl") %>
-            </div>
-          </div>
+<div class="text-center max-w-md">
+  <!-- 404 Icon -->
+  <div class="mb-8">
+    <div class="text-9xl font-bold text-gray-200 mb-4">404</div>
+    <div class="text-gray-400 flex justify-center">
+      <%- renderIcon("search", "text-9xl") %>
+    </div>
+  </div>
 
-          <!-- Error Message -->
-          <h1 class="text-3xl font-bold text-gray-900 mb-2">
-            Página no encontrada
-          </h1>
-          <p class="text-lg text-gray-600 mb-8">
-            Lo sentimos, la página que buscas no existe. Puede que el enlace sea
-            incorrecto o la página haya sido eliminada.
-          </p>
+  <!-- Error Message -->
+  <h1 class="text-3xl font-bold text-gray-900 mb-2">Página no encontrada</h1>
+  <p class="text-lg text-gray-600 mb-8">
+    Lo sentimos, la página que buscas no existe. Puede que el enlace sea
+    incorrecto o la página haya sido eliminada.
+  </p>
 
-          <!-- Action Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/"
-              class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4"
-                />
-              </svg>
-              Volver al Inicio
-            </a>
-            <% if (currentUser) { %>
-            <a
-              href="/dashboard"
-              class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-gray-900 font-medium hover:bg-gray-300 transition"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-              </svg>
-              Dashboard
-            </a>
-            <% } %>
-          </div>
+  <!-- Action Buttons -->
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <a
+      href="/"
+      class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-red-600 text-white font-medium hover:bg-red-700 transition"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4"
+        />
+      </svg>
+      Volver al Inicio
+    </a>
+    <% if (currentUser) { %>
+    <a
+      href="/dashboard"
+      class="inline-flex items-center justify-center px-6 py-3 rounded-md bg-gray-200 text-gray-900 font-medium hover:bg-gray-300 transition"
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+        />
+      </svg>
+      Dashboard
+    </a>
+    <% } %>
+  </div>
 
-          <!-- Helpful Tips -->
-          <div class="mt-12 p-6 bg-blue-50 border-l-4 border-blue-400 rounded">
-            <h3
-              class="font-semibold text-blue-900 mb-2 flex items-center gap-2"
-            >
-              <%- renderIcon("lightbulb", "text-lg") %> Consejos útiles
-            </h3>
-            <ul class="text-sm text-blue-800 text-left space-y-1">
-              <li>• Verifica que el enlace esté escrito correctamente</li>
-              <li>• Usa la barra de navegación para moverte por la app</li>
-              <li>• Si el problema persiste, contacta con soporte</li>
-            </ul>
-          </div>
-        </div>
-      <%- include('../partials/layout-error-end') %>
+  <!-- Helpful Tips -->
+  <div class="mt-12 p-6 bg-blue-50 border-l-4 border-blue-400 rounded">
+    <h3 class="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+      <%- renderIcon("lightbulb", "text-lg") %> Consejos útiles
+    </h3>
+    <ul class="text-sm text-blue-800 text-left space-y-1">
+      <li>• Verifica que el enlace esté escrito correctamente</li>
+      <li>• Usa la barra de navegación para moverte por la app</li>
+      <li>• Si el problema persiste, contacta con soporte</li>
+    </ul>
+  </div>
+</div>
+<%- include('./partials/layout-error-end') %>

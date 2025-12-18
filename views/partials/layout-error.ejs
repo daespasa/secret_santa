@@ -3,15 +3,21 @@
 <html lang="es" class="h-full">
   <head>
     <%- include('./head') %>
-    <title><%= typeof title !== 'undefined' ? title : 'Página de Error' %></title>
+    <title>
+      <%= typeof title !== 'undefined' ? title : 'Página de Error' %>
+    </title>
     <% if (typeof description !== 'undefined') { %>
     <meta name="description" content="<%= description %>" />
     <% } %>
   </head>
   <body class="h-full flex flex-col">
-    <div class="flex-1 flex flex-col bg-gray-50 pt-<%= typeof headerOffset !== 'undefined' ? headerOffset : '0' %>">
+    <div
+      class="flex-1 flex flex-col bg-gray-50 pt-<%= typeof headerOffset !== 'undefined' ? headerOffset : '0' %>"
+    >
       <!-- Main Content - Centered -->
-      <main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <main
+        class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10"
+      >
         <%- body %>
       </main>
     </div>

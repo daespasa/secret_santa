@@ -74,10 +74,12 @@ También se ha creado `views/layout.ejs` como un layout más completo que puede 
 Se han creado varios layouts para diferentes tipos de páginas, eliminando duplicación:
 
 ### `layout-page-start/end` - Páginas Estándar
+
 Para páginas autenticadas con header, contenido y footer:
+
 ```ejs
-<%- include('../partials/layout-page-start', { 
-  title: 'Mi Página', 
+<%- include('../partials/layout-page-start', {
+  title: 'Mi Página',
   description: 'Descripción de mi página'
 }) %>
   <!-- Contenido principal aquí -->
@@ -85,6 +87,7 @@ Para páginas autenticadas con header, contenido y footer:
 ```
 
 **Características**:
+
 - Header fijo
 - Fondo gris
 - Flash messages automáticos
@@ -92,9 +95,11 @@ Para páginas autenticadas con header, contenido y footer:
 - Máximo ancho (max-w-7xl)
 
 ### `layout-full-start/end` - Páginas Públicas
+
 Para landing pages y páginas públicas:
+
 ```ejs
-<%- include('../partials/layout-full-start', { 
+<%- include('../partials/layout-full-start', {
   title: 'Bienvenido',
   htmlClass: 'h-full scroll-smooth',
   includeHeader: true,
@@ -104,6 +109,7 @@ Para landing pages y páginas públicas:
 ```
 
 **Variables opcionales**:
+
 - `htmlClass` - Clases para el html tag
 - `includeHeader` - Mostrar header (default: false)
 - `keywords` - Meta keywords para SEO
@@ -111,7 +117,9 @@ Para landing pages y páginas públicas:
 - `canonicalUrl` - URL canónica
 
 ### `layout-auth-start/end` - Páginas de Autenticación
+
 Para login, register y páginas similares:
+
 ```ejs
 <%- include('../partials/layout-auth-start', {
   title: 'Iniciar Sesión'
@@ -121,13 +129,16 @@ Para login, register y páginas similares:
 ```
 
 **Características**:
+
 - Contenido centrado
 - Gradiente rojo-rosa
 - Ancho máximo 448px
 - Diseño minimalista
 
 ### `layout-error-start/end` - Páginas de Error/Info
+
 Para 404, error pages, etc:
+
 ```ejs
 <%- include('../partials/layout-error-start', {
   title: 'Página no encontrada',
@@ -166,6 +177,7 @@ En todas las vistas tienes acceso a:
 - `layout-error-start/end`: not-found
 
 ### Notas importantes
+
 - El offset del header (`pt-16`) se aplica automáticamente en `layout-full-start` cuando `includeHeader` es `true`.
 - Si necesitas mostrar mensajes flash en páginas con `layout-full`, inclúyelos manualmente dentro del contenido: `<%- include('../partials/flash') %>`.
 - Los `<script>` deben ir siempre antes del include de cierre correspondiente (`layout-*-end`) para quedar dentro de `<body>`.

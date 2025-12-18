@@ -1,4 +1,4 @@
-<%- include('../partials/layout-full-start', {
+<%- include('./partials/layout-full-start', {
   title: 'Amigo Invisible - Organiza tu intercambio',
   description: 'La forma más fácil de organizar tu intercambio de regalos. Crea grupos, personaliza con iconos y colores, comparte invitaciones, sortea de forma justa y todos reciben las asignaciones por email.',
   htmlClass: 'scroll-smooth',
@@ -7,90 +7,77 @@
   robots: 'index,follow',
   canonicalUrl: '/'
 }) %>
-           <div class="max-w-4xl mx-auto text-center">
-            <div class="mb-8">
-              <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
-            </div>
-            <h2
-              class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
-            >
-              Organiza tu <span class="text-red-600">Amigo Invisible</span>
-              <br class="hidden sm:block" />
-              en minutos
-            </h2>
-            <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              La forma más fácil de organizar tu intercambio de regalos. Crea
-              grupos, personaliza con iconos y colores, comparte invitaciones,
-              sortea de forma justa y todos reciben las asignaciones por email.
-            </p>
+<div class="max-w-4xl mx-auto text-center">
+  <div class="mb-8">
+    <%- renderIcon("package", "text-8xl mx-auto text-red-600 animate-bounce") %>
+  </div>
+  <h2
+    class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 mb-6"
+  >
+    Organiza tu <span class="text-red-600">Amigo Invisible</span>
+    <br class="hidden sm:block" />
+    en minutos
+  </h2>
+  <p class="text-xl sm:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto">
+    La forma más fácil de organizar tu intercambio de regalos. Crea grupos,
+    personaliza con iconos y colores, comparte invitaciones, sortea de forma
+    justa y todos reciben las asignaciones por email.
+  </p>
 
-            <!-- Features -->
-            <div
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 mt-12"
-            >
-              <div
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                <%- renderIcon("lock", "text-4xl mx-auto mb-3 text-blue-600") %>
-                <h3 class="font-semibold text-lg mb-2">Acceso Rápido</h3>
-                <p class="text-gray-600 text-sm">
-                  Accede en segundos. Tu perfil personal con foto y
-                  configuración.
-                </p>
-              </div>
-              <div
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                <%- renderIcon("mail", "text-4xl mx-auto mb-3 text-green-600") %>
-                <h3 class="font-semibold text-lg mb-2">Emails Automáticos</h3>
-                <p class="text-gray-600 text-sm">
-                  Cada participante recibe su asignación al instante.
-                </p>
-              </div>
-              <div
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                <%- renderIcon("shuffle", "text-4xl mx-auto mb-3 text-purple-600") %>
-                <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
-                <p class="text-gray-600 text-sm">
-                  Algoritmo circular: cada uno regala a uno y recibe de uno.
-                </p>
-              </div>
-              <div
-                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition"
-              >
-                <%- renderIcon("wand-2", "text-4xl mx-auto mb-3 text-pink-600") %>
-                <h3 class="font-semibold text-lg mb-2">Personalización</h3>
-                <p class="text-gray-600 text-sm">
-                  Elige icono y color para cada grupo. Hazlo único.
-                </p>
-              </div>
-            </div>
+  <!-- Features -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 mt-12">
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <%- renderIcon("lock", "text-4xl mx-auto mb-3 text-blue-600") %>
+      <h3 class="font-semibold text-lg mb-2">Acceso Rápido</h3>
+      <p class="text-gray-600 text-sm">
+        Accede en segundos. Tu perfil personal con foto y configuración.
+      </p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <%- renderIcon("mail", "text-4xl mx-auto mb-3 text-green-600") %>
+      <h3 class="font-semibold text-lg mb-2">Emails Automáticos</h3>
+      <p class="text-gray-600 text-sm">
+        Cada participante recibe su asignación al instante.
+      </p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <%- renderIcon("shuffle", "text-4xl mx-auto mb-3 text-purple-600") %>
+      <h3 class="font-semibold text-lg mb-2">Sorteo Justo</h3>
+      <p class="text-gray-600 text-sm">
+        Algoritmo circular: cada uno regala a uno y recibe de uno.
+      </p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+      <%- renderIcon("wand-2", "text-4xl mx-auto mb-3 text-pink-600") %>
+      <h3 class="font-semibold text-lg mb-2">Personalización</h3>
+      <p class="text-gray-600 text-sm">
+        Elige icono y color para cada grupo. Hazlo único.
+      </p>
+    </div>
+  </div>
 
-            <div
-              class="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            >
-              <% if (currentUser) { %>
-              <a
-                href="/dashboard"
-                class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-              >
-                <%- renderIcon("arrow-right", "text-lg mr-2") %> Ir a Dashboard
-              </a>
-              <% } else { %>
-              <a
-                href="/login"
-                class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-              >
-                <%- renderIcon("login", "text-lg mr-2") %> Iniciar sesión
-              </a>
-              <a
-                href="/register"
-                class="inline-flex items-center px-8 py-4 border-2 border-red-600 text-lg font-medium rounded-lg text-red-600 bg-transparent hover:bg-red-50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
-              >
-                <%- renderIcon("person_add", "text-lg mr-2") %> Crear cuenta
-              </a>
-              <% } %>
-            </div>
-          </div>
-<%- include('../partials/layout-full-end') %>
+  <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+    <% if (currentUser) { %>
+    <a
+      href="/dashboard"
+      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
+    >
+      <%- renderIcon("arrow-right", "text-lg mr-2") %> Ir a Dashboard
+    </a>
+    <% } else { %>
+    <a
+      href="/login"
+      class="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
+    >
+      <%- renderIcon("login", "text-lg mr-2") %> Iniciar sesión
+    </a>
+    <a
+      href="/register"
+      class="inline-flex items-center px-8 py-4 border-2 border-red-600 text-lg font-medium rounded-lg text-red-600 bg-transparent hover:bg-red-50 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition"
+    >
+      <%- renderIcon("person_add", "text-lg mr-2") %> Crear cuenta
+    </a>
+    <% } %>
+  </div>
+</div>
+<%- include('./partials/layout-full-end') %>

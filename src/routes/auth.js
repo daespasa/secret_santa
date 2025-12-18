@@ -44,7 +44,10 @@ router.get("/register", (req, res) => {
     console.log(`Register GET: Saved returnTo = ${req.query.returnTo}`);
   }
 
-  res.render("auth/register", { csrfToken: res.locals.csrfToken, returnTo: req.query.returnTo || null });
+  res.render("auth/register", {
+    csrfToken: res.locals.csrfToken,
+    returnTo: req.query.returnTo || null,
+  });
 });
 
 router.post("/register", registerLimiter, async (req, res, next) => {
@@ -127,14 +130,16 @@ router.post("/register", registerLimiter, async (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) return next(err);
       req.flash("success", "¡Cuenta creada y sesión iniciada correctamente!");
-      
+
       // Only use returnTo if it's a valid path
       let redirectTo = "/dashboard";
       if (returnTo && returnTo.trim() && returnTo.startsWith("/")) {
         redirectTo = returnTo;
       }
-      
-      console.log(`New user ${user.id} (${user.email}) registered. Redirecting to: ${redirectTo}`);
+
+      console.log(
+        `New user ${user.id} (${user.email}) registered. Redirecting to: ${redirectTo}`
+      );
       res.redirect(redirectTo);
     });
   } catch (err) {
@@ -155,7 +160,10 @@ router.get("/login", (req, res) => {
     req.session.returnTo = req.query.returnTo;
   }
 
-  res.render("auth/login", { csrfToken: res.locals.csrfToken, returnTo: req.query.returnTo || null });
+  res.render("auth/login", {
+    csrfToken: res.locals.csrfToken,
+    returnTo: req.query.returnTo || null,
+  });
 });
 
 router.post(
@@ -168,13 +176,13 @@ router.post(
   }),
   (req, res) => {
     req.flash("success", "¡Bienvenido!");
-    
+
     // Get returnTo from form body (hidden field), then session, then default
     let returnTo = req.body.returnTo;
     if (!returnTo || !returnTo.trim() || !returnTo.startsWith("/")) {
       returnTo = req.session.returnTo || "/dashboard";
     }
-    
+
     if (req.session.returnTo) {
       delete req.session.returnTo;
     }
