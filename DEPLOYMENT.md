@@ -224,12 +224,12 @@ sudo journalctl -u cloudflared -f
 # 2) En CasaOS: AppStore → Custom App → Importa el compose → Presiona "Start"
 
 # 🎉 El sistema automáticamente:
-#  ✓ Crea /DATA/secretsanta/{data,uploads}
-#  ✓ Genera .env template en /DATA/secretsanta/.env
+#  ✓ Crea /DATA/AppData/secretsanta/{data,uploads}
+#  ✓ Genera .env template en /DATA/AppData/secretsanta/.env
 #  ✓ Ejecuta migraciones de BD
 #  ✓ Inicia la aplicación
 
-# 3) Edita /DATA/secretsanta/.env con tus credenciales:
+# 3) Edita /DATA/AppData/secretsanta/.env con tus credenciales:
 #    - BASE_URL (tu dominio)
 #    - SESSION_SECRET (clave larga aleatoria)
 #    - GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET

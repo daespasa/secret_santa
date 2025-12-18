@@ -6,7 +6,7 @@ services:
     image: alpine:latest
     container_name: amigo-init
     volumes:
-      - /DATA/secretsanta:/data
+      - /DATA/AppData/secretsanta:/data
     command: |
       sh -c "
         mkdir -p /data/data /data/uploads
@@ -43,13 +43,13 @@ EOF
     restart: unless-stopped
     # Use a host-level env file so CasaOS can manage it easily
     env_file:
-      - /DATA/secretsanta/.env
+      - /DATA/AppData/secretsanta/.env
     ports:
       - "3000:3000"
-    # Persist all app data under /DATA/secretsanta
+    # Persist all app data under /DATA/AppData/secretsanta (CasaOS standard)
     volumes:
-      - /DATA/secretsanta/data:/data
-      - /DATA/secretsanta/uploads:/app/public/uploads
+      - /DATA/AppData/secretsanta/data:/data
+      - /DATA/AppData/secretsanta/uploads:/app/public/uploads
     command: ["sh", "-c", "npx prisma migrate deploy && npm start"]
     depends_on:
       init:

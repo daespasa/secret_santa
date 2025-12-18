@@ -263,12 +263,12 @@ docker-compose -f docker-compose.prod.yml up -d
 # 2) En CasaOS: AppStore → Custom App → Importa el compose → "Start"
 
 # 🎉 Automáticamente:
-#  • Crea /DATA/secretsanta/{data,uploads}
-#  • Genera .env template en /DATA/secretsanta/.env
+#  • Crea /DATA/AppData/secretsanta/{data,uploads}
+#  • Genera .env template en /DATA/AppData/secretsanta/.env
 #  • Ejecuta migraciones de BD
 #  • Inicia el servicio
 
-# 3) Edita /DATA/secretsanta/.env con credenciales (BASE_URL, SESSION_SECRET, etc.)
+# 3) Edita /DATA/AppData/secretsanta/.env con credenciales (BASE_URL, SESSION_SECRET, etc.)
 
 # 4) Reinicia desde CasaOS para aplicar cambios
 ```
