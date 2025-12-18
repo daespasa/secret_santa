@@ -16,6 +16,7 @@ Guía completa para desplegar **Amigo Invisible** en producción usando **Cloudf
 ## ✅ Opción A: Cloudflare Tunnel (Recomendado) ⭐
 
 **Ventajas:**
+
 - ✅ Sin costos de infraestructura
 - ✅ SSL automático con Let's Encrypt
 - ✅ DDoS protection gratis
@@ -216,10 +217,14 @@ sudo journalctl -u cloudflared -f
 ### Paso 7: Iniciar Aplicación
 
 ```bash
-# Crea base de datos
-docker-compose -f docker-compose.prod.yml exec app npx prisma migrate deploy
+## CasaOS (Compose import)
+# 1) En tu servidor CasaOS, crea carpetas:
+mkdir -p /DATA/secretsanta/data /DATA/secretsanta/uploads
 
-# Inicia contenedores
+# 2) Copia un .env a /DATA/secretsanta/.env con tus credenciales
+#    (usa .env.example como referencia; IMPORTANTES: BASE_URL, SESSION_SECRET, EMAIL_* y DB rutas /data)
+
+# 3) Importa docker-compose.prod.yml en CasaOS (App / Compose) y arranca
 docker-compose -f docker-compose.prod.yml up -d --build
 
 # Verifica logs
@@ -239,7 +244,8 @@ curl https://tu-dominio.com
 docker-compose -f docker-compose.prod.yml logs -f app
 
 # Conecta a la BD si necesitas
-psql postgresql://amigo_user:password@localhost:5432/secret_santa
+# (Si usas PostgreSQL en lugar de SQLite)
+# psql postgresql://amigo_user:password@localhost:5432/secret_santa
 ```
 
 ### Paso 9: Configurar SSL en Cloudflare
@@ -409,6 +415,7 @@ touch /app/maintenance.flag
 ### Logs Centralizados (Opcional)
 
 Usa un servicio como:
+
 - **CloudWatch** (AWS)
 - **Loggly**
 - **Datadog**

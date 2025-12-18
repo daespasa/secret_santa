@@ -7,16 +7,25 @@ services:
       dockerfile: Dockerfile
     container_name: amigo-invisible
     restart: unless-stopped
+    # Use a host-level env file so CasaOS can manage it easily
     env_file:
-      - .env
+      - /DATA/secretsanta/.env
     ports:
       - "3000:3000"
+    # Persist all app data under /DATA/secretsanta
     volumes:
-      - ./data:/data
-      - ./public/uploads:/app/public/uploads
+      - /DATA/secretsanta/data:/data
+      - /DATA/secretsanta/uploads:/app/public/uploads
     command: ["sh", "-c", "npx prisma migrate deploy && npm start"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      # Use Node-based check to avoid needing curl/wget in the image
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/',r=>process.exit(r.statusCode>=200&&r.statusCode<400?0:1)).on('error',()=>process.exit(1))",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
