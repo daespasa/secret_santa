@@ -176,7 +176,7 @@ router.get("/groups/:id", async (req, res, next) => {
       config,
       isGuest,
       guestInfo,
-      currentUser: req.user || { id: null },
+      currentUser: req.user || null,
     });
   } catch (err) {
     next(err);
