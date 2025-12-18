@@ -1,6 +1,6 @@
 # 🚀 Guía de Deployment - Amigo Invisible
 
-Guía completa para desplegar **Amigo Invisible** en producción usando **Cloudflare Tunnel + Docker**.
+Guía completa para desplegar **Amigo Invisible** en producción usando **Cloudflare Tunnel + Docker + Docker Hub**.
 
 ---
 
@@ -8,6 +8,7 @@ Guía completa para desplegar **Amigo Invisible** en producción usando **Cloudf
 
 - [Opción A: Cloudflare Tunnel (Recomendado)](#opción-a-cloudflare-tunnel)
 - [Opción B: Dokploy](#opción-b-dokploy)
+- [Setup Docker Hub (para CI/CD automático)](#setup-docker-hub-cicd)
 - [Monitoreo y Mantenimiento](#monitoreo-y-mantenimiento)
 - [Troubleshooting](#troubleshooting)
 
@@ -246,6 +247,47 @@ docker-compose -f docker-compose.prod.yml ps
 ```
 
 **Nota**: El servicio `init` automáticamente crea las carpetas y genera `.env` si no existen.
+
+---
+
+## 🐳 Setup Docker Hub + CI/CD (GitHub Actions)
+
+**¿Por qué?** Cada vez que hagas `git push`, GitHub automáticamente construye y publica la imagen en Docker Hub. Así los usuarios en CasaOS solo descargan la imagen pre-compilada (mucho más rápido).
+
+### Paso 1: Crear un Access Token en Docker Hub
+
+1. Ve a https://hub.docker.com/settings/security
+2. **New Access Token**
+3. Dale nombre: `github-actions`
+4. Permiso: **Read & Write**
+5. **Copia el token**
+
+### Paso 2: Agregar Secrets en GitHub
+
+1. Ve a tu repositorio → **Settings** → **Secrets and variables** → **Actions**
+2. **New repository secret**
+3. Agrega:
+   - **Nombre:** `DOCKER_HUB_USERNAME` → **Valor:** `tu-usuario-dockerhub` (ej: `daespasa`)
+   - **Nombre:** `DOCKER_HUB_TOKEN` → **Valor:** El token que copiaste
+
+### Paso 3: ¡Listo!
+
+Ahora cada vez que hagas `git push` a `main`:
+- ✅ GitHub compila automáticamente la imagen
+- ✅ La publica en Docker Hub: `daespasa/secret-santa:latest`
+- ✅ Los usuarios en CasaOS obtienen la imagen pre-compilada
+
+El compose ya usa: `image: daespasa/secret-santa:latest`
+
+### Ver el progreso
+
+1. Ve a tu repositorio → **Actions**
+2. Haz clic en el último workflow
+3. Verás el estado de la compilación y publicación
+
+Si falla, haz clic en el job para ver los logs.
+
+---
 
 ### Paso 8: Verificar Deployment
 

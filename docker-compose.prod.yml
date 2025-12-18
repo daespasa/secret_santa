@@ -36,9 +36,8 @@ EOF
     restart: "no"
 
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # Use pre-built image from Docker Hub
+    image: daespasa/secret-santa:latest
     container_name: amigo-invisible
     restart: unless-stopped
     # Use a host-level env file so CasaOS can manage it easily
