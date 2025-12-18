@@ -1,0 +1,15 @@
+# Exclude files from Docker build context
+node_modules/
+.git/
+.cache/
+coverage/
+.DS_Store
+.vscode/
+.idea/
+
+# Local data and uploads
+/data/
+public/uploads/
+
+# Build outputs handled separately
+public/style.css
