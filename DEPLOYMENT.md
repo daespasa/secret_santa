@@ -273,6 +273,7 @@ docker-compose -f docker-compose.prod.yml ps
 ### Paso 3: ¡Listo!
 
 Ahora cada vez que hagas `git push` a `main`:
+
 - ✅ GitHub compila automáticamente la imagen
 - ✅ La publica en Docker Hub: `daespasa/secret-santa:latest`
 - ✅ Los usuarios en CasaOS obtienen la imagen pre-compilada
