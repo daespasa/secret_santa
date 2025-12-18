@@ -250,12 +250,12 @@ de amigo invisible.`, includeHeader: true }) %>
         <% if (receiver.profilePhoto) { %>
         <img
           src="<%= receiver.profilePhoto %>"
-          alt="<%= receiver.name %>"
+          alt="<%= receiverName %>"
           class="h-16 w-16 sm:h-20 sm:w-20 rounded-full object-cover border-2 sm:border-3 border-red-300 shadow-md" />
         <% } else { %>
         <div
           class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-semibold shadow-md">
-          <%= receiver.name.charAt(0).toUpperCase() %>
+          <%= receiverName.charAt(0).toUpperCase() %>
         </div>
         <% } %>
       </div>
@@ -264,7 +264,7 @@ de amigo invisible.`, includeHeader: true }) %>
           Tu amigo invisible es:
         </p>
         <p class="text-2xl sm:text-3xl font-bold text-red-600 break-words">
-          <%= receiver.name %>
+          <%= receiverName %>
         </p>
         <p class="text-xs sm:text-sm text-gray-500 mt-2">
           ¡Que comience la aventura! 🎁
