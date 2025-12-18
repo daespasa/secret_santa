@@ -2,8 +2,18 @@
   title: 'Iniciar sesión - Amigo Invisible',
   description: 'Inicia sesión en tu cuenta de amigo invisible'
 }) %>
-<!-- Login Form -->
-<form method="post" action="/login" class="space-y-4">
+<div class="bg-white rounded-lg shadow-lg p-6 sm:p-8">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Iniciar sesión</h1>
+    <p class="text-gray-600">Bienvenido de vuelta</p>
+  </div>
+
+  <!-- Flash Messages -->
+  <%- include('../partials/flash') %>
+
+  <!-- Login Form -->
+  <form method="post" action="/login" class="space-y-4">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
   <input type="hidden" name="returnTo" value="<%= returnTo || '' %>" />
 
@@ -89,4 +99,5 @@
     Crea una aquí
   </a>
 </p>
+</div>
 <%- include('../partials/layout-auth-end') %>
