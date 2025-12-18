@@ -243,7 +243,7 @@ de amigo invisible.`, includeHeader: true }) %>
     <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
       <%- renderIcon("card_giftcard", "text-xl") %> Tu resultado
     </h3>
-    <% if (group.drawnAt && receiver) { %>
+    <% if (group.drawnAt && receiver && receiverName) { %>
     <div
       class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 p-4 sm:p-6 bg-gradient-to-br from-red-50 to-pink-50 rounded-lg border-2 border-red-200">
       <div class="flex-shrink-0">
