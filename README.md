@@ -255,18 +255,22 @@ docker-compose up
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
-### CasaOS (Compose import)
+### CasaOS (Completamente Automático ✨)
 
 ```bash
-# 1) Crea carpetas persistentes en el servidor
-mkdir -p /DATA/secretsanta/data /DATA/secretsanta/uploads
+# 1) Descarga docker-compose.prod.yml del repositorio
 
-# 2) Coloca tu archivo de entorno en:
-#    /DATA/secretsanta/.env
-#    (usa .env.example como referencia; BASE_URL, SESSION_SECRET, EMAIL_*, DB rutas /data)
+# 2) En CasaOS: AppStore → Custom App → Importa el compose → "Start"
 
-# 3) En CasaOS, importa docker-compose.prod.yml y arranca la app
-#    El compose aplica migraciones automáticamente y expone el puerto 3000
+# 🎉 Automáticamente:
+#  • Crea /DATA/secretsanta/{data,uploads}
+#  • Genera .env template en /DATA/secretsanta/.env
+#  • Ejecuta migraciones de BD
+#  • Inicia el servicio
+
+# 3) Edita /DATA/secretsanta/.env con credenciales (BASE_URL, SESSION_SECRET, etc.)
+
+# 4) Reinicia desde CasaOS para aplicar cambios
 ```
 
 ---

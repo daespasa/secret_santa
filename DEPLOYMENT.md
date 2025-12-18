@@ -214,25 +214,38 @@ sudo journalctl -u cloudflared -f
    - `tu-dominio.com` → `uuid.cfargotunnel.com`
    - `www.tu-dominio.com` → `uuid.cfargotunnel.com`
 
-### Paso 7: Iniciar Aplicación
+### Paso 7: Iniciar Aplicación en CasaOS (Completamente Automático)
 
 ```bash
-## CasaOS (Compose import)
-# 1) En tu servidor CasaOS, crea carpetas:
-mkdir -p /DATA/secretsanta/data /DATA/secretsanta/uploads
+## ✨ CasaOS (Solo 2 pasos)
 
-# 2) Copia un .env a /DATA/secretsanta/.env con tus credenciales
-#    (usa .env.example como referencia; IMPORTANTES: BASE_URL, SESSION_SECRET, EMAIL_* y DB rutas /data)
+# 1) Descarga docker-compose.prod.yml del repositorio
 
-# 3) Importa docker-compose.prod.yml en CasaOS (App / Compose) y arranca
-docker-compose -f docker-compose.prod.yml up -d --build
+# 2) En CasaOS: AppStore → Custom App → Importa el compose → Presiona "Start"
 
-# Verifica logs
+# 🎉 El sistema automáticamente:
+#  ✓ Crea /DATA/secretsanta/{data,uploads}
+#  ✓ Genera .env template en /DATA/secretsanta/.env
+#  ✓ Ejecuta migraciones de BD
+#  ✓ Inicia la aplicación
+
+# 3) Edita /DATA/secretsanta/.env con tus credenciales:
+#    - BASE_URL (tu dominio)
+#    - SESSION_SECRET (clave larga aleatoria)
+#    - GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+#    - SMTP_USER, SMTP_PASS (Brevo)
+#    - CLOUDFLARE_TUNNEL_TOKEN (opcional)
+
+# 4) Reinicia desde CasaOS (Stop → Start)
+
+# Ver logs:
 docker-compose -f docker-compose.prod.yml logs -f app
 
-# Verifica estado
+# Ver estado:
 docker-compose -f docker-compose.prod.yml ps
 ```
+
+**Nota**: El servicio `init` automáticamente crea las carpetas y genera `.env` si no existen.
 
 ### Paso 8: Verificar Deployment
 
