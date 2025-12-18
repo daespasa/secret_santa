@@ -26,6 +26,7 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 ## ✨ Características
 
 ### 👥 Gestión de Usuarios
+
 - **Autenticación Google OAuth 2.0** - Inicio de sesión sin contraseña
 - **Autenticación Local** - Email/contraseña con contraseñas hasheadas
 - **Fotos de Perfil** - Subida y almacenamiento de avatares
@@ -33,6 +34,7 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 - **Participantes Invitados** - Permite unirse sin registro
 
 ### 🎯 Gestión de Grupos
+
 - **Creación de Grupos** - Configuración completa con iconos y colores
 - **Invitaciones por Token** - Enlaces únicos y compartibles
 - **Límite de Participantes** - Configuración de mínimo de participantes
@@ -43,6 +45,7 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 - **Eliminación** - Borra grupos y todos sus datos
 
 ### 🎲 Sistema de Sorteo
+
 - **Sorteo Circular** - Algoritmo que garantiza asignaciones válidas
 - **Resorteo Ilimitado** - El admin puede regenerar asignaciones
 - **Validación de Participantes** - Verifica cantidad mínima antes de sortear
@@ -50,12 +53,14 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 - **Visualización de Resultados** - Cada usuario ve a quién le toca
 
 ### 💌 Sistema de Notificaciones
+
 - **Emails Profesionales** - Plantillas HTML modernas y responsivas
 - **Soporte SMTP** - Compatible con Brevo, SendGrid, Gmail, etc.
 - **Modo Desarrollo** - Logging en consola para testing
 - **Reintentos** - Manejo robusto de fallos de envío
 
 ### 🛡️ Protección
+
 - **CSRF Protection** - Tokens CSRF en todos los formularios
 - **Rate Limiting** - Protección contra fuerza bruta
 - **Validación de Entrada** - Sanitización de datos
@@ -63,6 +68,7 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 - **Autenticación JWT-like** - Gestión de sesiones
 
 ### 📱 Experiencia de Usuario
+
 - **Diseño Responsivo** - Funciona en móvil, tablet y desktop
 - **Interfaz Moderna** - Tailwind CSS con diseño limpio
 - **Material Icons** - Iconografía profesional
@@ -74,6 +80,7 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - **Express.js 5** - Framework web minimalista
 - **Node.js 20** - Runtime de JavaScript
 - **Prisma 6** - ORM type-safe
@@ -81,22 +88,26 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 - **PostgreSQL** - Base de datos escalable (producción)
 
 ### Frontend
+
 - **EJS** - Server-side rendering
 - **Tailwind CSS** - Utility-first CSS framework
 - **Material Symbols** - Iconografía moderna
 - **Responsive Design** - Mobile-first approach
 
 ### Seguridad & Autenticación
+
 - **Passport.js** - Estrategias de autenticación
 - **bcryptjs** - Hashing de contraseñas
 - **csrf-csrf** - Protección CSRF
 - **express-session** - Gestión de sesiones
 
 ### Email & Notificaciones
+
 - **Nodemailer** - Envío de emails
 - **Brevo SMTP** - Relay SMTP confiable
 
 ### DevOps
+
 - **Docker** - Containerización
 - **Docker Compose** - Orquestación local
 - **Multer** - Upload de archivos
@@ -107,12 +118,14 @@ Una aplicación web moderna y elegante para organizar intercambios de regalos (S
 ## 📦 Requisitos
 
 ### Sistema
+
 - **Node.js**: 20.x o superior
 - **npm**: 10.x o superior
 - **Docker**: 24.x o superior (opcional, recomendado)
 - **Docker Compose**: 2.x o superior (opcional)
 
 ### Cuentas Externas
+
 - **Google Cloud Project** - Para OAuth 2.0
 - **Brevo Account** - Para envío de emails (u otro servicio SMTP)
 - **Cloudflare Account** - Para dominio y Tunnel (producción)
@@ -358,12 +371,14 @@ EMAIL_MODE=smtp npm run dev
 ### Opción A: Cloudflare Tunnel + Docker (Recomendado) ⭐
 
 **Ventajas:**
+
 - Sin costos
 - SSL automático
 - DDoS protection incluido
 - Zero-trust network
 
 **Pasos:**
+
 1. Instala `cloudflared` en tu servidor
 2. Ejecuta: `cloudflared tunnel create amigo-invisible`
 3. Configura el tunnel a `localhost:3000`
@@ -374,6 +389,7 @@ Más info: [Cloudflare Tunnel Setup](https://developers.cloudflare.com/cloudflar
 ### Opción B: Dokploy (Alternativo)
 
 **Ventajas:**
+
 - Panel de control web
 - CI/CD automático
 - Autoescalado
@@ -445,25 +461,30 @@ EMAIL_FROM=Secret Santa <noreply@example.com>
 ### Prácticas Implementadas
 
 ✅ **Autenticación Segura**
+
 - Contraseñas hasheadas con bcryptjs
 - Sesiones con cookies httpOnly
 - SameSite=Lax contra CSRF
 
 ✅ **Protección CSRF**
+
 - Tokens CSRF en todos los formularios
 - Validación en endpoints POST/PUT/DELETE
 
 ✅ **Rate Limiting**
+
 - Límite de intentos de login: 5 por IP/15 min
 - Límite de sorteos: 1 por grupo/5 min
 - Límite de creación de grupos: 10 por usuario/hora
 
 ✅ **Validación de Entrada**
+
 - Sanitización de datos
 - Validación de emails
 - Validación de tipos
 
 ✅ **Control de Acceso**
+
 - Solo admins pueden sortear/resortear
 - Verificación de membresía en grupos
 - Aislamiento de datos por usuario

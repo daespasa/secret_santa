@@ -51,6 +51,7 @@ Incluye:
 Explicación clara de qué no funciona.
 
 **Pasos para reproducir**
+
 1. Paso 1
 2. Paso 2
 3. Paso 3
@@ -65,6 +66,7 @@ Qué sucede realmente.
 Si aplica.
 
 **Entorno**
+
 - OS: [Windows/Linux/Mac]
 - Node.js: [versión]
 - Navegador: [Chrome/Firefox/etc]
@@ -96,6 +98,7 @@ git checkout -b feature/tu-feature
 ### Tipos de Contribuciones
 
 #### 🐛 Bug Fixes
+
 ```bash
 git checkout -b fix/descripcion-del-bug
 # Haz tus cambios
@@ -103,6 +106,7 @@ git checkout -b fix/descripcion-del-bug
 ```
 
 #### ✨ Nuevas Características
+
 ```bash
 git checkout -b feature/nueva-caracteristica
 # Haz tus cambios
@@ -110,12 +114,14 @@ git checkout -b feature/nueva-caracteristica
 ```
 
 #### 📚 Documentación
+
 ```bash
 git checkout -b docs/tema
 # Edita .md, READMEs, etc.
 ```
 
 #### 🎨 Mejoras de UI/UX
+
 ```bash
 git checkout -b ui/descripcion
 # Cambios en vistas/estilos
@@ -132,7 +138,7 @@ git checkout -b ui/descripcion
 function handleUserLogin(email, password) {
   const user = findUserByEmail(email);
   if (!user) {
-    throw new Error('User not found');
+    throw new Error("User not found");
   }
   return authenticateUser(user, password);
 }
@@ -140,7 +146,7 @@ function handleUserLogin(email, password) {
 // ❌ Malo
 function login(e, p) {
   let u = db.query(`SELECT * FROM users WHERE email='${e}'`);
-  if (!u) throw 'err';
+  if (!u) throw "err";
   return auth(u, p);
 }
 ```
@@ -175,7 +181,8 @@ function login(e, p) {
 
 ```html
 <!-- ✅ Bueno -->
-<button class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+<button
+  class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
   Click me
 </button>
 
@@ -254,6 +261,7 @@ git commit -m "docs: actualizar README con instrucciones"
 ```
 
 **Formato de commits:**
+
 ```
 <tipo>: <descripción corta>
 
@@ -263,6 +271,7 @@ Closes #123
 ```
 
 **Tipos válidos:**
+
 - `feat` - Nueva característica
 - `fix` - Corrección de bug
 - `docs` - Cambios en documentación
@@ -296,9 +305,11 @@ git push origin feature/tu-feature --force-with-lease
 
 ```markdown
 ## Descripción
+
 Explicación clara de los cambios.
 
 ## Tipo de cambio
+
 - [ ] 🐛 Bug fix
 - [ ] ✨ Nueva feature
 - [ ] 📚 Documentación
@@ -306,13 +317,16 @@ Explicación clara de los cambios.
 - [ ] ♻️ Refactor
 
 ## Testing
+
 Describe cómo probaste los cambios:
+
 - [ ] Creé un grupo de prueba
 - [ ] Probé el sorteo
 - [ ] Verifiqué el email
 - [ ] Probé en móvil
 
 ## Checklist
+
 - [ ] Mi código sigue los estándares
 - [ ] He actualizado la documentación
 - [ ] No hay breaking changes
@@ -330,6 +344,7 @@ Describe cómo probaste los cambios:
 ### 4. Después de Mergeado
 
 Tu contribución será creditada en:
+
 - Changelog
 - Página de créditos
 - Release notes

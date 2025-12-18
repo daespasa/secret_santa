@@ -9,6 +9,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 ## [Unreleased]
 
 ### Planeado
+
 - [ ] Base de datos PostgreSQL
 - [ ] Soporte para múltiples idiomas
 - [ ] Notificaciones push en navegador
@@ -22,6 +23,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 ## [0.1.0] - 2025-12-18
 
 ### ✨ Agregado
+
 - ✅ Autenticación Google OAuth 2.0
 - ✅ Autenticación local (email/contraseña)
 - ✅ Registro e inicio de sesión
@@ -58,6 +60,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 - ✅ Guía de contribución
 
 ### 🔧 Configuración Técnica
+
 - Node.js 20 con Express.js 5
 - Prisma 6 con SQLite (desarrollo)
 - EJS para server-side rendering
@@ -69,6 +72,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 - Morgan para logging
 
 ### 🛡️ Seguridad
+
 - CSRF protection con csrf-csrf
 - Rate limiting con express-rate-limit
 - Validación de entrada
@@ -77,6 +81,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 - Control de acceso basado en roles
 
 ### 📱 Features de UX
+
 - Layout responsivo con 4 templates
 - Navegación principal fija
 - Flash messages contextuales
@@ -89,6 +94,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 ## Versiones Futuras
 
 ### v0.2.0 (Estimado: Q1 2026)
+
 - [ ] Migración a PostgreSQL
 - [ ] Panel de administración
 - [ ] Búsqueda global
@@ -97,6 +103,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 - [ ] Integración con calendarios (Google Calendar, Outlook)
 
 ### v0.3.0 (Estimado: Q2 2026)
+
 - [ ] API REST completa
 - [ ] Aplicación móvil (React Native)
 - [ ] Pago y plan premium
@@ -104,6 +111,7 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/) y est
 - [ ] Exportación de datos
 
 ### v1.0.0 (Estimado: Q3 2026)
+
 - Release estable
 - Cobertura de tests 80%+
 - Performance optimizada
@@ -126,11 +134,13 @@ Este MVP incluye todas las características esenciales para organizar intercambi
 - Seguridad básica implementada
 
 **Conocidos Issues:**
+
 - SQLite no es escalable para muchos usuarios (plan migrar a PostgreSQL)
 - Falta de tests automatizados (próxima versión)
 - Falta de API REST (v0.2.0)
 
 **Gracias especiales a:**
+
 - Usuarios de testing
 - Comunidad de código abierto
 
