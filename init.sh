@@ -27,5 +27,13 @@ else
   echo "✓ Using existing .env"
 fi
 
+# Load .env variables into environment
+if [ -f /data/.env ]; then
+  set -a
+  . /data/.env
+  set +a
+  echo "✓ Environment variables loaded from /data/.env"
+fi
+
 # Run migrations and start app
 npx prisma migrate deploy && npm start

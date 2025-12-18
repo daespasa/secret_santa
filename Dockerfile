@@ -39,6 +39,9 @@ RUN npx prisma generate
 COPY init.sh /app/init.sh
 RUN chmod +x /app/init.sh
 
+# Create default .env so docker-compose env_file doesn't fail
+COPY .env.example /tmp/.env.template
+
 EXPOSE 3000
 # Entrypoint: creates dirs, generates .env, runs migrations, then starts app
 ENTRYPOINT ["/app/init.sh"]

@@ -6,15 +6,13 @@ services:
     image: daespasa/secret-santa:latest
     container_name: amigo-invisible
     restart: unless-stopped
-    # Use a host-level env file so CasaOS can manage it easily
-    env_file:
-      - /DATA/AppData/secretsanta/.env
     ports:
       - "3000:3000"
     # Persist all app data under /DATA/AppData/secretsanta (CasaOS standard)
     volumes:
       - /DATA/AppData/secretsanta/data:/data
       - /DATA/AppData/secretsanta/uploads:/app/public/uploads
+      # The .env file is managed by the init script; CasaOS can edit /DATA/AppData/secretsanta/.env
     healthcheck:
       # Use Node-based check to avoid needing curl/wget in the image
       test:
